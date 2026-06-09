@@ -549,235 +549,100 @@ section {
   text-align: center;
 }
 
-/* ===== SHELF ===== */
 .shelf {
-  background: linear-gradient(180deg, #c8894a 0%, #a0682a 80%, #8b5820 100%);
+  background: var(--light-brown);
   border: 4px solid var(--dark);
-  box-shadow: 0 8px 0 #5a3010, 4px 12px 0 var(--dark);
-  padding: 24px 16px 28px;
-  margin-bottom: 8px;
+  box-shadow: 0 6px 0 var(--brown), 4px 10px 0 var(--dark);
+  padding: 20px;
+  margin-bottom: 12px;
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  position: relative;
-}
-.shelf::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(180deg,
-    transparent 0px, transparent 8px,
-    rgba(0,0,0,0.04) 8px, rgba(0,0,0,0.04) 9px);
-  pointer-events: none;
 }
 .shelf::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 6px;
-  background: rgba(0,0,0,0.15);
+  bottom: -10px; left: 0; right: 0;
+  height: 8px;
 }
 .shelf-board {
-  background: linear-gradient(180deg, #8b5820 0%, #6b3e10 100%);
-  height: 14px;
+  background: var(--brown);
+  height: 12px;
   border: 3px solid var(--dark);
-  margin-bottom: 6px;
-  box-shadow: 0 4px 0 var(--dark);
+  margin-bottom: 4px;
 }
 
-/* ===== CAN REDESIGN: Pixel Cylindrical Cans ===== */
 .can {
-  width: 88px;
+  width: 96px;
   cursor: pointer;
-  transition: transform 0.15s, filter 0.15s;
+  transition: transform 0.15s;
   position: relative;
-  filter: drop-shadow(2px 4px 0 rgba(0,0,0,0.45));
 }
-.can:hover {
-  transform: translateY(-10px) scale(1.07);
-  filter: drop-shadow(2px 10px 0 rgba(0,0,0,0.55));
-  z-index: 2;
-}
-
-/* Pull tab */
-.can-tab {
-  width: 22px;
-  height: 9px;
-  background: #7a7a8e;
-  border: 2px solid var(--dark);
+.can:hover { transform: translateY(-6px); }
+.can-top {
+  width: 88px;
+  height: 12px;
+  border-radius: 4px 4px 0 0;
+  border: 3px solid var(--dark);
   border-bottom: none;
   margin: 0 auto;
-  border-radius: 3px 3px 0 0;
-  position: relative;
 }
-.can-tab::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 50%;
-  transform: translateX(-50%);
-  width: 10px; height: 3px;
-  background: #5a5a6e;
-  border: 1px solid var(--dark);
-  border-radius: 2px;
-}
-
-/* Top metallic rim */
-.can-rim-top {
-  width: 88px;
-  height: 14px;
-  background: linear-gradient(180deg, #6a6a7e 0%, #44445a 55%, #54546a 100%);
-  border: 3px solid var(--dark);
-  border-bottom: 2px solid var(--dark);
-  border-radius: 5px 5px 0 0;
-  position: relative;
-}
-.can-rim-top::after {
-  content: '';
-  position: absolute;
-  top: 3px; left: 14px; right: 14px;
-  height: 3px;
-  background: rgba(255,255,255,0.22);
-  border-radius: 2px;
-}
-
-/* Can body */
 .can-body {
-  width: 88px;
-  height: 108px;
-  border-left: 3px solid var(--dark);
-  border-right: 3px solid var(--dark);
+  width: 96px;
+  height: 80px;
+  border: 3px solid var(--dark);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #32323e;
 }
-/* Metal side strips (cylindrical shading) */
-.can-body::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg,
-      #1e1e2a 0px, #2a2a38 8px,
-      transparent 8px, transparent calc(100% - 8px),
-      #1a1a28 calc(100% - 8px), #161620 100%);
-  z-index: 0;
-}
-
-/* Label band (the colored center zone) */
-.can-label-band {
-  position: absolute;
-  top: 0; left: 8px; right: 8px; bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  padding: 8px 4px 6px;
-}
-.can-label-band::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 10px;
-  background: rgba(0,0,0,0.2);
-}
-.can-label-band::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 8px;
-  background: rgba(0,0,0,0.2);
-}
-
-/* Highlight strip */
 .can-shine {
   position: absolute;
-  top: 6px; left: 10px;
-  width: 5px; height: 85%;
-  background: rgba(255,255,255,0.28);
-  border-radius: 3px;
-  z-index: 3;
-}
-
-/* Bottom metallic rim */
-.can-rim-bottom {
-  width: 88px;
-  height: 13px;
-  background: linear-gradient(180deg, #54546a 0%, #44445a 50%, #2e2e3e 100%);
-  border: 3px solid var(--dark);
-  border-top: 2px solid var(--dark);
-  border-radius: 0 0 5px 5px;
-  position: relative;
-}
-.can-rim-bottom::after {
-  content: '';
-  position: absolute;
-  top: 3px; left: 14px; right: 14px;
-  height: 2px;
-  background: rgba(255,255,255,0.10);
-  border-radius: 1px;
-}
-
-.can-icon {
-  font-size: 22px;
-  margin-bottom: 3px;
-  position: relative;
-  z-index: 3;
-  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.3));
-  line-height: 1;
+  top: 4px; left: 6px;
+  width: 6px; height: 30px;
+  background: rgba(255,255,255,0.4);
+  transform: rotate(-10deg);
 }
 .can-label-text {
   font-family: var(--pixel);
   font-size: 5px;
   text-align: center;
-  line-height: 2;
+  line-height: 1.8;
   color: var(--dark);
   position: relative;
-  z-index: 3;
-  font-weight: bold;
+  z-index: 1;
+  padding: 4px;
 }
-.can-keywords {
-  font-size: 8px;
-  color: rgba(0,0,0,0.6);
-  text-align: center;
-  margin-top: 3px;
-  line-height: 1.5;
-  font-family: var(--body);
+.can-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
   position: relative;
-  z-index: 3;
-  border-top: 1px solid rgba(0,0,0,0.15);
-  padding-top: 3px;
-  width: 100%;
+  z-index: 1;
 }
-
-/* Selected / active state */
-.can.selected .can-rim-top,
-.can.selected .can-rim-bottom {
-  border-color: var(--yellow);
-  box-shadow: 0 0 8px rgba(255,205,71,0.5);
+.can-bottom {
+  width: 88px;
+  height: 8px;
+  border-radius: 0 0 4px 4px;
+  border: 3px solid var(--dark);
+  border-top: none;
+  margin: 0 auto;
 }
 .can.selected .can-body {
-  border-left-color: var(--yellow);
-  border-right-color: var(--yellow);
+  box-shadow: 0 0 0 3px var(--yellow);
 }
 
-/* Can label band colors */
-.can-pink   .can-label-band { background: var(--pink); }
-.can-yellow .can-label-band { background: var(--yellow); }
-.can-cyan   .can-label-band { background: var(--cyan); }
-.can-green  .can-label-band { background: var(--green); }
-.can-purple .can-label-band { background: var(--purple); }
-
-/* Text colors per label */
-.can-pink   .can-label-text, .can-pink   .can-keywords { color: white; }
-.can-purple .can-label-text, .can-purple .can-keywords { color: white; }
-.can-pink   .can-keywords { border-top-color: rgba(255,255,255,0.25); }
-.can-purple .can-keywords { border-top-color: rgba(255,255,255,0.25); }
+/* Can colors */
+.can-pink .can-top, .can-pink .can-body, .can-pink .can-bottom { background: var(--pink); }
+.can-yellow .can-top, .can-yellow .can-body, .can-yellow .can-bottom { background: var(--yellow); }
+.can-cyan .can-top, .can-cyan .can-body, .can-cyan .can-bottom { background: var(--cyan); }
+.can-green .can-top, .can-green .can-body, .can-green .can-bottom { background: var(--green); }
+.can-purple .can-top, .can-purple .can-body, .can-purple .can-bottom { background: var(--purple); }
+.can-label-text { color: var(--dark); }
+.can-purple .can-label-text { color: white; }
+.can-pink .can-label-text { color: white; }
 
 /* Can expand panel */
 .can-expand {
@@ -2091,125 +1956,6 @@ footer .tiny {
 }
 
 
-/* ===== COLA TRANSITION OVERLAY ===== */
-#colaTransition {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  background: linear-gradient(160deg, #0a0c1e 0%, #1a1040 50%, #0a1a18 100%);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-}
-#colaTransition.active { display: flex; }
-
-.cola-stage {
-  position: relative;
-  width: 400px;
-  max-width: 90vw;
-  height: 260px;
-  margin-bottom: 20px;
-}
-
-/* Penguin (left side) */
-.ct-penguin {
-  position: absolute;
-  left: 20px;
-  bottom: 0;
-  animation: ctPenguinBob 1.6s ease-in-out infinite;
-}
-@keyframes ctPenguinBob {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-/* Cola can travelling from penguin to candidate */
-.ct-cola {
-  position: absolute;
-  left: 120px;
-  bottom: 60px;
-  font-size: 36px;
-  animation: ctColaFly 1s ease-out 0.4s both;
-}
-@keyframes ctColaFly {
-  from { left: 120px; bottom: 60px; transform: rotate(-10deg) scale(0.7); opacity: 0.6; }
-  to   { left: 230px; bottom: 80px; transform: rotate(0deg)   scale(1);   opacity: 1;   }
-}
-
-/* Candidate (right side) drinking */
-.ct-candidate {
-  position: absolute;
-  right: 20px;
-  bottom: 0;
-}
-/* tilt head back */
-.ct-candidate-head {
-  animation: ctDrink 0.6s ease-in-out 1.6s both;
-  transform-origin: center bottom;
-}
-@keyframes ctDrink {
-  0%   { transform: rotate(0deg); }
-  40%  { transform: rotate(-18deg); }
-  100% { transform: rotate(-8deg); }
-}
-
-/* Tension symbols above candidate head — fade out */
-.ct-tension {
-  position: absolute;
-  right: 48px;
-  bottom: 200px;
-  font-family: var(--pixel);
-  font-size: 10px;
-  color: var(--pink);
-  animation: ctTensionFade 1s ease-out 1.8s both;
-  line-height: 1.8;
-}
-@keyframes ctTensionFade {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-20px); }
-}
-
-/* Sparkles / bubbles after drinking */
-.ct-sparkle {
-  position: absolute;
-  opacity: 0;
-  font-size: 16px;
-  animation: ctSparkleIn 0.5s ease-out var(--delay, 2.2s) both;
-}
-@keyframes ctSparkleIn {
-  from { opacity: 0; transform: scale(0) translateY(10px); }
-  60%  { opacity: 1; }
-  to   { opacity: 0.8; transform: scale(1) translateY(-20px); }
-}
-
-.ct-speech {
-  background: rgba(20,22,58,0.96);
-  border: 3px solid var(--cyan);
-  box-shadow: 4px 4px 0 var(--cyan);
-  padding: 14px 20px;
-  max-width: 460px;
-  font-size: 13px;
-  line-height: 2;
-  color: #e0eeff;
-  margin-bottom: 20px;
-  text-align: left;
-  animation: slideDown 0.4s ease 0.2s both;
-}
-.ct-speech .ct-speaker {
-  font-family: var(--pixel);
-  font-size: 6px;
-  color: var(--cyan);
-  margin-bottom: 8px;
-}
-.ct-continue-btn {
-  display: none;
-  animation: slideDown 0.4s ease;
-}
-.ct-continue-btn.show { display: inline-block; }
-
 /* Music prompt */
 #musicPrompt {
   position: fixed;
@@ -2657,6 +2403,7 @@ footer .tiny {
   <div class="nav-item active" onclick="goTo('#hero')"><span class="nav-dot"></span>开场</div>
   <div class="nav-item" onclick="goTo('#charCreate')"><span class="nav-dot"></span>创建角色</div>
   <div class="nav-item" onclick="goTo('#scratch')"><span class="nav-dot"></span>明日运势</div>
+  <div class="nav-item" onclick="goTo('#water')"><span class="nav-dot"></span>静静可乐</div>
   <div class="nav-item" onclick="goTo('#cans')"><span class="nav-dot"></span>职位罐头</div>
   <div class="nav-item" onclick="goTo('#backpack')"><span class="nav-dot"></span>背包安检</div>
   <div class="nav-item" onclick="goTo('#door')"><span class="nav-dot"></span>职场暗门</div>
@@ -2670,6 +2417,7 @@ footer .tiny {
   <div class="progress-dot active" onclick="goTo('#hero')" title="开场"></div>
   <div class="progress-dot" onclick="goTo('#charCreate')" title="创建角色"></div>
   <div class="progress-dot" onclick="goTo('#scratch')" title="明日运势"></div>
+  <div class="progress-dot" onclick="goTo('#water')" title="静静牌可乐"></div>
   <div class="progress-dot" onclick="goTo('#cans')" title="职位罐头"></div>
   <div class="progress-dot" onclick="goTo('#backpack')" title="背包安检"></div>
   <div class="progress-dot" onclick="goTo('#door')" title="职场暗门"></div>
@@ -3451,7 +3199,7 @@ footer .tiny {
     <div class="ai-speech" style="background:rgba(14,16,40,0.92);border-color:var(--yellow);color:#e0eeff;">
       <span class="ai-name" style="color:var(--yellow);">🤖 AI 店员</span>
       <span id="scratchGreeting">在正式开始之前，送你一张 Tomorrow 便利店的「明日运势刮刮乐」。</span><br>
-      <span style="color:var(--yellow);">想给面试前夜的你一点小小的好运补给～</span><br>
+      <span style="color:var(--yellow);">这不是算命，只是给面试前夜的你一点小小的好运补给。</span><br>
       <span style="color:#aaa;font-size:12px;">不管刮到哪一张，我都希望它能让你轻松一点。</span>
     </div>
   </div>
@@ -3522,7 +3270,7 @@ footer .tiny {
   <!-- Buttons -->
   <div style="text-align:center;margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;" class="fade-in">
     <button class="pixel-btn" style="background:#916EFF;color:white;font-size:8px;" onclick="revealScratch()">✨ 刮开看看</button>
-    <button class="pixel-btn cyan" id="scratchNextBtn" style="display:none;font-size:8px;" onclick="startColaTransition()">带着这份好运继续逛店 →</button>
+    <button class="pixel-btn cyan" id="scratchNextBtn" style="display:none;font-size:8px;" onclick="goTo('#water')">带着这份好运继续逛店 →</button>
   </div>
 
   <div class="scratch-disclaimer fade-in">
@@ -3531,114 +3279,264 @@ footer .tiny {
 
 </section>
 
-<!-- ===== COLA TRANSITION OVERLAY (not a section) ===== -->
-<!-- ===== COLA TRANSITION OVERLAY (not a section) ===== -->
-<div id="colaTransition">
-  <div style="font-family:var(--pixel);font-size:8px;color:var(--cyan);margin-bottom:18px;letter-spacing:2px;">
-    🧊 COLD DRINKS ZONE · 静静牌可乐
+<!-- ===== SECTION 1: WATER ===== -->
+<section id="water">
+  <div class="zone-tag">🧊 冷饮区 · COLD DRINKS ZONE</div>
+  <div class="section-header fade-in">01｜静静牌可乐</div>
+  <!-- Voxel cola can icon -->
+  <div style="margin:16px auto;" class="voxel-cola">
+    <svg width="80" height="100" viewBox="0 0 80 100" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;display:block;margin:0 auto;">
+      <!-- can body (blocky cylinder via rects) -->
+      <rect x="16" y="18" width="48" height="68" rx="4" fill="#e82020" stroke="#242647" stroke-width="3"/>
+      <!-- can top -->
+      <rect x="20" y="10" width="40" height="12" rx="2" fill="#c01010" stroke="#242647" stroke-width="2.5"/>
+      <!-- pull tab -->
+      <rect x="34" y="4"  width="12" height="8"  rx="1" fill="#888" stroke="#242647" stroke-width="1.5"/>
+      <rect x="37" y="2"  width="6"  height="4"  rx="1" fill="#aaa" stroke="#242647" stroke-width="1"/>
+      <!-- can bottom -->
+      <rect x="20" y="80" width="40" height="8"  rx="2" fill="#c01010" stroke="#242647" stroke-width="2.5"/>
+      <!-- label white area -->
+      <rect x="20" y="30" width="40" height="44" fill="#FCF7E8" stroke="#242647" stroke-width="1.5"/>
+      <!-- label design -->
+      <rect x="20" y="30" width="40" height="10" fill="#e82020"/>
+      <text x="40" y="39" font-family="monospace" font-size="6" fill="white" text-anchor="middle" font-weight="bold">静静牌</text>
+      <text x="40" y="52" font-family="'Press Start 2P',monospace" font-size="7" fill="#e82020" text-anchor="middle">COLA</text>
+      <text x="40" y="64" font-family="monospace" font-size="5" fill="#888" text-anchor="middle">冷静聪明汽水</text>
+      <text x="40" y="72" font-family="monospace" font-size="4" fill="#aaa" text-anchor="middle">CALM · SMART · 330ml</text>
+      <!-- shine -->
+      <rect x="20" y="18" width="8" height="48" fill="white" opacity="0.12" rx="2"/>
+      <!-- top rim shine -->
+      <rect x="22" y="11" width="36" height="3" fill="white" opacity="0.2" rx="1"/>
+    </svg>
   </div>
+  <div class="section-sub fade-in">先别急，喝口可乐</div>
 
-  <div class="cola-stage">
-    <!-- Sparkles -->
-    <span class="ct-sparkle" style="--delay:2.3s;left:220px;bottom:150px;">✦</span>
-    <span class="ct-sparkle" style="--delay:2.5s;left:260px;bottom:170px;">⬥</span>
-    <span class="ct-sparkle" style="--delay:2.4s;left:200px;bottom:180px;">✧</span>
-    <span class="ct-sparkle" style="--delay:2.6s;left:280px;bottom:140px;">★</span>
-    <span class="ct-sparkle" style="--delay:2.7s;left:240px;bottom:190px;">◈</span>
+  <!-- Pixel fridge scene -->
+  <div class="scene-pixel-bg fade-in" style="height:200px;max-width:700px;">
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="200" style="image-rendering:pixelated;display:block;">
+      <!-- bg -->
+      <rect x="0" y="0" width="700" height="200" fill="#0d1a2e"/>
+      <!-- floor blocks -->
+      <rect x="0" y="158" width="700" height="42" fill="#1a0e06"/>
+      <rect x="0" y="156" width="700" height="6"  fill="#2a1a0a"/>
+      <rect x="0"   y="156" width="32" height="6" fill="#2a1a0a" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="32"  y="156" width="32" height="6" fill="#221408" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="64"  y="156" width="32" height="6" fill="#2a1a0a" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="96"  y="156" width="32" height="6" fill="#221408" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="128" y="156" width="32" height="6" fill="#2a1a0a" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="160" y="156" width="32" height="6" fill="#221408" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="192" y="156" width="32" height="6" fill="#2a1a0a" stroke="#1a0a00" stroke-width="1"/>
+      <rect x="224" y="156" width="32" height="6" fill="#221408" stroke="#1a0a00" stroke-width="1"/>
+      <!-- stars -->
+      <rect x="420" y="10" width="3" height="3" fill="white" opacity="0.6"><animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.8s" repeatCount="indefinite"/></rect>
+      <rect x="520" y="22" width="2" height="2" fill="white" opacity="0.5"/>
+      <rect x="600" y="14" width="3" height="3" fill="white" opacity="0.7"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="3.2s" repeatCount="indefinite"/></rect>
+      <rect x="670" y="30" width="2" height="2" fill="white" opacity="0.4"/>
 
-    <!-- Penguin (pixel SVG) -->
-    <div class="ct-penguin">
-      <svg width="88" height="120" viewBox="0 0 88 120" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-        <!-- feet -->
-        <rect x="14" y="108" width="18" height="10" rx="3" fill="#FF943E" stroke="#1a1a1a" stroke-width="1.5"/>
-        <rect x="56" y="108" width="18" height="10" rx="3" fill="#FF943E" stroke="#1a1a1a" stroke-width="1.5"/>
-        <!-- legs -->
-        <rect x="18" y="96"  width="12" height="14" fill="#1a1a1a"/>
-        <rect x="58" y="96"  width="12" height="14" fill="#1a1a1a"/>
-        <!-- body -->
-        <rect x="8"  y="56"  width="72" height="44" rx="8" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-        <!-- belly -->
-        <rect x="18" y="60"  width="52" height="38" rx="6" fill="#fff"/>
-        <!-- apron -->
-        <rect x="16" y="64"  width="56" height="30" rx="3" fill="#e03030" opacity="0.9"/>
-        <rect x="22" y="68"  width="44" height="18" rx="2" fill="#fff"/>
-        <text x="44" y="81"  font-family="monospace" font-size="7" fill="#1a1a1a" text-anchor="middle" font-weight="bold">TMR</text>
-        <!-- badge -->
-        <rect x="42" y="62"  width="22" height="10" rx="1" fill="#FFCD47" stroke="#1a1a1a" stroke-width="1.5"/>
-        <text x="53" y="70"  font-family="monospace" font-size="5" fill="#1a1a1a" text-anchor="middle">AI</text>
-        <!-- scarf -->
-        <rect x="6"  y="48"  width="76" height="12" rx="3" fill="#e03030" stroke="#b01010" stroke-width="2"/>
-        <!-- wing left (outstretched — handing cola) -->
-        <rect x="-6" y="60"  width="18" height="10" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2" transform="rotate(-30 6 65)"/>
-        <!-- wing right -->
-        <rect x="76" y="60"  width="14" height="10" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-        <!-- head -->
-        <rect x="10" y="16"  width="68" height="40" rx="10" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-        <!-- face -->
-        <rect x="16" y="22"  width="56" height="30" rx="8" fill="#fff"/>
-        <!-- eyes (happy / squint) -->
-        <rect x="18" y="28"  width="16" height="10" rx="3" fill="#1a1a1a"/>
-        <rect x="19" y="29"  width="5"  height="4"  fill="#fff"/>
-        <rect x="19" y="29"  width="2"  height="2"  fill="#47D6D6" opacity="0.9"/>
-        <rect x="54" y="28"  width="16" height="10" rx="3" fill="#1a1a1a"/>
-        <rect x="55" y="29"  width="5"  height="4"  fill="#fff"/>
-        <rect x="55" y="29"  width="2"  height="2"  fill="#47D6D6" opacity="0.9"/>
-        <!-- beak -->
-        <rect x="36" y="42"  width="16" height="7"  rx="3" fill="#FF943E" stroke="#cc6010" stroke-width="1.5"/>
-      </svg>
+      <!-- ═══ VENDING MACHINE BODY ═══ -->
+      <!-- outer shell (dark blue-grey, chunky) -->
+      <rect x="60"  y="18" width="180" height="140" rx="4" fill="#1e2a3a" stroke="#3a5a7a" stroke-width="4"/>
+      <!-- top panel (darker) -->
+      <rect x="64"  y="22" width="172" height="20"  fill="#162030" stroke="#3a5a7a" stroke-width="1"/>
+      <!-- machine label -->
+      <rect x="74"  y="26" width="152" height="12"  fill="#0a1a2a"/>
+      <text x="150" y="36" font-family="'Press Start 2P',monospace" font-size="6" fill="#47D6D6" text-anchor="middle">TOMORROW MART</text>
+      <!-- side accent strips -->
+      <rect x="60"  y="42" width="6"   height="110" fill="#47D6D6" opacity="0.4"/>
+      <rect x="234" y="42" width="6"   height="110" fill="#47D6D6" opacity="0.4"/>
+
+      <!-- GLASS WINDOW -->
+      <rect x="70"  y="44" width="116" height="86"  fill="#0a1828" stroke="#47D6D6" stroke-width="2"/>
+      <!-- glass glint -->
+      <rect x="72"  y="46" width="6"   height="40"  fill="white" opacity="0.07"/>
+      <!-- window glow -->
+      <rect x="70"  y="44" width="116" height="86"  fill="#ffe090" opacity="0.04"/>
+
+      <!-- SHELF ROW 1 (top) -->
+      <rect x="70"  y="88" width="116" height="4"   fill="#2a4a6a" stroke="#3a6a8a" stroke-width="1"/>
+      <!-- Row 1 products: 4 cans -->
+      <rect x="74"  y="52" width="22"  height="36"  rx="2" fill="#e82020" stroke="#242647" stroke-width="1.5"/>
+      <rect x="76"  y="55" width="18"  height="12"  fill="#FCF7E8"/>
+      <text x="85"  y="64" font-family="monospace" font-size="5" fill="#e82020" text-anchor="middle" font-weight="bold">静静</text>
+      <rect x="74"  y="54" width="4"   height="3"   fill="#c81010" rx="1"/>
+
+      <rect x="100" y="52" width="22"  height="36"  rx="2" fill="#e82020" stroke="#242647" stroke-width="1.5"/>
+      <rect x="102" y="55" width="18"  height="12"  fill="#FCF7E8"/>
+      <text x="111" y="64" font-family="monospace" font-size="5" fill="#e82020" text-anchor="middle" font-weight="bold">静静</text>
+      <rect x="100" y="54" width="4"   height="3"   fill="#c81010" rx="1"/>
+
+      <rect x="126" y="52" width="22"  height="36"  rx="2" fill="#47D6D6" stroke="#242647" stroke-width="1.5"/>
+      <rect x="128" y="55" width="18"  height="12"  fill="#FCF7E8"/>
+      <text x="137" y="64" font-family="monospace" font-size="5" fill="#0a8090" text-anchor="middle" font-weight="bold">薄荷</text>
+      <rect x="126" y="54" width="4"   height="3"   fill="#2a9090" rx="1"/>
+
+      <rect x="152" y="52" width="22"  height="36"  rx="2" fill="#6DD986" stroke="#242647" stroke-width="1.5"/>
+      <rect x="154" y="55" width="18"  height="12"  fill="#FCF7E8"/>
+      <text x="163" y="64" font-family="monospace" font-size="5" fill="#2a6a30" text-anchor="middle" font-weight="bold">气泡</text>
+      <rect x="152" y="54" width="4"   height="3"   fill="#3a8a40" rx="1"/>
+
+      <!-- SHELF ROW 2 -->
+      <rect x="70"  y="126" width="116" height="4"  fill="#2a4a6a" stroke="#3a6a8a" stroke-width="1"/>
+      <!-- Row 2: snack boxes -->
+      <rect x="74"  y="94" width="24"  height="32"  rx="1" fill="#FFCD47" stroke="#242647" stroke-width="1.5"/>
+      <rect x="76"  y="96" width="20"  height="10"  fill="#FF943E"/>
+      <text x="86"  y="104" font-family="monospace" font-size="4" fill="#FCF7E8" text-anchor="middle">能量</text>
+
+      <rect x="102" y="94" width="24"  height="32"  rx="1" fill="#FF5C8A" stroke="#242647" stroke-width="1.5"/>
+      <rect x="104" y="96" width="20"  height="10"  fill="#c03060"/>
+      <text x="114" y="104" font-family="monospace" font-size="4" fill="#FCF7E8" text-anchor="middle">果味</text>
+
+      <rect x="130" y="94" width="24"  height="32"  rx="1" fill="#916EFF" stroke="#242647" stroke-width="1.5"/>
+      <rect x="132" y="96" width="20"  height="10"  fill="#6040cc"/>
+      <text x="142" y="104" font-family="monospace" font-size="4" fill="#FCF7E8" text-anchor="middle">冷静</text>
+
+      <rect x="158" y="94" width="24"  height="32"  rx="1" fill="#FF943E" stroke="#242647" stroke-width="1.5"/>
+      <rect x="160" y="96" width="20"  height="10"  fill="#c06010"/>
+      <text x="170" y="104" font-family="monospace" font-size="4" fill="#FCF7E8" text-anchor="middle">勇气</text>
+
+      <!-- BOTTOM PANEL (coin + button area) -->
+      <rect x="70"  y="132" width="116" height="22"  fill="#0e1828" stroke="#3a5a7a" stroke-width="1"/>
+      <!-- price display -->
+      <rect x="74"  y="135" width="40"  height="15"  fill="#0a2a0a" stroke="#3a7a3a" stroke-width="1"/>
+      <text x="94"  y="146" font-family="monospace" font-size="6" fill="#6DD986" text-anchor="middle">¥ 5</text>
+      <!-- coin slot -->
+      <rect x="124" y="137" width="28"  height="6"   rx="3" fill="#1a1a2a" stroke="#5a5a7a" stroke-width="1.5"/>
+      <text x="138" y="143" font-family="monospace" font-size="4" fill="#888" text-anchor="middle">INSERT</text>
+      <!-- dispense flap -->
+      <rect x="160" y="134" width="22"  height="14"  rx="2" fill="#1a2a3a" stroke="#47D6D6" stroke-width="1.5"/>
+      <rect x="162" y="140" width="18"  height="3"   fill="#47D6D6" opacity="0.5"/>
+
+      <!-- machine glow on floor -->
+      <ellipse cx="150" cy="160" rx="70" ry="8" fill="#47D6D6" opacity="0.08"/>
+
+      <!-- ═══ CANDIDATE reaching for machine ═══ -->
+      <!-- shadow -->
+      <ellipse cx="370" cy="162" rx="20" ry="5" fill="#000" opacity="0.2"/>
+      <!-- backpack -->
+      <rect x="378" y="68" width="22" height="34" fill="#6DD986" stroke="#242647" stroke-width="2"/>
+      <rect x="381" y="74" width="16" height="10" fill="#5BA83A" stroke="#242647" stroke-width="1"/>
+      <!-- body -->
+      <rect x="354" y="72" width="32"  height="44"  fill="#4a6a9a" stroke="#242647" stroke-width="2.5"/>
+      <rect x="362" y="74" width="16"  height="8"   fill="#5a7aaa"/>
+      <!-- head -->
+      <rect x="358" y="46" width="28"  height="26"  fill="#f4c08a" stroke="#242647" stroke-width="2.5"/>
+      <!-- hair -->
+      <rect x="356" y="40" width="32"  height="12"  fill="#5a3010" stroke="#242647" stroke-width="2"/>
+      <!-- eyes -->
+      <rect x="362" y="53" width="6" height="6" fill="#242647"/>
+      <rect x="374" y="53" width="6" height="6" fill="#242647"/>
+      <rect x="363" y="54" width="2" height="2" fill="white"/>
+      <rect x="375" y="54" width="2" height="2" fill="white"/>
+      <!-- excited expression (wide eyes) -->
+      <rect x="364" y="62" width="8"  height="3"   rx="1" fill="#c87860"/>
+      <!-- arm reaching forward -->
+      <rect x="340" y="80" width="16"  height="9"   rx="2" fill="#4a6a9a" stroke="#242647" stroke-width="2">
+        <animateTransform attributeName="transform" type="translate" values="0,0;4,0;0,0" dur="1.2s" repeatCount="indefinite"/>
+      </rect>
+      <!-- legs -->
+      <rect x="358" y="116" width="12" height="20"  fill="#3a3a6a" stroke="#242647" stroke-width="2">
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="1.8s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="374" y="116" width="12" height="20"  fill="#3a3a6a" stroke="#242647" stroke-width="2">
+        <animateTransform attributeName="transform" type="translate" values="0,-2;0,0;0,-2" dur="1.8s" repeatCount="indefinite"/>
+      </rect>
+      <!-- shoes -->
+      <rect x="356" y="134" width="16" height="8"   fill="#1a1a1a" stroke="#242647" stroke-width="1.5"/>
+      <rect x="372" y="134" width="16" height="8"   fill="#1a1a1a" stroke="#242647" stroke-width="1.5"/>
+
+      <!-- ═══ QQ PENGUIN beside machine ═══ -->
+      <!-- shadow -->
+      <ellipse cx="480" cy="162" rx="22" ry="5" fill="#000" opacity="0.2"/>
+      <!-- feet -->
+      <rect x="463" y="148" width="14" height="9"  rx="3" fill="#FF943E" stroke="#1a1a1a" stroke-width="1.5">
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-3;0,0" dur="1.8s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="483" y="148" width="14" height="9"  rx="3" fill="#FF943E" stroke="#1a1a1a" stroke-width="1.5">
+        <animateTransform attributeName="transform" type="translate" values="0,-3;0,0;0,-3" dur="1.8s" repeatCount="indefinite"/>
+      </rect>
+      <!-- legs -->
+      <rect x="465" y="138" width="10" height="12" fill="#1a1a1a"/>
+      <rect x="483" y="138" width="10" height="12" fill="#1a1a1a"/>
+      <!-- body -->
+      <rect x="454" y="100" width="52" height="42" rx="7" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+      <!-- belly -->
+      <rect x="462" y="104" width="36" height="35" rx="5" fill="#FFFFFF"/>
+      <!-- apron -->
+      <rect x="460" y="108" width="40" height="26" rx="3" fill="#e03030" opacity="0.9"/>
+      <rect x="464" y="112" width="32" height="16" rx="2" fill="#FFFFFF"/>
+      <text x="480" y="123" font-family="monospace" font-size="6" fill="#1a1a1a" text-anchor="middle" font-weight="bold">TMR</text>
+      <!-- badge -->
+      <rect x="478" y="107" width="18" height="9"  rx="1" fill="#FFCD47" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="487" y="114" font-family="monospace" font-size="4" fill="#1a1a1a" text-anchor="middle">AI</text>
+      <!-- red scarf -->
+      <rect x="452" y="92" width="56" height="12"  rx="3" fill="#e03030" stroke="#b01010" stroke-width="2.5"/>
+      <rect x="452" y="94" width="56" height="6"   fill="#ff4040" opacity="0.4"/>
+      <!-- scarf tail -->
+      <rect x="454" y="102" width="12" height="20" rx="2" fill="#e03030" stroke="#b01010" stroke-width="1.5"/>
+      <!-- wing left (pointing at machine) -->
+      <rect x="440" y="104" width="16" height="12" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2">
+        <animateTransform attributeName="transform" type="rotate" values="0 448 108;-20 448 108;5 448 108;-15 448 108;0 448 108" dur="1.4s" repeatCount="indefinite"/>
+      </rect>
+      <!-- wing right -->
+      <rect x="504" y="104" width="14" height="12" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+      <!-- head -->
+      <rect x="454" y="60"  width="52" height="36" rx="8" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+      <!-- face -->
+      <rect x="460" y="66"  width="40" height="26" rx="7" fill="#FFFFFF"/>
+      <!-- eyes -->
+      <rect x="462" y="70"  width="12" height="10" rx="3" fill="#1a1a1a"/>
+      <rect x="463" y="71"  width="4"  height="4"  fill="#FFFFFF"/>
+      <rect x="463" y="71"  width="2"  height="2"  fill="#47D6D6" opacity="0.9"/>
+      <rect x="486" y="70"  width="12" height="10" rx="3" fill="#1a1a1a"/>
+      <rect x="487" y="71"  width="4"  height="4"  fill="#FFFFFF"/>
+      <rect x="487" y="71"  width="2"  height="2"  fill="#47D6D6" opacity="0.9"/>
+      <!-- beak -->
+      <rect x="473" y="82"  width="14" height="7"  rx="3" fill="#FF943E" stroke="#cc6010" stroke-width="1.5"/>
+
+      <!-- speech bubble from penguin -->
+      <rect x="510" y="42" width="150" height="48" rx="3" fill="white" stroke="#242647" stroke-width="2"/>
+      <rect x="510" y="42" width="150" height="12" rx="2" fill="#242647"/>
+      <rect x="513" y="44" width="5"   height="5"  fill="#e82020"/>
+      <rect x="521" y="44" width="5"   height="5"  fill="#FFCD47"/>
+      <rect x="529" y="44" width="5"   height="5"  fill="#6DD986"/>
+      <polygon points="516,90 506,98 526,96" fill="white" stroke="#242647" stroke-width="1.5"/>
+      <text x="585" y="62"  font-family="'Press Start 2P',monospace" font-size="6" fill="#1a1a1a" text-anchor="middle">今晚特供</text>
+      <text x="585" y="76"  font-family="'Press Start 2P',monospace" font-size="6" fill="#e82020" text-anchor="middle">静静牌可乐</text>
+      <text x="585" y="85"  font-family="'Press Start 2P',monospace" font-size="5" fill="#888" text-anchor="middle">冷静 · 聪明 · 勇气</text>
+
+      <!-- neon sign overhead -->
+      <rect x="50"  y="8"  width="240" height="16" fill="#0a1a2a" stroke="#47D6D6" stroke-width="2"/>
+      <text x="60"  y="21" font-size="9" fill="#47D6D6" font-family="monospace">❄ 冷饮区 · VENDING ❄</text>
+    </svg>
+  </div>
+  <div class="water-bottle-container fade-in">
+    <div class="water-bottle">
+      <div class="bottle-cap"></div>
+      <div class="bottle-body">
+        <div class="bottle-shine"></div>
+        <div class="bottle-label">
+          静静牌可乐<br>
+          CALM COLA<br>
+          ✦ 入店必喝 ✦
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Flying cola can -->
-    <div class="ct-cola">🥤</div>
-
-    <!-- Candidate (pixel SVG) -->
-    <div class="ct-candidate">
-      <!-- Tension symbols (fading) -->
-      <div class="ct-tension">？！<br>…</div>
-      <svg width="80" height="140" viewBox="0 0 80 140" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-        <!-- shadow -->
-        <ellipse cx="40" cy="138" rx="22" ry="5" fill="#000" opacity="0.2"/>
-        <!-- shoes -->
-        <rect x="12" y="122" width="20" height="10" fill="#1a1a1a" stroke="#242647" stroke-width="1.5"/>
-        <rect x="48" y="122" width="20" height="10" fill="#1a1a1a" stroke="#242647" stroke-width="1.5"/>
-        <!-- legs -->
-        <rect x="14" y="100" width="16" height="24" fill="#3a3a6a" stroke="#242647" stroke-width="2"/>
-        <rect x="50" y="100" width="16" height="24" fill="#3a3a6a" stroke="#242647" stroke-width="2"/>
-        <!-- backpack -->
-        <rect x="54" y="52" width="20" height="30" fill="#6DD986" stroke="#242647" stroke-width="2"/>
-        <rect x="57" y="58" width="14" height="10" fill="#5BA83A" stroke="#242647" stroke-width="1"/>
-        <!-- body -->
-        <rect x="20" y="56" width="40" height="48" fill="#4a6a9a" stroke="#242647" stroke-width="2.5"/>
-        <rect x="28" y="58" width="22" height="10" fill="#5a7aaa"/>
-        <!-- head (with drink animation) -->
-        <g class="ct-candidate-head">
-          <rect x="22" y="26" width="36" height="30" fill="#f4c08a" stroke="#242647" stroke-width="2.5"/>
-          <!-- hair -->
-          <rect x="20" y="18" width="40" height="14" fill="#5a3010" stroke="#242647" stroke-width="2"/>
-          <!-- eyes (calmer — half closed) -->
-          <rect x="26" y="35" width="8"  height="6"  fill="#242647"/>
-          <rect x="46" y="35" width="8"  height="6"  fill="#242647"/>
-          <rect x="27" y="36" width="3"  height="2"  fill="white"/>
-          <rect x="47" y="36" width="3"  height="2"  fill="white"/>
-          <!-- calm mouth -->
-          <rect x="32" y="47" width="16" height="3"  rx="1" fill="#c87860"/>
-          <!-- arm holding can -->
-          <rect x="2" y="60" width="20" height="10" rx="2" fill="#4a6a9a" stroke="#242647" stroke-width="2"/>
-        </g>
-      </svg>
+  <div class="ai-companion dark fade-in" style="max-width:560px;">
+    
+    <div class="ai-speech" style="background:rgba(14,16,40,0.92);border-color:var(--cyan);color:#e0eeff;">
+      <span class="ai-name">🤖 AI 店员</span>
+      <span id="waterGreeting" style="color:#e0eeff;">先喝一口吧。你不需要立刻成为最会回答问题的人，我们可以慢慢来。</span><br>
+      <span style="color:var(--yellow); font-size:15px; font-weight:bold;">先看看明天你要面对什么，再看看你已经带来了什么。</span>
     </div>
   </div>
 
-  <div class="ct-speech">
-    <div class="ct-speaker">🐧 AI 企鹅店员</div>
-    好运收到啦。现在喝一口静静牌可乐，准备进入明天的面试频道。<br>
-    <span style="color:var(--yellow);font-size:12px;">别急着表现。先喝一口，我们慢慢整理。</span>
+  <div style="text-align:center;" class="fade-in">
+    <button class="pixel-btn orange" onclick="goTo('#cans')">我准备好了，继续逛店 →</button>
   </div>
+</section>
 
-  <button class="pixel-btn cyan ct-continue-btn" id="colaNextBtn" onclick="endColaTransition()">
-    喝完了，去看岗位 →
-  </button>
-</div>
 <!-- ===== SECTION 2: CANS ===== -->
 <section id="cans">
   <div class="shelf-container">
@@ -3650,7 +3548,6 @@ footer .tiny {
       
       <div class="ai-speech" style="background:#3a1a00;border-color:#c49a6c;color:#f0e0c0;">
         <span class="ai-name" style="color:#c49a6c;">🤖 AI 店员</span>
-        好啦，现在我们先看看，明天你要面对的是一份什么样的工作。<br>
         这不是普通说明书，而是 HR 店长提前装好的岗位真实信息。<br>
         <em>先看看明天要面对的是什么，再整理你自己。</em>
       </div>
@@ -3661,75 +3558,50 @@ footer .tiny {
 
     <div class="shelf-board fade-in"></div>
     <div class="shelf fade-in">
-      <!-- HR 实习生 -->
       <div class="can can-pink" onclick="openCan('hr-intern')">
-        <div class="can-tab"></div>
-        <div class="can-rim-top"></div>
+        <div class="can-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-label-band">
-            <div class="can-icon">👤</div>
-            <div class="can-label-text">HR 实习生</div>
-            <div class="can-keywords">招聘·沟通·细致</div>
-          </div>
+          <div class="can-icon">👤</div>
+          <div class="can-label-text">HR<br>实习生<br>罐头</div>
         </div>
-        <div class="can-rim-bottom"></div>
+        <div class="can-bottom"></div>
       </div>
-      <!-- 校园招聘 -->
       <div class="can can-yellow" onclick="openCan('campus')">
-        <div class="can-tab"></div>
-        <div class="can-rim-top"></div>
+        <div class="can-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-label-band">
-            <div class="can-icon">🎓</div>
-            <div class="can-label-text">校园招聘</div>
-            <div class="can-keywords">校园·活动·信任</div>
-          </div>
+          <div class="can-icon">🎓</div>
+          <div class="can-label-text">校园<br>招聘<br>罐头</div>
         </div>
-        <div class="can-rim-bottom"></div>
+        <div class="can-bottom"></div>
       </div>
-      <!-- 员工关系 -->
       <div class="can can-cyan" onclick="openCan('employee')">
-        <div class="can-tab"></div>
-        <div class="can-rim-top"></div>
+        <div class="can-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-label-band">
-            <div class="can-icon">🤝</div>
-            <div class="can-label-text">员工关系</div>
-            <div class="can-keywords">制度·温度·原则</div>
-          </div>
+          <div class="can-icon">🤝</div>
+          <div class="can-label-text">员工<br>关系<br>罐头</div>
         </div>
-        <div class="can-rim-bottom"></div>
+        <div class="can-bottom"></div>
       </div>
-      <!-- HR 数字化 -->
       <div class="can can-green" onclick="openCan('digital')">
-        <div class="can-tab"></div>
-        <div class="can-rim-top"></div>
+        <div class="can-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-label-band">
-            <div class="can-icon">💻</div>
-            <div class="can-label-text">HR 数字化</div>
-            <div class="can-keywords">数据·流程·分析</div>
-          </div>
+          <div class="can-icon">💻</div>
+          <div class="can-label-text">HR<br>数字化<br>罐头</div>
         </div>
-        <div class="can-rim-bottom"></div>
+        <div class="can-bottom"></div>
       </div>
-      <!-- 雇主品牌 -->
       <div class="can can-purple" onclick="openCan('brand')">
-        <div class="can-tab"></div>
-        <div class="can-rim-top"></div>
+        <div class="can-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-label-band">
-            <div class="can-icon">✨</div>
-            <div class="can-label-text">雇主品牌</div>
-            <div class="can-keywords">内容·创意·传播</div>
-          </div>
+          <div class="can-icon">✨</div>
+          <div class="can-label-text">雇主<br>品牌<br>罐头</div>
         </div>
-        <div class="can-rim-bottom"></div>
+        <div class="can-bottom"></div>
       </div>
     </div>
     <div class="shelf-board fade-in"></div>
@@ -4498,7 +4370,7 @@ function goTo(id) {
 }
 
 window.addEventListener('scroll', () => {
-  const sections = ['#hero','#charCreate','#scratch','#cans','#backpack','#door','#chocolate','#receipt','#hrcounter'];
+  const sections = ['#hero','#charCreate','#scratch','#water','#cans','#backpack','#door','#chocolate','#receipt','#hrcounter'];
   const navItems = document.querySelectorAll('.nav-item');
   const dots = document.querySelectorAll('.progress-dot');
   let current = 0;
@@ -5301,9 +5173,11 @@ function updatePersonalization() {
   const nick = charData.nickname || '你';
   const emoji = charData.avatarEmoji || '';
 
-  // Cola transition greeting
-  const colaGreeting = document.getElementById('colaTransitionNick');
-  if (colaGreeting) colaGreeting.textContent = nick;
+  // Water section AI greeting
+  const waterP = document.getElementById('waterGreeting');
+  if (waterP) {
+    waterP.innerHTML = `欢迎你，<strong style="color:var(--yellow);">${nick}</strong>。先喝一口静静牌可乐，不用急着成为最会回答问题的人。`;
+  }
 
   // Backpack section title
   const bpTitle = document.getElementById('backpackTitle');
@@ -5737,6 +5611,7 @@ const robotMessages = {
   '#hero':       '欢迎来到 Tomorrow 便利店！\n这里不卖标准答案～',
   '#charCreate': 'hi，先留下你的小标记吧～',
   '#scratch':    '这是 Tomorrow 便利店\n送你的好运补给～刮开看看！',
+  '#water':      '先喝一口，慢慢来。\n你不需要立刻变成最会答题的人。',
   '#cans':       '这些罐头里装的是真实岗位信息哦～\n先看看明天要面对什么。',
   '#backpack':   '这不是筛选！\n只是陪你看看你已经带来了什么。',
   '#door':       '这里没有标准答案，\n想想如果真遇到了你会怎么做～',
@@ -5748,7 +5623,7 @@ const robotMessages = {
 let bubbleOpen = false;
 
 function getCurrentSection() {
-  const secs = ['#hrcounter','#receipt','#chocolate','#door','#backpack','#cans','#scratch','#charCreate','#hero'];
+  const secs = ['#hrcounter','#receipt','#chocolate','#door','#backpack','#cans','#water','#charCreate','#hero'];
   for (const id of secs) {
     const el = document.querySelector(id);
     if (el) {
@@ -5980,25 +5855,6 @@ function checkReveal(ctx) {
   for(let i=3; i<data.length; i+=4) if(data[i]<128) transparent++;
   const pct = transparent / (320*300);
   if(pct > 0.45) revealScratch();
-}
-
-// ===== COLA TRANSITION =====
-function startColaTransition() {
-  const overlay = document.getElementById('colaTransition');
-  if (!overlay) { goTo('#cans'); return; }
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  setTimeout(() => {
-    const btn = document.getElementById('colaNextBtn');
-    if (btn) btn.classList.add('show');
-  }, 3500);
-}
-
-function endColaTransition() {
-  const overlay = document.getElementById('colaTransition');
-  if (overlay) overlay.classList.remove('active');
-  document.body.style.overflow = '';
-  goTo('#cans');
 }
 
 function revealScratch() {
