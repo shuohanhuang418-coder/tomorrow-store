@@ -549,100 +549,235 @@ section {
   text-align: center;
 }
 
+/* ===== SHELF ===== */
 .shelf {
-  background: var(--light-brown);
+  background: linear-gradient(180deg, #c8894a 0%, #a0682a 80%, #8b5820 100%);
   border: 4px solid var(--dark);
-  box-shadow: 0 6px 0 var(--brown), 4px 10px 0 var(--dark);
-  padding: 20px;
-  margin-bottom: 12px;
+  box-shadow: 0 8px 0 #5a3010, 4px 12px 0 var(--dark);
+  padding: 24px 16px 28px;
+  margin-bottom: 8px;
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
+  position: relative;
+}
+.shelf::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg,
+    transparent 0px, transparent 8px,
+    rgba(0,0,0,0.04) 8px, rgba(0,0,0,0.04) 9px);
+  pointer-events: none;
 }
 .shelf::after {
   content: '';
   position: absolute;
-  bottom: -10px; left: 0; right: 0;
-  height: 8px;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: rgba(0,0,0,0.15);
 }
 .shelf-board {
-  background: var(--brown);
-  height: 12px;
+  background: linear-gradient(180deg, #8b5820 0%, #6b3e10 100%);
+  height: 14px;
   border: 3px solid var(--dark);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 0 var(--dark);
 }
 
+/* ===== CAN REDESIGN: Pixel Cylindrical Cans ===== */
 .can {
-  width: 96px;
-  cursor: pointer;
-  transition: transform 0.15s;
-  position: relative;
-}
-.can:hover { transform: translateY(-6px); }
-.can-top {
   width: 88px;
-  height: 12px;
-  border-radius: 4px 4px 0 0;
-  border: 3px solid var(--dark);
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+  position: relative;
+  filter: drop-shadow(2px 4px 0 rgba(0,0,0,0.45));
+}
+.can:hover {
+  transform: translateY(-10px) scale(1.07);
+  filter: drop-shadow(2px 10px 0 rgba(0,0,0,0.55));
+  z-index: 2;
+}
+
+/* Pull tab */
+.can-tab {
+  width: 22px;
+  height: 9px;
+  background: #7a7a8e;
+  border: 2px solid var(--dark);
   border-bottom: none;
   margin: 0 auto;
+  border-radius: 3px 3px 0 0;
+  position: relative;
 }
-.can-body {
-  width: 96px;
-  height: 80px;
+.can-tab::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 50%;
+  transform: translateX(-50%);
+  width: 10px; height: 3px;
+  background: #5a5a6e;
+  border: 1px solid var(--dark);
+  border-radius: 2px;
+}
+
+/* Top metallic rim */
+.can-rim-top {
+  width: 88px;
+  height: 14px;
+  background: linear-gradient(180deg, #6a6a7e 0%, #44445a 55%, #54546a 100%);
   border: 3px solid var(--dark);
+  border-bottom: 2px solid var(--dark);
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+.can-rim-top::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 14px; right: 14px;
+  height: 3px;
+  background: rgba(255,255,255,0.22);
+  border-radius: 2px;
+}
+
+/* Can body */
+.can-body {
+  width: 88px;
+  height: 108px;
+  border-left: 3px solid var(--dark);
+  border-right: 3px solid var(--dark);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #32323e;
 }
+/* Metal side strips (cylindrical shading) */
+.can-body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg,
+      #1e1e2a 0px, #2a2a38 8px,
+      transparent 8px, transparent calc(100% - 8px),
+      #1a1a28 calc(100% - 8px), #161620 100%);
+  z-index: 0;
+}
+
+/* Label band (the colored center zone) */
+.can-label-band {
+  position: absolute;
+  top: 0; left: 8px; right: 8px; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  padding: 8px 4px 6px;
+}
+.can-label-band::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 10px;
+  background: rgba(0,0,0,0.2);
+}
+.can-label-band::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 8px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* Highlight strip */
 .can-shine {
   position: absolute;
-  top: 4px; left: 6px;
-  width: 6px; height: 30px;
-  background: rgba(255,255,255,0.4);
-  transform: rotate(-10deg);
+  top: 6px; left: 10px;
+  width: 5px; height: 85%;
+  background: rgba(255,255,255,0.28);
+  border-radius: 3px;
+  z-index: 3;
+}
+
+/* Bottom metallic rim */
+.can-rim-bottom {
+  width: 88px;
+  height: 13px;
+  background: linear-gradient(180deg, #54546a 0%, #44445a 50%, #2e2e3e 100%);
+  border: 3px solid var(--dark);
+  border-top: 2px solid var(--dark);
+  border-radius: 0 0 5px 5px;
+  position: relative;
+}
+.can-rim-bottom::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 14px; right: 14px;
+  height: 2px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 1px;
+}
+
+.can-icon {
+  font-size: 22px;
+  margin-bottom: 3px;
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.3));
+  line-height: 1;
 }
 .can-label-text {
   font-family: var(--pixel);
   font-size: 5px;
   text-align: center;
-  line-height: 1.8;
+  line-height: 2;
   color: var(--dark);
   position: relative;
-  z-index: 1;
-  padding: 4px;
+  z-index: 3;
+  font-weight: bold;
 }
-.can-icon {
-  font-size: 20px;
-  margin-bottom: 4px;
+.can-keywords {
+  font-size: 8px;
+  color: rgba(0,0,0,0.6);
+  text-align: center;
+  margin-top: 3px;
+  line-height: 1.5;
+  font-family: var(--body);
   position: relative;
-  z-index: 1;
-}
-.can-bottom {
-  width: 88px;
-  height: 8px;
-  border-radius: 0 0 4px 4px;
-  border: 3px solid var(--dark);
-  border-top: none;
-  margin: 0 auto;
-}
-.can.selected .can-body {
-  box-shadow: 0 0 0 3px var(--yellow);
+  z-index: 3;
+  border-top: 1px solid rgba(0,0,0,0.15);
+  padding-top: 3px;
+  width: 100%;
 }
 
-/* Can colors */
-.can-pink .can-top, .can-pink .can-body, .can-pink .can-bottom { background: var(--pink); }
-.can-yellow .can-top, .can-yellow .can-body, .can-yellow .can-bottom { background: var(--yellow); }
-.can-cyan .can-top, .can-cyan .can-body, .can-cyan .can-bottom { background: var(--cyan); }
-.can-green .can-top, .can-green .can-body, .can-green .can-bottom { background: var(--green); }
-.can-purple .can-top, .can-purple .can-body, .can-purple .can-bottom { background: var(--purple); }
-.can-label-text { color: var(--dark); }
-.can-purple .can-label-text { color: white; }
-.can-pink .can-label-text { color: white; }
+/* Selected / active state */
+.can.selected .can-rim-top,
+.can.selected .can-rim-bottom {
+  border-color: var(--yellow);
+  box-shadow: 0 0 8px rgba(255,205,71,0.5);
+}
+.can.selected .can-body {
+  border-left-color: var(--yellow);
+  border-right-color: var(--yellow);
+}
+
+/* Can label band colors */
+.can-pink   .can-label-band { background: var(--pink); }
+.can-yellow .can-label-band { background: var(--yellow); }
+.can-cyan   .can-label-band { background: var(--cyan); }
+.can-green  .can-label-band { background: var(--green); }
+.can-purple .can-label-band { background: var(--purple); }
+
+/* Text colors per label */
+.can-pink   .can-label-text, .can-pink   .can-keywords { color: white; }
+.can-purple .can-label-text, .can-purple .can-keywords { color: white; }
+.can-pink   .can-keywords { border-top-color: rgba(255,255,255,0.25); }
+.can-purple .can-keywords { border-top-color: rgba(255,255,255,0.25); }
 
 /* Can expand panel */
 .can-expand {
@@ -3526,50 +3661,75 @@ footer .tiny {
 
     <div class="shelf-board fade-in"></div>
     <div class="shelf fade-in">
+      <!-- HR 实习生 -->
       <div class="can can-pink" onclick="openCan('hr-intern')">
-        <div class="can-top"></div>
+        <div class="can-tab"></div>
+        <div class="can-rim-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-icon">👤</div>
-          <div class="can-label-text">HR<br>实习生<br>罐头</div>
+          <div class="can-label-band">
+            <div class="can-icon">👤</div>
+            <div class="can-label-text">HR 实习生</div>
+            <div class="can-keywords">招聘·沟通·细致</div>
+          </div>
         </div>
-        <div class="can-bottom"></div>
+        <div class="can-rim-bottom"></div>
       </div>
+      <!-- 校园招聘 -->
       <div class="can can-yellow" onclick="openCan('campus')">
-        <div class="can-top"></div>
+        <div class="can-tab"></div>
+        <div class="can-rim-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-icon">🎓</div>
-          <div class="can-label-text">校园<br>招聘<br>罐头</div>
+          <div class="can-label-band">
+            <div class="can-icon">🎓</div>
+            <div class="can-label-text">校园招聘</div>
+            <div class="can-keywords">校园·活动·信任</div>
+          </div>
         </div>
-        <div class="can-bottom"></div>
+        <div class="can-rim-bottom"></div>
       </div>
+      <!-- 员工关系 -->
       <div class="can can-cyan" onclick="openCan('employee')">
-        <div class="can-top"></div>
+        <div class="can-tab"></div>
+        <div class="can-rim-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-icon">🤝</div>
-          <div class="can-label-text">员工<br>关系<br>罐头</div>
+          <div class="can-label-band">
+            <div class="can-icon">🤝</div>
+            <div class="can-label-text">员工关系</div>
+            <div class="can-keywords">制度·温度·原则</div>
+          </div>
         </div>
-        <div class="can-bottom"></div>
+        <div class="can-rim-bottom"></div>
       </div>
+      <!-- HR 数字化 -->
       <div class="can can-green" onclick="openCan('digital')">
-        <div class="can-top"></div>
+        <div class="can-tab"></div>
+        <div class="can-rim-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-icon">💻</div>
-          <div class="can-label-text">HR<br>数字化<br>罐头</div>
+          <div class="can-label-band">
+            <div class="can-icon">💻</div>
+            <div class="can-label-text">HR 数字化</div>
+            <div class="can-keywords">数据·流程·分析</div>
+          </div>
         </div>
-        <div class="can-bottom"></div>
+        <div class="can-rim-bottom"></div>
       </div>
+      <!-- 雇主品牌 -->
       <div class="can can-purple" onclick="openCan('brand')">
-        <div class="can-top"></div>
+        <div class="can-tab"></div>
+        <div class="can-rim-top"></div>
         <div class="can-body">
           <div class="can-shine"></div>
-          <div class="can-icon">✨</div>
-          <div class="can-label-text">雇主<br>品牌<br>罐头</div>
+          <div class="can-label-band">
+            <div class="can-icon">✨</div>
+            <div class="can-label-text">雇主品牌</div>
+            <div class="can-keywords">内容·创意·传播</div>
+          </div>
         </div>
-        <div class="can-bottom"></div>
+        <div class="can-rim-bottom"></div>
       </div>
     </div>
     <div class="shelf-board fade-in"></div>
