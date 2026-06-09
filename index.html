@@ -3515,6 +3515,7 @@ footer .tiny {
       
       <div class="ai-speech" style="background:#3a1a00;border-color:#c49a6c;color:#f0e0c0;">
         <span class="ai-name" style="color:#c49a6c;">🤖 AI 店员</span>
+        好啦，现在我们先看看，明天你要面对的是一份什么样的工作。<br>
         这不是普通说明书，而是 HR 店长提前装好的岗位真实信息。<br>
         <em>先看看明天要面对的是什么，再整理你自己。</em>
       </div>
@@ -5140,11 +5141,9 @@ function updatePersonalization() {
   const nick = charData.nickname || '你';
   const emoji = charData.avatarEmoji || '';
 
-  // Water section AI greeting
-  const waterP = document.getElementById('waterGreeting');
-  if (waterP) {
-    waterP.innerHTML = `欢迎你，<strong style="color:var(--yellow);">${nick}</strong>。先喝一口静静牌可乐，不用急着成为最会回答问题的人。`;
-  }
+  // Cola transition greeting
+  const colaGreeting = document.getElementById('colaTransitionNick');
+  if (colaGreeting) colaGreeting.textContent = nick;
 
   // Backpack section title
   const bpTitle = document.getElementById('backpackTitle');
