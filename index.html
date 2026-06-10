@@ -1407,6 +1407,48 @@ section {
 }
 .door-disclaimer strong { color: rgba(71,200,200,0.8); font-family: var(--pixel); font-size: 9px; }
 
+/* ── Scene role badge ── */
+.scene-role-badge {
+  font-family: var(--pixel);
+  font-size: 7px;
+  color: rgba(200,170,255,0.8);
+  background: rgba(80,50,160,0.18);
+  border: 1px solid rgba(145,110,255,0.3);
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  letter-spacing: 0.5px;
+}
+/* ── Scene role context sentence ── */
+.scene-role-context {
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--yellow);
+  background: rgba(255,205,71,0.07);
+  border-left: 3px solid var(--yellow);
+  padding: 7px 12px;
+  margin-bottom: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.3px;
+}
+/* ── Role follow-up box ── */
+.scene-followup {
+  margin-top: 14px;
+  background: rgba(71,214,214,0.07);
+  border: 1px solid rgba(71,214,214,0.28);
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #a8d4e0;
+}
+.followup-label {
+  font-family: var(--pixel);
+  font-size: 7px;
+  color: var(--cyan);
+  display: block;
+  margin-bottom: 7px;
+}
+
 /* ── Door handle ── */
 .tg-handle {
   position: absolute;
@@ -5523,7 +5565,9 @@ function openCan(id) {
     panel.classList.add('open');
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
+  window.selectedHrRole = id;
   flash('🥫 罐头已打开！');
+  if (document.getElementById('scene-item-0')) buildAllScenes();
 }
 
 // ===== BACKPACK SCAN =====
@@ -5583,6 +5627,7 @@ const scenes = [
     id: 'A',
     label: '场景 A · 紧张的候选人',
     observe: ['安抚情绪', '沟通边界', '候选人体验意识', '信息确认'],
+    roleContext: '你现在是 HR 助理，需要在面试开始前稳定候选人情绪，确认流程，让他准备好进入面试。',
     situation: `面试前 <em>10 分钟</em>，一位候选人反复发消息询问流程细节。<br>
       他说自己很紧张，担心迟到、记错流程，也担心自己发挥不好。<br>
       你作为 HR 助理，看到这些消息——`,
@@ -5642,12 +5687,19 @@ const scenes = [
       <ellipse cx="686" cy="52" rx="5" ry="4" fill="white" stroke="#242647" stroke-width="1"/>
       <text x="672" y="24" font-size="8" fill="#555" font-family="monospace">流程对吗？</text>
       <text x="676" y="36" font-size="8" fill="#e84040" font-family="monospace">好紧张…</text>
-      <text x="678" y="48" font-size="8" fill="#555" font-family="monospace">会迟到吗</text>`
+      <text x="678" y="48" font-size="8" fill="#555" font-family="monospace">会迟到吗</text>
+      <!-- Role labels -->
+      <rect x="106" y="143" width="60" height="16" rx="2" fill="#1e1408" stroke="#FFCD47" stroke-width="1.5" opacity="0.96"/>
+      <text x="136" y="154" text-anchor="middle" font-size="7" fill="#FFCD47" font-family="monospace" font-weight="bold">HR 助理</text>
+      <text x="108" y="141" font-size="6" fill="rgba(255,205,71,0.6)" font-family="monospace">你 ▼</text>
+      <rect x="612" y="143" width="60" height="16" rx="2" fill="#081822" stroke="#47D6D6" stroke-width="1.5" opacity="0.96"/>
+      <text x="642" y="154" text-anchor="middle" font-size="7" fill="#47D6D6" font-family="monospace" font-weight="bold">候选人</text>`
   },
   {
     id: 'B',
     label: '场景 B · 链接发错了',
     observe: ['危机处理', '诚恳道歉', '快速响应', '复盘改进'],
+    roleContext: '你现在是 HR 助理，需要快速补救错误链接，避免候选人错过面试，并做好后续复盘。',
     situation: `你发现昨天发出的面试通知邮件里，<em>会议链接是错的</em>。<br>
       距离面试开始还有 <em>30 分钟</em>，候选人可能已经打开了那个无效链接。<br>
       你的第一反应是——`,
@@ -5692,12 +5744,21 @@ const scenes = [
       <rect x="560" y="72" width="36" height="60" fill="#222" stroke="#242647" stroke-width="3" rx="3"/>
       <rect x="565" y="78" width="26" height="44" fill="#1a3a1a"/>
       <text x="568" y="96" font-size="7" fill="#6dff6d" font-family="monospace">CALL</text>
-      <text x="567" y="108" font-size="7" fill="#888" font-family="monospace">候选人</text>`
+      <text x="567" y="108" font-size="7" fill="#888" font-family="monospace">候选人</text>
+      <!-- Role labels -->
+      <rect x="60" y="128" width="60" height="16" rx="2" fill="#1e1408" stroke="#FFCD47" stroke-width="1.5" opacity="0.96"/>
+      <text x="90" y="139" text-anchor="middle" font-size="7" fill="#FFCD47" font-family="monospace" font-weight="bold">HR 助理</text>
+      <text x="62" y="126" font-size="6" fill="rgba(255,205,71,0.6)" font-family="monospace">你 ▼</text>
+      <rect x="542" y="128" width="60" height="16" rx="2" fill="#081822" stroke="#47D6D6" stroke-width="1.5" opacity="0.96"/>
+      <text x="572" y="139" text-anchor="middle" font-size="7" fill="#47D6D6" font-family="monospace" font-weight="bold">候选人</text>
+      <rect x="200" y="128" width="76" height="14" rx="1" fill="#080c18" stroke="rgba(200,210,240,0.4)" stroke-width="1" opacity="0.9"/>
+      <text x="238" y="138" text-anchor="middle" font-size="6" fill="#8090b0" font-family="monospace">面试通知系统</text>`
   },
   {
     id: 'C',
     label: '场景 C · 岗位理解偏差',
     observe: ['真实介绍岗位', '尊重候选人选择', '澄清期待', '不夸大岗位'],
+    roleContext: '你现在是 HR 助理，需要温和澄清候选人对岗位的理解偏差，帮助他建立真实认知。',
     situation: `一位候选人表现得很积极，但在聊天中你发现，<br>
       他以为 HR 实习<em>主要是"和人聊天"</em>，工作很轻松。<br>
       他还说很喜欢社交，觉得这份工作"特别适合自己"。<br>
@@ -5743,12 +5804,21 @@ const scenes = [
       <rect x="520" y="20" width="160" height="36" rx="4" fill="white" stroke="#FF943E" stroke-width="2"/>
       <polygon points="660,38 672,30 672,46" fill="white" stroke="#FF943E" stroke-width="2"/>
       <text x="530" y="36" font-size="8" fill="#242647" font-family="monospace">HR 就是和人聊天</text>
-      <text x="530" y="48" font-size="8" fill="#555" font-family="monospace">感觉很适合我！</text>`
+      <text x="530" y="48" font-size="8" fill="#555" font-family="monospace">感觉很适合我！</text>
+      <!-- Role labels -->
+      <rect x="122" y="128" width="60" height="16" rx="2" fill="#1e1408" stroke="#FFCD47" stroke-width="1.5" opacity="0.96"/>
+      <text x="152" y="139" text-anchor="middle" font-size="7" fill="#FFCD47" font-family="monospace" font-weight="bold">HR 助理</text>
+      <text x="124" y="126" font-size="6" fill="rgba(255,205,71,0.6)" font-family="monospace">你 ▼</text>
+      <rect x="606" y="128" width="60" height="16" rx="2" fill="#081822" stroke="#47D6D6" stroke-width="1.5" opacity="0.96"/>
+      <text x="636" y="139" text-anchor="middle" font-size="7" fill="#47D6D6" font-family="monospace" font-weight="bold">候选人</text>
+      <rect x="316" y="68" width="56" height="11" rx="1" fill="#060c18" stroke="rgba(160,180,220,0.5)" stroke-width="1" opacity="0.92"/>
+      <text x="344" y="76" text-anchor="middle" font-size="6" fill="#8090b8" font-family="monospace">岗位说明 JD</text>`
   },
   {
     id: 'D',
     label: '场景 D · 融入新团队',
     observe: ['观察与学习', '主动但不急于表现', '建立信任', '寻找切入点'],
+    roleContext: '你现在是 HR 助理，需要观察新人融入状态，找到合适的介入方式，帮助建立信任。',
     situation: `你刚加入团队的第一周。同事们已经配合默契，有自己的节奏和默契。<br>
       开会时大家讨论热烈，你<em>暂时还不知道怎么插话</em>。<br>
       你想尽快进入状态，但又不想显得太突兀——`,
@@ -5804,9 +5874,74 @@ const scenes = [
       <!-- thought bubble: "?" -->
       <ellipse cx="558" cy="42" rx="22" ry="16" fill="white" stroke="#242647" stroke-width="2"/>
       <ellipse cx="538" cy="56" rx="7" ry="5" fill="white" stroke="#242647" stroke-width="1"/>
-      <text x="550" y="46" font-size="14" fill="#888" font-family="monospace">?</text>`
+      <text x="550" y="46" font-size="14" fill="#888" font-family="monospace">?</text>
+      <!-- Role labels -->
+      <rect x="96" y="126" width="56" height="14" rx="2" fill="#1a0c1e" stroke="#FF5C8A" stroke-width="1.5" opacity="0.9"/>
+      <text x="124" y="136" text-anchor="middle" font-size="6" fill="#FF5C8A" font-family="monospace">团队成员</text>
+      <rect x="278" y="126" width="56" height="14" rx="2" fill="#0e1a0e" stroke="#6DD986" stroke-width="1.5" opacity="0.9"/>
+      <text x="306" y="136" text-anchor="middle" font-size="6" fill="#6DD986" font-family="monospace">团队成员</text>
+      <rect x="462" y="126" width="64" height="14" rx="2" fill="#081822" stroke="#47D6D6" stroke-width="1.5" opacity="0.9"/>
+      <text x="494" y="136" text-anchor="middle" font-size="6" fill="#47D6D6" font-family="monospace">新人 · 你观察</text>
+      <rect x="618" y="124" width="54" height="12" rx="1" fill="#f0f0f0" opacity="0.88"/>
+      <text x="645" y="133" text-anchor="middle" font-size="6" fill="#242647" font-family="monospace">招聘进度板</text>`
   }
 ];
+
+const hrRoleMap = {
+  'hr-intern': {
+    name: 'HR 实习生',
+    sceneFocus: ['沟通意识 · 候选人体验', '责任感 · 快速响应', '真实介绍 · 信息整理', '观察 · 学习 · 反馈'],
+  },
+  'campus': {
+    name: '校园招聘',
+    sceneFocus: ['亲和力 · 流程解释', '批量沟通 · 应急处置', '适合学生的表达方式', '活动组织 · 学生沟通'],
+  },
+  'employee': {
+    name: '员工关系',
+    sceneFocus: ['情绪安抚 · 共情', '诚恳道歉 · 制度边界', '澄清期待 · 边界表达', '信任建立 · 融入支持'],
+  },
+  'digital': {
+    name: 'HR 数字化',
+    sceneFocus: ['流程确认 · 系统通知', '系统异常 · 数据同步', '流程逻辑 · 系统说明', '工具协作 · 数据记录'],
+  },
+  'brand': {
+    name: '雇主品牌',
+    sceneFocus: ['候选人体验 · 品牌感知', '品牌形象 · 危机应对', '真实表达 · 不夸大', '团队文化 · 真实感'],
+  },
+};
+
+const roleFollowUps = {
+  'hr-intern': {
+    0: '如果同时有多位候选人都在问问题，你会如何优先处理？',
+    1: '复盘时，你会记录在哪里？下次如何避免同类问题？',
+    2: '如果候选人听完还是坚持原来的理解，你会怎么继续？',
+    3: '第一周内，你会如何找到一个"可以请教的人"？',
+  },
+  'campus': {
+    0: '如果同一时间有很多同学都在问流程，你会如何批量但不失温度地回应？',
+    1: '宣讲会链接发错了，你会如何第一时间通知到所有人？',
+    2: '如何用应届生更能接受的方式，介绍这份实习的真实挑战？',
+    3: '校招活动中，如何帮助新成员快速找到自己的定位？',
+  },
+  'employee': {
+    0: '如果对方情绪比较激动，但你仍需要稳定地传递流程信息，你会怎么做？',
+    1: '如果对方因为这个失误而情绪激动，你会如何在道歉的同时稳定局面？',
+    2: '如果对方对制度边界有强烈抵触，你会如何既尊重他，又坚持必要的说明？',
+    3: '如果新人在融入过程中遭遇了不太友好的对待，你会如何介入？',
+  },
+  'digital': {
+    0: '面试通知的发送流程中，哪个环节最容易出错？如何用系统手段减少人为失误？',
+    1: '如果你发现错误来自系统流程而不是个人失误，你会如何记录并反馈给系统维护方？',
+    2: '如何用系统化的方式确保 JD 信息在不同渠道保持一致？',
+    3: '你会用什么工具帮助新人更快了解团队的协作方式和流程？',
+  },
+  'brand': {
+    0: '候选人的每一次体验都在影响雇主品牌。这次沟通结束后，他会如何描述这家公司？',
+    1: '如果这件事被候选人发到社交媒体，你会如何提前预判并管理？',
+    2: '你会如何在不夸大宣传的前提下，让候选人真实感受到岗位和团队的价值？',
+    3: '如果让新人在第一周内真实感受到团队文化，你会设计什么样的融入体验？',
+  },
+};
 
 const scenarioSelections = {};
 const scenarioNotes = {};
@@ -5838,29 +5973,42 @@ function buildAllScenes() {
   const stage = document.getElementById('sceneStage');
   if (!stage) return;
   stage.innerHTML = '';
+  const role = window.selectedHrRole || 'hr-intern';
+  const roleInfo = hrRoleMap[role] || hrRoleMap['hr-intern'];
+
   scenes.forEach((s, idx) => {
     if (!scenarioSelections[idx]) scenarioSelections[idx] = [];
+    const followUpText = (roleFollowUps[role] || {})[idx] || '';
+    const focusTag = (roleInfo.sceneFocus || [])[idx] || '';
+    const savedNote = scenarioNotes[idx] || '';
+
     const item = document.createElement('div');
     item.className = 'scene-stage-item';
     item.id = 'scene-item-' + idx;
     item.innerHTML = `
       <div class="scene-divider">▸ 场景 ${s.id}</div>
+      <div class="scene-role-badge">当前岗位视角：${roleInfo.name} &nbsp;·&nbsp; <span style="color:var(--cyan);">${focusTag}</span></div>
       <div class="scene-card" data-scene="${s.id}">
         <div class="scene-illustration" id="scene-illus-${idx}">
           <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated;">${s.svgScene}</svg>
         </div>
         <div class="scene-content">
           <div class="scene-label">${s.label}</div>
+          <div class="scene-role-context">👤 ${s.roleContext || ''}</div>
           <div class="scene-situation">${s.situation}</div>
           <div class="scene-observe">
             ${s.observe.map(o => `<span class="observe-tag">${o}</span>`).join('')}
           </div>
           <div class="scene-prompt">${s.prompt}</div>
           <div class="keyword-pool" id="skeywords-${idx}">
-            ${s.keywords.map(k => `<div class="keyword" onclick="selectSceneKw(${idx}, this, '${k}')">${k}</div>`).join('')}
+            ${s.keywords.map(k => {
+              const sel = (scenarioSelections[idx] || []).includes(k);
+              return `<div class="keyword${sel ? ' selected' : ''}" onclick="selectSceneKw(${idx}, this, '${k}')">${k}</div>`;
+            }).join('')}
           </div>
           <div class="scenario-note" style="margin-top:12px;">${s.note}</div>
-          <textarea class="scenario-textarea" id="snote-${idx}" placeholder="可选：在这里写下你的想法（60 字以内）…" maxlength="60"></textarea>
+          <textarea class="scenario-textarea" id="snote-${idx}" placeholder="可选：在这里写下你的想法（60 字以内）…" maxlength="60">${savedNote}</textarea>
+          ${followUpText ? `<div class="scene-followup"><span class="followup-label">💬 ${roleInfo.name} · 追问重点</span>${followUpText}</div>` : ''}
         </div>
       </div>
       <div id="scene-feedback-${idx}" class="scene-ai-feedback" style="display:none;margin-top:16px;"></div>
@@ -5869,12 +6017,10 @@ function buildAllScenes() {
     const ta = item.querySelector('#snote-' + idx);
     if (ta) ta.addEventListener('input', () => { scenarioNotes[idx] = ta.value; });
   });
-  // Add final CTA after last scene
   const cta = document.createElement('div');
   cta.style.cssText = 'text-align:center;margin:20px 0 40px;';
   cta.innerHTML = `<button class="pixel-btn green" onclick="goTo('#chocolate')">✓ 四幕全部体验完毕，去选问题巧克力 →</button>`;
   stage.appendChild(cta);
-  // Apply scene animations
   setTimeout(applySceneAnimations, 100);
 }
 
