@@ -2703,6 +2703,328 @@ footer .tiny {
 }
 .scratch-result.revealed-anim { animation: burstIn 0.4s ease; }
 
+
+/* ===== SECTION: ENDING ===== */
+#ending {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  overflow: hidden;
+  background: #060914;
+  font-family: var(--body);
+}
+#ending.active { display: block; }
+
+/* Sky gradient layers */
+.end-sky {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #1a1a4e 0%, #0a0c28 40%, #060914 100%);
+}
+
+/* Stars */
+.end-star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: endStarTwinkle var(--dur,2s) ease-in-out infinite;
+  animation-delay: var(--d,0s);
+  opacity: 0;
+}
+.end-star.visible { opacity: var(--op,0.8); }
+@keyframes endStarTwinkle {
+  0%,100% { opacity: var(--op,0.8); transform: scale(1); }
+  50%      { opacity: calc(var(--op,0.8) * 0.3); transform: scale(0.7); }
+}
+
+/* Moon */
+.end-moon {
+  position: absolute;
+  top: 7vh; right: 12vw;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #fff9e0, #f0d878 40%, #d4b840);
+  box-shadow: 0 0 30px 8px rgba(255,230,100,0.25), 0 0 60px 20px rgba(255,220,80,0.1);
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.end-moon.visible { opacity: 1; }
+.end-moon::before {
+  content:'';
+  position:absolute;
+  top:12px; left:14px;
+  width:10px; height:10px;
+  border-radius:50%;
+  background: rgba(200,180,60,0.3);
+  box-shadow: 14px 6px 0 rgba(200,180,60,0.2), 6px 20px 0 rgba(200,180,60,0.15);
+}
+
+/* Ground & road */
+.end-ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 42%;
+}
+.end-ground-base {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, #0d1a10 0%, #0a1208 100%);
+}
+/* Road: perspective trapezoid via clip-path */
+.end-road {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(180deg, #1a1a2a 0%, #2a2a3e 50%, #1e1e2e 100%);
+}
+/* Road center line dashes */
+.end-road-dash {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  background: rgba(255,205,71,0.5);
+  border-radius: 2px;
+  animation: endRoadScroll 1.8s linear infinite;
+}
+@keyframes endRoadScroll {
+  from { transform: translateX(-50%) translateY(0); opacity: 1; }
+  to   { transform: translateX(-50%) translateY(30px); opacity: 0; }
+}
+/* Grass borders */
+.end-grass-l, .end-grass-r {
+  position: absolute;
+  bottom: 0;
+  width: 40%;
+  height: 55%;
+}
+.end-grass-l { left: 0; }
+.end-grass-r { right: 0; }
+.end-grass-l::before, .end-grass-r::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.end-grass-l::before { background: linear-gradient(135deg, #0d2010 0%, #0a1a0c 100%); }
+.end-grass-r::before { background: linear-gradient(225deg, #0d2010 0%, #0a1a0c 100%); }
+/* Grass tufts (pixel bumps) */
+.end-grass-tufts {
+  position: absolute;
+  bottom: 56%;
+  width: 100%;
+  height: 16px;
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+}
+.end-tuft {
+  width: 6px;
+  height: var(--h, 10px);
+  background: #1a4020;
+  border-radius: 3px 3px 0 0;
+  flex-shrink: 0;
+}
+/* Firefly dots */
+.end-firefly {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #aaffa0;
+  box-shadow: 0 0 4px 2px rgba(150,255,130,0.6);
+  opacity: 0;
+  animation: endFirefly var(--fd,4s) ease-in-out infinite;
+  animation-delay: var(--fdd,0s);
+}
+@keyframes endFirefly {
+  0%,100%  { opacity: 0; transform: translate(0,0); }
+  20%,80%  { opacity: 0.9; }
+  50%      { opacity: 0.6; transform: translate(var(--fx,8px), var(--fy,-12px)); }
+}
+
+/* Convenience store (behind/left) */
+.end-store {
+  position: absolute;
+  bottom: 40%;
+  left: 6vw;
+  opacity: 0;
+  transition: opacity 2s ease;
+  transform-origin: bottom left;
+}
+.end-store.visible { opacity: 0.75; }
+.end-store svg { width: 130px; height: auto; image-rendering: pixelated; }
+
+/* Cat */
+.end-cat {
+  position: absolute;
+  bottom: calc(42% + 2px);
+  left: 20%;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  animation: endCatIdle 3s ease-in-out infinite;
+}
+.end-cat.visible { opacity: 1; }
+@keyframes endCatIdle {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+.end-cat svg { width: 56px; height: auto; image-rendering: pixelated; }
+
+/* Character holding receipt */
+.end-character {
+  position: absolute;
+  bottom: calc(42% - 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  animation: endCharBreath 4s ease-in-out infinite;
+}
+.end-character.visible { opacity: 1; }
+@keyframes endCharBreath {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-4px); }
+}
+.end-character svg { width: 72px; height: auto; image-rendering: pixelated; }
+
+/* Receipt in hand */
+.end-receipt {
+  position: absolute;
+  bottom: calc(42% + 28px);
+  left: calc(50% + 18px);
+  width: 36px;
+  opacity: 0;
+  transform-origin: top center;
+  transition: opacity 1.5s ease;
+  animation: endReceiptSway 5s ease-in-out infinite;
+}
+.end-receipt.visible { opacity: 1; }
+@keyframes endReceiptSway {
+  0%,100% { transform: rotate(-4deg); }
+  50%     { transform: rotate(4deg); }
+}
+.end-receipt svg { width: 100%; image-rendering: pixelated; }
+
+/* Copy / text area */
+.end-copy {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 24px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  pointer-events: none;
+}
+.end-line {
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.9;
+  color: #e8f0ff;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0,0,30,0.9);
+  max-width: 380px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  margin-bottom: 2px;
+}
+.end-line.show { opacity: 1; transform: translateY(0); }
+.end-line.big {
+  font-family: var(--pixel);
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+.end-line.dim {
+  font-size: 13px;
+  color: #a0b8d0;
+}
+.end-line.finale {
+  font-family: var(--pixel);
+  font-size: 16px;
+  color: var(--yellow);
+  text-shadow: 0 0 20px rgba(255,220,70,0.6), 0 2px 12px rgba(0,0,30,0.9);
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+/* Bottom controls */
+.end-controls {
+  position: absolute;
+  bottom: 24px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.end-controls.show { opacity: 1; }
+.end-btn-main {
+  font-family: var(--pixel);
+  font-size: 10px;
+  padding: 12px 22px;
+  background: var(--yellow);
+  color: #1a1a2a;
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.1s;
+}
+.end-btn-main:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(0,0,0,0.5); }
+.end-btn-sec {
+  font-family: var(--pixel);
+  font-size: 9px;
+  padding: 8px 14px;
+  background: transparent;
+  color: #90b0cc;
+  border: 2px solid #4a6a8a;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.end-btn-sec:hover { color: #c0d8f0; border-color: #7aa0c0; }
+
+/* Skip button (top right) */
+.end-skip {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: #5a7a9a;
+  background: transparent;
+  border: 1px solid #3a5a7a;
+  padding: 6px 10px;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s;
+}
+.end-skip:hover { color: #9abcce; }
+.end-skip.hidden { display: none; }
+
+@media (max-width: 480px) {
+  .end-line      { font-size: 14px; }
+  .end-line.big  { font-size: 11px; }
+  .end-line.finale { font-size: 13px; }
+  .end-character svg { width: 58px; }
+  .end-receipt { left: calc(50% + 14px); }
+  .end-cat svg { width: 46px; }
+  .end-store { left: 2vw; }
+  .end-store svg { width: 100px; }
+  .end-moon { width: 44px; height: 44px; }
+  .end-btn-main { font-size: 9px; padding: 10px 16px; }
+}
+
 </style>
 </head>
 <body>
@@ -4517,7 +4839,7 @@ footer .tiny {
   </div>
 
   <div style="text-align:center; margin-top:32px;">
-    <button class="pixel-btn cyan" onclick="goTo('#hero')">← 重新逛一次便利店</button>
+    <button class="pixel-btn cyan" onclick="startEnding()">带着小票，离开便利店 →</button>
   </div>
 </section>
 <footer>
@@ -6135,6 +6457,175 @@ setTimeout(() => {
   if(el) _scratchObs.observe(el);
 }, 500);
 
+
+// ===== ENDING SCENE =====
+let endingTimers = [];
+
+function startEnding() {
+  const el = document.getElementById('ending');
+  el.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  endingTimers = [];
+  endBuildScene();
+}
+
+function endingTimer(fn, ms) {
+  const t = setTimeout(fn, ms);
+  endingTimers.push(t);
+}
+
+function endClearTimers() {
+  endingTimers.forEach(clearTimeout);
+  endingTimers = [];
+}
+
+function endBuildScene() {
+  // Reset everything
+  document.querySelectorAll('.end-star').forEach(s => s.classList.remove('visible'));
+  document.getElementById('endMoon').classList.remove('visible');
+  document.getElementById('endStore').classList.remove('visible');
+  document.getElementById('endCat').classList.remove('visible');
+  document.getElementById('endCharacter').classList.remove('visible');
+  document.getElementById('endReceipt').classList.remove('visible');
+  document.querySelectorAll('.end-line').forEach(l => l.classList.remove('show'));
+  document.getElementById('endControls').classList.remove('show');
+  document.getElementById('endSkip').classList.remove('hidden');
+  document.getElementById('endCopy').style.opacity = '0';
+
+  // Init scene elements once
+  if (!document.getElementById('endStars').children.length) endInitStars();
+  if (!document.getElementById('endFireflies').children.length) endInitFireflies();
+  if (!document.getElementById('endTuftsL').children.length) endInitGrass();
+  if (!document.querySelector('.end-road-dash')) endInitRoadDashes();
+
+  // Step 1 (500ms): stars appear
+  endingTimer(() => {
+    document.querySelectorAll('.end-star').forEach((s, i) => {
+      endingTimer(() => s.classList.add('visible'), i * 20);
+    });
+  }, 500);
+
+  // Step 2 (1200ms): moon
+  endingTimer(() => document.getElementById('endMoon').classList.add('visible'), 1200);
+
+  // Step 3 (1800ms): store glow
+  endingTimer(() => document.getElementById('endStore').classList.add('visible'), 1800);
+
+  // Step 4 (2600ms): character + receipt
+  endingTimer(() => {
+    document.getElementById('endCharacter').classList.add('visible');
+    document.getElementById('endReceipt').classList.add('visible');
+  }, 2600);
+
+  // Step 5 (3400ms): cat walks in
+  endingTimer(() => document.getElementById('endCat').classList.add('visible'), 3400);
+
+  // Step 6 (4200ms): start copy lines
+  endingTimer(() => {
+    document.getElementById('endCopy').style.opacity = '1';
+    endShowLines();
+  }, 4200);
+}
+
+function endShowLines() {
+  const lines = document.querySelectorAll('.end-line');
+  const delays = [0, 1800, 2600, 4000, 4700, 6200, 7000, 8400, 9200, 10600, 11400, 12800, 13400, 14800, 16200];
+  lines.forEach((line, i) => {
+    const d = delays[i] || i * 1400;
+    endingTimer(() => line.classList.add('show'), d);
+  });
+  // Show controls after last line
+  const lastDelay = (delays[lines.length - 1] || 16200) + 1600;
+  endingTimer(() => {
+    document.getElementById('endControls').classList.add('show');
+    document.getElementById('endSkip').classList.add('hidden');
+  }, lastDelay);
+}
+
+function endSkip() {
+  endClearTimers();
+  document.querySelectorAll('.end-star').forEach(s => s.classList.add('visible'));
+  document.getElementById('endMoon').classList.add('visible');
+  document.getElementById('endStore').classList.add('visible');
+  document.getElementById('endCharacter').classList.add('visible');
+  document.getElementById('endReceipt').classList.add('visible');
+  document.getElementById('endCat').classList.add('visible');
+  document.getElementById('endCopy').style.opacity = '1';
+  document.querySelectorAll('.end-line').forEach(l => l.classList.add('show'));
+  document.getElementById('endControls').classList.add('show');
+  document.getElementById('endSkip').classList.add('hidden');
+}
+
+function endReplay() {
+  endClearTimers();
+  endBuildScene();
+}
+
+function endGoForward() {
+  document.getElementById('ending').classList.remove('active');
+  document.body.style.overflow = '';
+  goTo('#hero');
+}
+
+function endViewReceipt() {
+  document.getElementById('ending').classList.remove('active');
+  document.body.style.overflow = '';
+  goTo('#receipt');
+}
+
+function endInitStars() {
+  const container = document.getElementById('endStars');
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('div');
+    s.className = 'end-star';
+    const size = Math.random() < 0.25 ? 3 : Math.random() < 0.55 ? 2 : 1;
+    const op = 0.4 + Math.random() * 0.55;
+    s.style.cssText = [
+      `width:${size}px`, `height:${size}px`,
+      `left:${Math.random()*100}%`, `top:${Math.random()*58}%`,
+      `--op:${op.toFixed(2)}`, `--dur:${(1.5+Math.random()*2.5).toFixed(1)}s`,
+      `--d:${(Math.random()*4).toFixed(1)}s`
+    ].join(';');
+    container.appendChild(s);
+  }
+}
+
+function endInitFireflies() {
+  const container = document.getElementById('endFireflies');
+  for (let i = 0; i < 8; i++) {
+    const f = document.createElement('div');
+    f.className = 'end-firefly';
+    f.style.cssText = [
+      `left:${15+Math.random()*70}%`, `bottom:${5+Math.random()*30}%`,
+      `--fd:${(3+Math.random()*4).toFixed(1)}s`, `--fdd:${(Math.random()*5).toFixed(1)}s`,
+      `--fx:${(Math.random()*20-10).toFixed(0)}px`, `--fy:${(-8-Math.random()*16).toFixed(0)}px`
+    ].join(';');
+    container.appendChild(f);
+  }
+}
+
+function endInitGrass() {
+  ['endTuftsL','endTuftsR'].forEach(id => {
+    const el = document.getElementById(id);
+    for (let i = 0; i < 18; i++) {
+      const t = document.createElement('div');
+      t.className = 'end-tuft';
+      t.style.setProperty('--h', `${6+Math.floor(Math.random()*10)}px`);
+      el.appendChild(t);
+    }
+  });
+}
+
+function endInitRoadDashes() {
+  const road = document.querySelector('.end-road');
+  for (let i = 0; i < 6; i++) {
+    const d = document.createElement('div');
+    d.className = 'end-road-dash';
+    d.style.cssText = `bottom:${5+i*14}%;height:${8+Math.random()*6}px;animation-delay:${i*0.3}s`;
+    road.appendChild(d);
+  }
+}
+
 </script>
 
 <!-- ===== MINI ROBOT COMPANION ===== -->
@@ -6198,6 +6689,184 @@ setTimeout(() => {
       <rect x="13" y="6" width="32" height="4" rx="2" fill="#fff" opacity="0.12"/>
     </svg>
   </div>
+</div>
+
+
+<!-- ===== ENDING SCENE ===== -->
+<div id="ending">
+  <!-- Sky -->
+  <div class="end-sky" id="endSky"></div>
+
+  <!-- Stars (generated by JS) -->
+  <div id="endStars"></div>
+
+  <!-- Moon -->
+  <div class="end-moon" id="endMoon"></div>
+
+  <!-- Ground -->
+  <div class="end-ground">
+    <div class="end-ground-base"></div>
+    <div class="end-road">
+      <!-- Dashes generated by JS -->
+    </div>
+    <!-- Fireflies -->
+    <div id="endFireflies"></div>
+    <!-- Grass left -->
+    <div class="end-grass-l">
+      <div class="end-grass-tufts" id="endTuftsL"></div>
+    </div>
+    <!-- Grass right -->
+    <div class="end-grass-r">
+      <div class="end-grass-tufts" id="endTuftsR"></div>
+    </div>
+  </div>
+
+  <!-- Convenience store (behind, left) -->
+  <div class="end-store" id="endStore">
+    <svg width="130" height="120" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+      <!-- building -->
+      <rect x="5" y="30" width="120" height="85" fill="#1a1a3a" stroke="#2a2a5a" stroke-width="2"/>
+      <!-- roof -->
+      <rect x="0" y="20" width="130" height="14" fill="#2a2a5a" stroke="#1a1a3a" stroke-width="2"/>
+      <!-- sign -->
+      <rect x="20" y="24" width="90" height="10" fill="#FFCD47" stroke="#1a1a3a" stroke-width="1"/>
+      <text x="65" y="32" text-anchor="middle" font-size="6" fill="#1a1a2a" font-family="monospace" font-weight="bold">TOMORROW MART</text>
+      <!-- warm window glow -->
+      <rect x="15" y="42" width="36" height="28" fill="#3a2800" stroke="#2a1a00" stroke-width="1"/>
+      <rect x="17" y="44" width="32" height="24" fill="#d4820a" opacity="0.55"/>
+      <rect x="17" y="44" width="32" height="24" fill="url(#winGlow)" opacity="0.7"/>
+      <!-- window 2 -->
+      <rect x="78" y="42" width="36" height="28" fill="#3a2800" stroke="#2a1a00" stroke-width="1"/>
+      <rect x="80" y="44" width="32" height="24" fill="#d4820a" opacity="0.55"/>
+      <!-- door -->
+      <rect x="51" y="75" width="28" height="40" fill="#2a2a4a" stroke="#1a1a3a" stroke-width="2"/>
+      <rect x="53" y="77" width="11" height="36" fill="#c47a08" opacity="0.4"/>
+      <rect x="66" y="77" width="11" height="36" fill="#c47a08" opacity="0.4"/>
+      <!-- door light spill -->
+      <ellipse cx="65" cy="115" rx="22" ry="6" fill="#d4820a" opacity="0.25"/>
+      <defs>
+        <radialGradient id="winGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffe090" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#c47a08" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Cat -->
+  <div class="end-cat" id="endCat">
+    <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">
+      <!-- body -->
+      <rect x="10" y="18" width="26" height="18" rx="4" fill="#e8d0a8" stroke="#2a2010" stroke-width="2"/>
+      <!-- head -->
+      <rect x="16" y="6" width="20" height="16" rx="4" fill="#e8d0a8" stroke="#2a2010" stroke-width="2"/>
+      <!-- ears -->
+      <polygon points="17,8 14,0 20,4" fill="#e8d0a8" stroke="#2a2010" stroke-width="1.5"/>
+      <polygon points="35,8 38,0 32,4" fill="#e8d0a8" stroke="#2a2010" stroke-width="1.5"/>
+      <!-- inner ear -->
+      <polygon points="17,7 15,2 19,5" fill="#f0a0a0" opacity="0.6"/>
+      <polygon points="35,7 37,2 33,5" fill="#f0a0a0" opacity="0.6"/>
+      <!-- eyes (calm closed) -->
+      <path d="M20,12 Q22,10 24,12" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M28,12 Q30,10 32,12" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- nose -->
+      <rect x="25" y="16" width="4" height="3" rx="1" fill="#e08888"/>
+      <!-- whiskers -->
+      <line x1="12" y1="15" x2="22" y2="16" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
+      <line x1="12" y1="18" x2="22" y2="17" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
+      <line x1="44" y1="15" x2="34" y2="16" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
+      <line x1="44" y1="18" x2="34" y2="17" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
+      <!-- legs -->
+      <rect x="12" y="34" width="8" height="8" rx="2" fill="#d8c098" stroke="#2a2010" stroke-width="1.5"/>
+      <rect x="26" y="34" width="8" height="8" rx="2" fill="#d8c098" stroke="#2a2010" stroke-width="1.5"/>
+      <!-- tail -->
+      <path d="M36,28 Q50,20 52,30 Q50,38 44,36" stroke="#e8d0a8" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M36,28 Q50,20 52,30 Q50,38 44,36" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Character holding receipt -->
+  <div class="end-character" id="endCharacter">
+    <svg width="72" height="96" viewBox="0 0 72 96" xmlns="http://www.w3.org/2000/svg">
+      <!-- legs -->
+      <rect x="18" y="72" width="14" height="22" rx="3" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1.5"/>
+      <rect x="40" y="72" width="14" height="22" rx="3" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1.5"/>
+      <!-- shoes -->
+      <rect x="14" y="90" width="20" height="8" rx="3" fill="#1a1a28"/>
+      <rect x="38" y="90" width="20" height="8" rx="3" fill="#1a1a28"/>
+      <!-- body -->
+      <rect x="12" y="38" width="48" height="38" rx="4" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5"/>
+      <!-- collar -->
+      <rect x="28" y="38" width="16" height="10" rx="2" fill="#4a6aaf"/>
+      <!-- left arm (hangs down) -->
+      <rect x="2" y="40" width="12" height="32" rx="3" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5"/>
+      <rect x="2" y="68" width="12" height="8" rx="2" fill="#e8c8a0"/>
+      <!-- right arm (raised, holds receipt) -->
+      <rect x="58" y="30" width="12" height="28" rx="3" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5" transform="rotate(-18,64,44)"/>
+      <rect x="60" y="54" width="12" height="8" rx="2" fill="#e8c8a0" transform="rotate(-18,66,58)"/>
+      <!-- head -->
+      <rect x="18" y="6" width="36" height="34" rx="5" fill="#e8c8a0" stroke="#c8a880" stroke-width="1.5"/>
+      <!-- hair -->
+      <rect x="16" y="2" width="40" height="14" rx="4" fill="#3a2a1a"/>
+      <!-- eyes (calm looking up) -->
+      <rect x="24" y="20" width="7" height="7" rx="1" fill="#2a1a0a"/>
+      <rect x="41" y="20" width="7" height="7" rx="1" fill="#2a1a0a"/>
+      <!-- eye shine -->
+      <rect x="26" y="21" width="2" height="2" fill="#fff"/>
+      <rect x="43" y="21" width="2" height="2" fill="#fff"/>
+      <!-- mouth (gentle smile) -->
+      <path d="M28,32 Q36,37 44,32" stroke="#c08060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Receipt in hand -->
+  <div class="end-receipt" id="endReceipt">
+    <svg width="36" height="58" viewBox="0 0 36 58" xmlns="http://www.w3.org/2000/svg">
+      <!-- paper body -->
+      <rect x="2" y="2" width="32" height="52" fill="#f8f4e8" stroke="#c8b880" stroke-width="1.5"/>
+      <!-- torn top edge -->
+      <polyline points="2,4 5,2 8,5 11,2 14,4 17,2 20,5 23,2 26,4 29,2 32,4 34,2 34,4" fill="#f8f4e8" stroke="#c8b880" stroke-width="1"/>
+      <!-- content lines -->
+      <rect x="6" y="10" width="24" height="2" rx="1" fill="#c8b060" opacity="0.7"/>
+      <rect x="6" y="16" width="18" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
+      <rect x="6" y="20" width="22" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
+      <rect x="6" y="24" width="16" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
+      <rect x="6" y="30" width="24" height="1" rx="1" fill="#c8c0a8" opacity="0.4"/>
+      <rect x="6" y="35" width="14" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
+      <rect x="6" y="39" width="20" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
+      <!-- star stamp -->
+      <text x="18" y="52" text-anchor="middle" font-size="8" fill="#FFCD47" opacity="0.9">★</text>
+    </svg>
+  </div>
+
+  <!-- Copy lines -->
+  <div class="end-copy" id="endCopy">
+    <div class="end-line" data-i="0">你走出便利店，手里还握着那张小票。</div>
+    <div class="end-line" data-i="1">这一刻你突然明白，</div>
+    <div class="end-line dim" data-i="2">知道这一切，并不意味着什么一定会发生。</div>
+    <div class="end-line" data-i="3" style="margin-top:10px;">明天的面试，</div>
+    <div class="end-line dim" data-i="4">也只是地球 Online 里的一场职场体验游戏。</div>
+    <div class="end-line" data-i="5" style="margin-top:10px;">你抬头看见群星璀璨，月亮高挂。</div>
+    <div class="end-line dim" data-i="6">小猫轻轻走过，四周只有安静的虫鸣。</div>
+    <div class="end-line" data-i="7" style="margin-top:10px;">面前是一条很长的路。</div>
+    <div class="end-line big" data-i="8">平静，却有力量。</div>
+    <div class="end-line" data-i="9" style="margin-top:10px;">此刻的你，就是最好的你。</div>
+    <div class="end-line dim" data-i="10">你带着一点自信，也带着一点勇气。</div>
+    <div class="end-line" data-i="11" style="margin-top:10px;">无论如何，</div>
+    <div class="end-line big" data-i="12">前进，都是最好的答案。</div>
+    <div class="end-line dim" data-i="13" style="margin-top:8px;">你沉沉睡去，等待明天醒来，等待太阳升起。</div>
+    <div class="end-line finale" data-i="14" style="margin-top:14px;">Tomorrow will load soon...</div>
+  </div>
+
+  <!-- Controls -->
+  <div class="end-controls" id="endControls">
+    <button class="end-btn-main" onclick="endGoForward()">带着小票出发 →</button>
+    <button class="end-btn-sec" onclick="endReplay()">↺ 再看一次</button>
+    <button class="end-btn-sec" onclick="endViewReceipt()">再看小票</button>
+  </div>
+
+  <!-- Skip button -->
+  <button class="end-skip" id="endSkip" onclick="endSkip()">跳过 »</button>
 </div>
 
 </body>
