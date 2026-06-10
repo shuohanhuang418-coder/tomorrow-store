@@ -1009,10 +1009,10 @@ section {
 /* ── TIME-GATE ARENA ── */
 .time-gate-arena {
   position: relative;
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto 32px;
   display: grid;
-  grid-template-columns: 1fr 320px 1fr;
+  grid-template-columns: 1fr 370px 1fr;
   grid-template-rows: auto;
   gap: 0 16px;
   align-items: center;
@@ -1110,9 +1110,13 @@ section {
 /* Door frame */
 .tg-frame {
   position: relative;
-  width: 240px;
-  height: 340px;
+  width: 290px;
+  height: 420px;
+  cursor: pointer;
+  transition: filter 0.2s;
 }
+.tg-frame:hover { filter: brightness(1.12) drop-shadow(0 0 12px rgba(145,110,255,0.45)); }
+.tg-frame:active { filter: brightness(1.3) drop-shadow(0 0 20px rgba(145,110,255,0.7)); }
 /* Outer gold border (pixel-stepped) */
 .tg-frame::before {
   content: '';
@@ -1216,8 +1220,8 @@ section {
 }
 /* Ground platform under door */
 .tg-platform {
-  width: 280px;
-  height: 20px;
+  width: 340px;
+  height: 22px;
   background: linear-gradient(180deg, #3a1a6a 0%, #1a0838 100%);
   border: 3px solid var(--yellow);
   border-top: none;
@@ -1402,6 +1406,134 @@ section {
   text-align: center;
 }
 .door-disclaimer strong { color: rgba(71,200,200,0.8); font-family: var(--pixel); font-size: 9px; }
+
+/* ── Door handle ── */
+.tg-handle {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 38px;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* ── Portal entrance overlay ── */
+#portalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #6a18e8 0%, #2a0870 30%, #08041a 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#portalOverlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.portal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid rgba(145,110,255,0.6);
+  animation: portalRingExpand 1.2s ease-out forwards;
+}
+@keyframes portalRingExpand {
+  0%   { width: 40px; height: 40px; opacity: 1; }
+  100% { width: 200vw; height: 200vw; opacity: 0; }
+}
+.portal-core {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #c8a0ff 30%, #6030d0 60%, transparent 100%);
+  animation: portalCorePulse 0.6s ease-in-out infinite alternate;
+}
+@keyframes portalCorePulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+.portal-text {
+  position: absolute;
+  bottom: 30%;
+  font-family: var(--pixel);
+  font-size: 10px;
+  color: #c8a8ff;
+  letter-spacing: 3px;
+  animation: portalTextBlink 0.4s ease-in-out infinite alternate;
+}
+@keyframes portalTextBlink { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+/* ── All-scenes layout ── */
+.scene-all-stages {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.scene-stage-item {
+  scroll-margin-top: 80px;
+  border-top: 2px solid rgba(145,110,255,0.2);
+  padding-top: 4px;
+  margin-bottom: 32px;
+}
+.scene-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--pixel);
+  font-size: 8px;
+  color: var(--purple);
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+.scene-divider::before, .scene-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--purple), transparent);
+}
+
+/* ── Scene illustration animations ── */
+@keyframes nervousShake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-3px) rotate(-1deg); }
+  40% { transform: translateX(3px) rotate(1deg); }
+  60% { transform: translateX(-2px) rotate(-0.5deg); }
+  80% { transform: translateX(2px); }
+}
+@keyframes sweatBounce {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(0.85); }
+}
+@keyframes blinkRed {
+  0%,100% { opacity: 1; }
+  45%,55% { opacity: 0; }
+}
+@keyframes exclamBounce {
+  0%,100% { transform: translateY(0); }
+  40% { transform: translateY(-6px) scale(1.15); }
+}
+@keyframes bubbleFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes questionPulse {
+  0%,100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes clockTick {
+  from { transform-origin: 700px 55px; transform: rotate(0deg); }
+  to   { transform-origin: 700px 55px; transform: rotate(360deg); }
+}
+
+/* ── Robot draggable ── */
+#miniRobot.dragging { cursor: grabbing; }
+#miniRobot.dragging #miniRobotChar { animation: none !important; }
 
 /* ===== SECTION 5: CHOCOLATE ===== */
 #chocolate {
@@ -4912,10 +5044,9 @@ footer .tiny {
 
     <!-- Central door -->
     <div class="time-gate-center">
-      <div class="tg-frame" id="tgFrame">
+      <div class="tg-frame" id="tgFrame" onclick="portalDoorClick()" title="点击进入">
         <div class="tg-interior" id="tgInterior">
           <!-- Vortex rings (built by JS) -->
-          <!-- Vignette scenes (built by JS) -->
           <div class="tg-vortex-core"></div>
           <div class="tg-scanlines"></div>
         </div>
@@ -4923,6 +5054,20 @@ footer .tiny {
         <div class="tg-corner tr"></div>
         <div class="tg-corner bl"></div>
         <div class="tg-corner br"></div>
+        <!-- Door handle (right side) -->
+        <div class="tg-handle">
+          <svg width="14" height="38" viewBox="0 0 14 38" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+            <!-- back plate -->
+            <rect x="3" y="2" width="8" height="34" rx="2" fill="#1a0e38" stroke="rgba(200,165,55,0.8)" stroke-width="1"/>
+            <!-- handle bar -->
+            <rect x="5" y="10" width="6" height="18" rx="3" fill="#c8a037" stroke="#8a6010" stroke-width="1"/>
+            <!-- handle shine -->
+            <rect x="6" y="11" width="2" height="6" rx="1" fill="#ffe080" opacity="0.55"/>
+            <!-- screws -->
+            <rect x="5" y="4" width="4" height="4" rx="1" fill="#8a6818" stroke="#6a4808" stroke-width="1"/>
+            <rect x="5" y="30" width="4" height="4" rx="1" fill="#8a6818" stroke="#6a4808" stroke-width="1"/>
+          </svg>
+        </div>
       </div>
       <div class="tg-platform">
         <div class="tg-light left"></div>
@@ -4947,7 +5092,7 @@ footer .tiny {
       <div class="gate-panel-line">想一想：</div>
       <div class="gate-panel-line bright" style="margin-top:6px;">如果真的遇到这件事，</div>
       <div class="gate-panel-line bright">你会怎么处理？</div>
-      <button class="gate-yes-btn" onclick="document.getElementById('sceneNav').scrollIntoView({behavior:'smooth'})">▶ YES, 准备好了</button>
+      <button class="gate-yes-btn" onclick="portalDoorClick()">▶ YES, 进入场景</button>
     </div>
   </div>
 
@@ -4955,19 +5100,18 @@ footer .tiny {
   <div class="ai-companion dark fade-in" style="max-width:580px;margin:0 auto 36px;">
     <div class="ai-speech" style="background:rgba(10,12,34,0.9);border-color:rgba(71,200,200,0.45);color:#c0d4f0;">
       <span class="ai-name">🤖 AI 店员</span>
-      这扇门会把你拉进<strong style="color:var(--yellow)">时间隧道</strong>，带你窥见未来职场的真实片段。<br>
-      选择一个<strong style="color:var(--cyan)">小场景</strong>，开始<strong style="color:var(--purple)">情境还原</strong>与<strong style="color:var(--green)">互动</strong>。准备好了吗？
+      点按这扇门，我们一起进去看看。<br>
+      接下来会进入 <strong style="color:var(--yellow)">4 个真实职场小场景</strong>，全部体验，不是四选一。别担心，我会陪你一起。
     </div>
   </div>
 
-  <!-- Scene navigator (level-select tabs) -->
-  <div style="text-align:center;font-family:var(--pixel);font-size:8px;color:rgba(120,100,200,0.65);letter-spacing:1px;margin-bottom:12px;">▸ 选择一个场景进入</div>
+  <!-- Scene navigator (anchor tabs) -->
   <div class="scene-nav" id="sceneNav">
     <!-- tabs built by JS -->
   </div>
 
-  <!-- Scene cards -->
-  <div class="scene-stage" id="sceneStage">
+  <!-- All 4 scenes rendered at once -->
+  <div class="scene-all-stages" id="sceneStage">
     <!-- built by JS -->
   </div>
 
@@ -4976,11 +5120,13 @@ footer .tiny {
     这些选择不会直接决定面试结果，也不是人格诊断。<br>
     它们只是帮助你提前进入岗位情境，也帮助 HR 在正式面试中提出更具体、可验证的问题。
   </div>
-
-  <div style="text-align:center; margin-top:32px;">
-    <button class="pixel-btn orange" onclick="goTo('#chocolate')">情境体验完成，去选问题巧克力 →</button>
-  </div>
 </section>
+
+<!-- Portal entrance overlay -->
+<div id="portalOverlay">
+  <div class="portal-core"></div>
+  <div class="portal-text">ENTERING FUTURE WORKPLACE...</div>
+</div>
 
 <!-- ===== SECTION 5: CHOCOLATE ===== -->
 <section id="chocolate">
@@ -5671,50 +5817,65 @@ function buildSceneTabs() {
   nav.innerHTML = '';
   scenes.forEach((s, i) => {
     const tab = document.createElement('div');
-    tab.className = 'scene-tab' + (i === 0 ? ' active' : '');
+    tab.className = 'scene-tab';
     tab.textContent = s.label;
-    tab.onclick = () => showScene(i);
+    tab.onclick = () => {
+      const el = document.getElementById('scene-item-' + i);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.scene-tab').forEach((t, j) => t.classList.toggle('active', j === i));
+    };
     nav.appendChild(tab);
   });
 }
 
 function showScene(idx) {
-  currentScene = idx;
-  const s = scenes[idx];
-  if (!scenarioSelections[idx]) scenarioSelections[idx] = [];
+  // Legacy: just scroll to scene
+  const el = document.getElementById('scene-item-' + idx);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-  // Update tabs
-  document.querySelectorAll('.scene-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
-
+function buildAllScenes() {
   const stage = document.getElementById('sceneStage');
-  stage.innerHTML = `
-    <div class="scene-card">
-      <div class="scene-illustration">
-        <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">${s.svgScene}</svg>
-      </div>
-      <div class="scene-content">
-        <div class="scene-label">${s.label}</div>
-        <div class="scene-situation">${s.situation}</div>
-        <div class="scene-observe">
-          ${s.observe.map(o => `<span class="observe-tag">${o}</span>`).join('')}
+  if (!stage) return;
+  stage.innerHTML = '';
+  scenes.forEach((s, idx) => {
+    if (!scenarioSelections[idx]) scenarioSelections[idx] = [];
+    const item = document.createElement('div');
+    item.className = 'scene-stage-item';
+    item.id = 'scene-item-' + idx;
+    item.innerHTML = `
+      <div class="scene-divider">▸ 场景 ${s.id}</div>
+      <div class="scene-card" data-scene="${s.id}">
+        <div class="scene-illustration" id="scene-illus-${idx}">
+          <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="image-rendering:pixelated;">${s.svgScene}</svg>
         </div>
-        <div class="scene-prompt">${s.prompt}</div>
-        <div class="keyword-pool" id="skeywords-${idx}">
-          ${s.keywords.map(k => `<div class="keyword${scenarioSelections[idx].includes(k) ? ' selected' : ''}" onclick="selectSceneKw(${idx}, this, '${k}')">${k}</div>`).join('')}
+        <div class="scene-content">
+          <div class="scene-label">${s.label}</div>
+          <div class="scene-situation">${s.situation}</div>
+          <div class="scene-observe">
+            ${s.observe.map(o => `<span class="observe-tag">${o}</span>`).join('')}
+          </div>
+          <div class="scene-prompt">${s.prompt}</div>
+          <div class="keyword-pool" id="skeywords-${idx}">
+            ${s.keywords.map(k => `<div class="keyword" onclick="selectSceneKw(${idx}, this, '${k}')">${k}</div>`).join('')}
+          </div>
+          <div class="scenario-note" style="margin-top:12px;">${s.note}</div>
+          <textarea class="scenario-textarea" id="snote-${idx}" placeholder="可选：在这里写下你的想法（60 字以内）…" maxlength="60"></textarea>
         </div>
-        <div class="scenario-note" style="margin-top:12px;">${s.note}</div>
-        <textarea class="scenario-textarea" id="snote-${idx}" placeholder="可选：在这里写下你的想法（60 字以内）…" maxlength="60">${scenarioNotes[idx] || ''}</textarea>
       </div>
-    </div>
-    <div id="scene-feedback-${idx}" class="scene-ai-feedback" style="display:none;margin-top:16px;"></div>
-    <div style="display:flex;justify-content:space-between;margin-top:12px;gap:12px;flex-wrap:wrap;">
-      ${idx > 0 ? `<button class="pixel-btn" style="background:var(--dark);color:#aaa;border-color:#a0b8cc;" onclick="showScene(${idx-1})">← 上一个场景</button>` : '<span></span>'}
-      ${idx < scenes.length-1 ? `<button class="pixel-btn purple" onclick="showScene(${idx+1})">进入下一个场景 →</button>` : `<button class="pixel-btn green" onclick="goTo('#chocolate')">✓ 全部场景体验完毕 →</button>`}
-    </div>
-  `;
-  // Save note on input
-  const ta = document.getElementById('snote-' + idx);
-  if (ta) ta.addEventListener('input', () => { scenarioNotes[idx] = ta.value; });
+      <div id="scene-feedback-${idx}" class="scene-ai-feedback" style="display:none;margin-top:16px;"></div>
+    `;
+    stage.appendChild(item);
+    const ta = item.querySelector('#snote-' + idx);
+    if (ta) ta.addEventListener('input', () => { scenarioNotes[idx] = ta.value; });
+  });
+  // Add final CTA after last scene
+  const cta = document.createElement('div');
+  cta.style.cssText = 'text-align:center;margin:20px 0 40px;';
+  cta.innerHTML = `<button class="pixel-btn green" onclick="goTo('#chocolate')">✓ 四幕全部体验完毕，去选问题巧克力 →</button>`;
+  stage.appendChild(cta);
+  // Apply scene animations
+  setTimeout(applySceneAnimations, 100);
 }
 
 function selectSceneKw(idx, el, kw) {
@@ -5769,7 +5930,7 @@ function showSceneFeedback(idx, sel) {
 }
 
 buildSceneTabs();
-showScene(0);
+buildAllScenes();
 
 // ===== CHOCOLATE =====
 const chocolates = [
@@ -7156,6 +7317,201 @@ function endInitRoadDashes() {
 }
 
 
+// ===== PORTAL DOOR =====
+function portalDoorClick() {
+  const overlay = document.getElementById('portalOverlay');
+  if (!overlay) return;
+  overlay.classList.add('active');
+  // Add expanding rings
+  for (let i = 0; i < 4; i++) {
+    const ring = document.createElement('div');
+    ring.className = 'portal-ring';
+    ring.style.animationDelay = (i * 0.18) + 's';
+    overlay.appendChild(ring);
+  }
+  // Robot tip
+  setTimeout(() => {
+    const txt = document.getElementById('rbText');
+    const bubble = document.getElementById('miniRobotBubble');
+    if (txt && bubble) {
+      txt.innerHTML = '先看第一个情景。我会在旁边陪你～';
+      bubble.classList.add('visible');
+      clearTimeout(window._bubbleTimer);
+      window._bubbleTimer = setTimeout(closeBubble, 4500);
+    }
+  }, 400);
+  // After 1.6s: close overlay and scroll to scenes
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    overlay.querySelectorAll('.portal-ring').forEach(r => r.remove());
+    const sceneStage = document.getElementById('sceneStage');
+    if (sceneStage) sceneStage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 1600);
+}
+
+// Apply CSS animations to rendered scene SVG elements
+function applySceneAnimations() {
+  // Scene A: nervous candidate shaking
+  const illustA = document.querySelector('#scene-item-0 .scene-illustration svg');
+  if (illustA) {
+    // Add CSS style block for scene A animations
+    const styleA = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleA.textContent = `
+      .cand-body { animation: sA-shake 2.2s ease-in-out infinite; }
+      .cand-sweat { animation: sA-sweat 1.6s ease-in-out infinite; }
+      .cand-bubble { animation: sA-bubble 3s ease-in-out infinite; }
+      @keyframes sA-shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-3px) rotate(-1deg)} 40%{transform:translateX(3px) rotate(1deg)} 60%{transform:translateX(-2px)} 80%{transform:translateX(2px)} }
+      @keyframes sA-sweat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px) scaleY(0.8)} }
+      @keyframes sA-bubble { 0%,100%{opacity:1;transform:translateY(0)} 50%{opacity:0.7;transform:translateY(-3px)} }
+    `;
+    illustA.insertBefore(styleA, illustA.firstChild);
+    // Assign classes to candidate elements (4th rect group = candidate body, sweat ellipse)
+    const rects = illustA.querySelectorAll('rect');
+    const ellipses = illustA.querySelectorAll('ellipse');
+    // Candidate body is the 9th rect (index 8): fill="#5a7a9a"
+    rects.forEach(r => {
+      if (r.getAttribute('fill') === '#5a7a9a') r.classList.add('cand-body');
+      if (r.getAttribute('fill') === '#f4d0a0') r.classList.add('cand-body');
+    });
+    ellipses.forEach(e => {
+      if (e.getAttribute('fill') === '#87ceeb') e.classList.add('cand-sweat');
+    });
+    // Thought bubble ellipses
+    ellipses.forEach(e => {
+      if (e.getAttribute('fill') === 'white') e.classList.add('cand-bubble');
+    });
+  }
+
+  // Scene B: error blink + exclamation bounce
+  const illustB = document.querySelector('#scene-item-1 .scene-illustration svg');
+  if (illustB) {
+    const styleB = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleB.textContent = `
+      .err-text { animation: sB-blink 1.1s ease-in-out infinite; }
+      .excl-mark { animation: sB-bounce 1.4s ease-in-out infinite; }
+      .clock-hand { animation: sB-tick 60s linear infinite; transform-origin: 700px 55px; }
+      @keyframes sB-blink { 0%,100%{opacity:1;fill:#e84040} 45%,55%{opacity:0.1} }
+      @keyframes sB-bounce { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-7px) scale(1.15)} }
+      @keyframes sB-tick { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    `;
+    illustB.insertBefore(styleB, illustB.firstChild);
+    illustB.querySelectorAll('text').forEach(t => {
+      if (t.textContent.includes('链接无效')) t.classList.add('err-text');
+      if (t.textContent.includes('!')) t.classList.add('excl-mark');
+    });
+    illustB.querySelectorAll('line').forEach(l => {
+      if (l.getAttribute('stroke') === '#e84040') l.classList.add('clock-hand');
+    });
+  }
+
+  // Scene C: speech bubble floating
+  const illustC = document.querySelector('#scene-item-2 .scene-illustration svg');
+  if (illustC) {
+    const styleC = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleC.textContent = `
+      .speech-bubble { animation: sC-float 2.8s ease-in-out infinite; }
+      .jd-doc { animation: sC-pulse 3.5s ease-in-out infinite; }
+      @keyframes sC-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+      @keyframes sC-pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+    `;
+    illustC.insertBefore(styleC, illustC.firstChild);
+    illustC.querySelectorAll('rect').forEach(r => {
+      if (r.getAttribute('fill') === 'white' && r.getAttribute('rx') === '4') r.classList.add('speech-bubble');
+      if (r.getAttribute('fill') === 'white' && r.getAttribute('width') === '180') r.classList.add('jd-doc');
+    });
+  }
+
+  // Scene D: thought bubble pulsing
+  const illustD = document.querySelector('#scene-item-3 .scene-illustration svg');
+  if (illustD) {
+    const styleD = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleD.textContent = `
+      .think-bubble { animation: sD-pulse 2.2s ease-in-out infinite; }
+      .nod-head { animation: sD-nod 2s ease-in-out infinite; }
+      @keyframes sD-pulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.08)} }
+      @keyframes sD-nod { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-3px)} 60%{transform:translateY(1px)} }
+    `;
+    illustD.insertBefore(styleD, illustD.firstChild);
+    illustD.querySelectorAll('ellipse').forEach(e => {
+      if (e.getAttribute('fill') === 'white') e.classList.add('think-bubble');
+    });
+  }
+}
+
+// ===== DRAGGABLE ROBOT =====
+(function initDraggableRobot() {
+  const robot = document.getElementById('miniRobot');
+  if (!robot) return;
+  // Override pointer-events on parent so it can be dragged
+  robot.style.pointerEvents = 'all';
+  let dragging = false, startX, startY, origRight, origBottom;
+
+  robot.addEventListener('mousedown', (e) => {
+    if (e.target.closest('#miniRobotBubble') || e.target.closest('.rb-close')) return;
+    dragging = true;
+    robot.classList.add('dragging');
+    const rect = robot.getBoundingClientRect();
+    startX = e.clientX - rect.right;
+    startY = e.clientY - rect.bottom;
+    // Switch from right/bottom fixed to left/top for easier drag math
+    robot.style.right = 'auto';
+    robot.style.bottom = 'auto';
+    robot.style.left = rect.left + 'px';
+    robot.style.top = rect.top + 'px';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const w = window.innerWidth, h = window.innerHeight;
+    const rw = robot.offsetWidth, rh = robot.offsetHeight;
+    let nx = e.clientX - rw + (startX < 0 ? startX : 0);
+    let ny = e.clientY - rh + (startY < 0 ? startY : 0);
+    nx = Math.max(0, Math.min(w - rw, nx));
+    ny = Math.max(0, Math.min(h - rh, ny));
+    robot.style.left = nx + 'px';
+    robot.style.top  = ny + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    robot.classList.remove('dragging');
+  });
+
+  // Touch support
+  robot.addEventListener('touchstart', (e) => {
+    if (e.target.closest('#miniRobotBubble') || e.target.closest('.rb-close')) return;
+    dragging = true;
+    robot.classList.add('dragging');
+    const touch = e.touches[0];
+    const rect = robot.getBoundingClientRect();
+    startX = touch.clientX - rect.left;
+    startY = touch.clientY - rect.top;
+    robot.style.right = 'auto';
+    robot.style.bottom = 'auto';
+    robot.style.left = rect.left + 'px';
+    robot.style.top  = rect.top + 'px';
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const touch = e.touches[0];
+    const w = window.innerWidth, h = window.innerHeight;
+    const rw = robot.offsetWidth, rh = robot.offsetHeight;
+    let nx = touch.clientX - startX;
+    let ny = touch.clientY - startY;
+    nx = Math.max(0, Math.min(w - rw, nx));
+    ny = Math.max(0, Math.min(h - rh, ny));
+    robot.style.left = nx + 'px';
+    robot.style.top  = ny + 'px';
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => { dragging = false; robot.classList.remove('dragging'); });
+})();
+
 // ===== TIME GATE DOOR =====
 function buildTimeGate() {
   const interior = document.getElementById('tgInterior');
@@ -7197,72 +7553,34 @@ function buildTimeGate() {
     interior.insertBefore(p, interior.querySelector('.tg-scanlines'));
   }
 
-  // Mini vignette scenes (4 scenes cycling)
-  const vignettes = [
-    // Scene 1: Interview table
-    `<svg width="90" height="60" viewBox="0 0 90 60">
-      <rect x="5" y="32" width="80" height="8" fill="#3a2a10" stroke="#6a4a20" stroke-width="1"/>
-      <rect x="10" y="20" width="20" height="14" rx="2" fill="#1a2a6a" stroke="#3a5aaa" stroke-width="1"/>
-      <rect x="60" y="18" width="18" height="16" rx="2" fill="#2a1a4a" stroke="#4a2a8a" stroke-width="1"/>
-      <rect x="10" y="4" width="10" height="16" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="62" y="2" width="10" height="16" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="38" y="22" width="14" height="10" rx="1" fill="#c8d0e0" stroke="#8090b0" stroke-width="1"/>
-      <rect x="40" y="24" width="4" height="2" fill="#6080c0" opacity=".7"/>
-      <rect x="40" y="28" width="8" height="1" fill="#8090b0" opacity=".6"/>
-      <text x="45" y="56" text-anchor="middle" font-size="5" fill="#a0b0d0" font-family="monospace">INTERVIEW</text>
+  // Future-workplace silhouettes (small, sequential fade, no overlap)
+  const silhouettes = [
+    // Interview table silhouette
+    `<svg width="70" height="50" viewBox="0 0 70 50" style="position:absolute;bottom:18%;left:50%;transform:translateX(-50%);opacity:0;animation:tgVigFade 10s ease-in-out 0s infinite;">
+      <rect x="8" y="28" width="54" height="5" fill="rgba(160,130,255,0.25)" rx="1"/>
+      <rect x="10" y="12" width="8" height="16" rx="2" fill="rgba(160,130,255,0.18)"/>
+      <rect x="52" y="10" width="8" height="18" rx="2" fill="rgba(160,130,255,0.18)"/>
+      <rect x="26" y="18" width="18" height="10" rx="1" fill="rgba(160,130,255,0.12)"/>
     </svg>`,
-    // Scene 2: HR at desk
-    `<svg width="90" height="60" viewBox="0 0 90 60">
-      <rect x="5" y="35" width="80" height="6" fill="#2a1a0a" stroke="#4a3010" stroke-width="1"/>
-      <rect x="15" y="18" width="32" height="18" rx="2" fill="#1a2850" stroke="#2a4080" stroke-width="1"/>
-      <rect x="17" y="20" width="28" height="12" fill="#0a1830" stroke="#1a3060" stroke-width="1"/>
-      <rect x="20" y="22" width="14" height="2" fill="#3a7aff" opacity=".6"/>
-      <rect x="20" y="26" width="10" height="2" fill="#3a7aff" opacity=".4"/>
-      <rect x="20" y="30" width="12" height="2" fill="#3a7aff" opacity=".5"/>
-      <rect x="58" y="12" width="14" height="20" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="60" y="8" width="10" height="8" rx="2" fill="#2a1a0a"/>
-      <rect x="55" y="26" width="8" height="10" rx="2" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1"/>
-      <rect x="62" y="20" width="18" height="8" rx="2" fill="#e0eeff" stroke="#8090d0" stroke-width="1"/>
-      <text x="71" y="25.5" text-anchor="middle" font-size="4" fill="#4060c0" font-family="monospace">Hi!</text>
-      <text x="45" y="56" text-anchor="middle" font-size="5" fill="#a0b0d0" font-family="monospace">HR CHAT</text>
+    // Team around board silhouette
+    `<svg width="70" height="50" viewBox="0 0 70 50" style="position:absolute;bottom:18%;left:50%;transform:translateX(-50%);opacity:0;animation:tgVigFade 10s ease-in-out 2.5s infinite;">
+      <rect x="15" y="5" width="40" height="28" rx="2" fill="rgba(70,214,214,0.15)" stroke="rgba(70,214,214,0.1)" stroke-width="1"/>
+      <rect x="5"  y="15" width="6" height="14" rx="2" fill="rgba(160,130,255,0.2)"/>
+      <rect x="28" y="11" width="6" height="18" rx="2" fill="rgba(160,130,255,0.2)"/>
+      <rect x="59" y="13" width="6" height="16" rx="2" fill="rgba(160,130,255,0.2)"/>
     </svg>`,
-    // Scene 3: Team meeting
-    `<svg width="90" height="60" viewBox="0 0 90 60">
-      <rect x="20" y="24" width="50" height="20" rx="2" fill="#1a2840" stroke="#2a4070" stroke-width="1"/>
-      <rect x="8" y="14" width="10" height="16" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="38" y="10" width="10" height="16" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="68" y="14" width="10" height="16" rx="2" fill="#e8c8a0" stroke="#c8a070" stroke-width="1"/>
-      <rect x="25" y="28" width="6" height="2" fill="#a0c0ff" opacity=".7"/>
-      <rect x="25" y="32" width="8" height="2" fill="#a0c0ff" opacity=".5"/>
-      <rect x="44" y="28" width="10" height="2" fill="#ffcd47" opacity=".7"/>
-      <rect x="55" y="28" width="6" height="2" fill="#a0c0ff" opacity=".5"/>
-      <text x="45" y="56" text-anchor="middle" font-size="5" fill="#a0b0d0" font-family="monospace">TEAM SYNC</text>
-    </svg>`,
-    // Scene 4: Task progress
-    `<svg width="90" height="60" viewBox="0 0 90 60">
-      <rect x="10" y="8" width="70" height="46" rx="3" fill="#0e1830" stroke="#2a3a70" stroke-width="1"/>
-      <rect x="14" y="14" width="30" height="6" rx="1" fill="#2a4a8a"/>
-      <rect x="14" y="14" width="20" height="6" rx="1" fill="#4a80d0"/>
-      <rect x="14" y="23" width="30" height="6" rx="1" fill="#2a4a8a"/>
-      <rect x="14" y="23" width="26" height="6" rx="1" fill="#4a80d0"/>
-      <rect x="14" y="32" width="30" height="6" rx="1" fill="#2a4a8a"/>
-      <rect x="14" y="32" width="12" height="6" rx="1" fill="#916eff"/>
-      <rect x="48" y="14" width="24" height="28" rx="2" fill="#1a2850" stroke="#2a4080" stroke-width="1"/>
-      <rect x="50" y="17" width="8" height="2" fill="#ffcd47" opacity=".8"/>
-      <rect x="50" y="21" width="14" height="2" fill="#c0d0f0" opacity=".6"/>
-      <rect x="50" y="25" width="10" height="2" fill="#c0d0f0" opacity=".5"/>
-      <rect x="50" y="29" width="12" height="2" fill="#70d0ff" opacity=".7"/>
-      <rect x="50" y="35" width="20" height="4" rx="1" fill="#6dd986" opacity=".8"/>
-      <text x="45" y="59" text-anchor="middle" font-size="4" fill="#a0b0d0" font-family="monospace">TASK BOARD</text>
+    // Single desk silhouette
+    `<svg width="70" height="50" viewBox="0 0 70 50" style="position:absolute;bottom:18%;left:50%;transform:translateX(-50%);opacity:0;animation:tgVigFade 10s ease-in-out 5s infinite;">
+      <rect x="10" y="22" width="50" height="4" fill="rgba(255,205,71,0.15)" rx="1"/>
+      <rect x="18" y="8" width="22" height="14" rx="2" fill="rgba(70,214,214,0.12)"/>
+      <rect x="25" y="5" width="8" height="17" rx="2" fill="rgba(160,130,255,0.18)"/>
     </svg>`
   ];
 
-  vignettes.forEach((svg, i) => {
+  silhouettes.forEach(svg => {
     const v = document.createElement('div');
-    v.className = 'tg-vignette';
-    v.style.cssText = `top:14%;left:50%;transform:translateX(-50%);--vd:${i*2.25}s`;
     v.innerHTML = svg;
-    interior.insertBefore(v, interior.querySelector('.tg-scanlines'));
+    interior.insertBefore(v.firstElementChild, interior.querySelector('.tg-scanlines'));
   });
 }
 
