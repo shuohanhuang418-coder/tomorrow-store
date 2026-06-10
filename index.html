@@ -2987,98 +2987,131 @@ footer .tiny {
   inset: 0;
   z-index: 2000;
   overflow: hidden;
-  background: #060914;
+  background: #060a1c;
   font-family: var(--body);
 }
 #ending.active { display: block; }
 
-/* Sky gradient layers */
+/* Sky: layered atmospheric night with depth */
 .end-sky {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, #1a1a4e 0%, #0a0c28 40%, #060914 100%);
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(210,225,255,0.07) 0%, transparent 42%),
+    radial-gradient(ellipse at 10% 82%, rgba(255,175,60,0.06) 0%, transparent 30%),
+    radial-gradient(ellipse at 50% -8%, #1c2060 0%, #0d1038 32%, #080a22 65%, #050810 100%);
+}
+/* Horizon haze: dark band where sky meets ground */
+.end-sky::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(to top, rgba(5,8,24,0.92) 0%, rgba(8,12,32,0.5) 40%, transparent 100%);
+  pointer-events: none;
 }
 
-/* Stars */
+/* Stars: two depth layers */
 .end-star {
   position: absolute;
   border-radius: 50%;
-  background: #fff;
-  animation: endStarTwinkle var(--dur,2s) ease-in-out infinite;
+  animation: endStarTwinkle var(--dur,2.5s) ease-in-out infinite;
   animation-delay: var(--d,0s);
   opacity: 0;
+  transition: opacity 1.5s ease;
 }
-.end-star.visible { opacity: var(--op,0.8); }
+.end-star.near {
+  background: #deeeff;
+  box-shadow: 0 0 2px 1px rgba(180,210,255,0.35);
+}
+.end-star.far { background: #a8b8d8; }
+.end-star.visible { opacity: var(--op, 0.7); }
 @keyframes endStarTwinkle {
-  0%,100% { opacity: var(--op,0.8); transform: scale(1); }
-  50%      { opacity: calc(var(--op,0.8) * 0.3); transform: scale(0.7); }
+  0%,100% { opacity: var(--op,0.7); transform: scale(1); }
+  50%      { opacity: calc(var(--op,0.7) * 0.2); transform: scale(0.55); }
 }
 
-/* Moon */
+/* Moon: cool silver, atmospheric glow */
 .end-moon {
   position: absolute;
-  top: 7vh; right: 12vw;
-  width: 56px; height: 56px;
+  top: 8vh; right: 11vw;
+  width: 50px; height: 50px;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 38%, #fff9e0, #f0d878 40%, #d4b840);
-  box-shadow: 0 0 30px 8px rgba(255,230,100,0.25), 0 0 60px 20px rgba(255,220,80,0.1);
+  background: radial-gradient(circle at 34% 32%, #f0f6ff, #d4e4ff 52%, #a8c0f0);
+  box-shadow:
+    0 0 14px 4px rgba(150,190,255,0.16),
+    0 0 36px 14px rgba(130,170,255,0.07),
+    0 0 80px 30px rgba(110,155,255,0.03);
   opacity: 0;
-  transition: opacity 1.8s ease;
+  transition: opacity 2s ease;
 }
 .end-moon.visible { opacity: 1; }
+/* Moon craters (subtle) */
 .end-moon::before {
-  content:'';
-  position:absolute;
-  top:12px; left:14px;
-  width:10px; height:10px;
-  border-radius:50%;
-  background: rgba(200,180,60,0.3);
-  box-shadow: 14px 6px 0 rgba(200,180,60,0.2), 6px 20px 0 rgba(200,180,60,0.15);
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 35%, rgba(140,165,210,0.22) 0%, transparent 18%),
+    radial-gradient(circle at 65% 58%, rgba(140,165,210,0.16) 0%, transparent 13%),
+    radial-gradient(circle at 28% 64%, rgba(140,165,210,0.14) 0%, transparent 10%);
+}
+/* Soft moon halo ring */
+.end-moon::after {
+  content: '';
+  position: absolute;
+  top: -28px; left: -28px; right: -28px; bottom: -28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(150,195,255,0.05) 30%, transparent 70%);
+  pointer-events: none;
 }
 
-/* Ground & road */
+/* Ground plane */
 .end-ground {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 42%;
+  height: 44%;
 }
 .end-ground-base {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 100%;
-  background: linear-gradient(180deg, #0d1a10 0%, #0a1208 100%);
+  bottom: 0; left: 0; right: 0; height: 100%;
+  background: linear-gradient(180deg, #0c1c14 0%, #091208 55%, #060c06 100%);
 }
-/* Road: perspective trapezoid via clip-path */
-.end-road {
+
+/* Perspective road SVG */
+.end-road-svg {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(42% 0%, 58% 0%, 100% 100%, 0% 100%);
-  background: linear-gradient(180deg, #1a1a2a 0%, #2a2a3e 50%, #1e1e2e 100%);
+  bottom: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
 }
-/* Road center line dashes */
-.end-road-dash {
+/* Road center dashes animated */
+.end-road-dash-svg {
+  animation: endDashScroll 1.7s linear infinite;
+  animation-delay: var(--dd, 0s);
+}
+@keyframes endDashScroll {
+  0%   { opacity: 0.9; transform: translateY(0); }
+  100% { opacity: 0.1; transform: translateY(6px); }
+}
+
+/* Store warm light spill on left ground */
+.end-store-glow {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  background: rgba(255,205,71,0.5);
-  border-radius: 2px;
-  animation: endRoadScroll 1.8s linear infinite;
+  bottom: 0; left: 0;
+  width: 55%; height: 70%;
+  background: radial-gradient(ellipse at 14% 88%, rgba(210,140,20,0.13) 0%, rgba(175,105,10,0.06) 38%, transparent 62%);
+  pointer-events: none;
 }
-@keyframes endRoadScroll {
-  from { transform: translateX(-50%) translateY(0); opacity: 1; }
-  to   { transform: translateX(-50%) translateY(30px); opacity: 0; }
-}
-/* Grass borders */
+
+/* Grass L/R */
 .end-grass-l, .end-grass-r {
   position: absolute;
   bottom: 0;
-  width: 40%;
-  height: 55%;
+  width: 43%;
+  height: 58%;
+  overflow: hidden;
 }
 .end-grass-l { left: 0; }
 .end-grass-r { right: 0; }
@@ -3087,218 +3120,273 @@ footer .tiny {
   position: absolute;
   inset: 0;
 }
-.end-grass-l::before { background: linear-gradient(135deg, #0d2010 0%, #0a1a0c 100%); }
-.end-grass-r::before { background: linear-gradient(225deg, #0d2010 0%, #0a1a0c 100%); }
-/* Grass tufts (pixel bumps) */
+.end-grass-l::before { background: linear-gradient(174deg, #0c2010 0%, #0f2814 45%, #08140a 100%); }
+.end-grass-r::before { background: linear-gradient(186deg, #0c2010 0%, #0f2814 45%, #08140a 100%); }
+
+/* Grass tufts (pixel silhouettes) */
 .end-grass-tufts {
   position: absolute;
   bottom: 56%;
   width: 100%;
-  height: 16px;
+  height: 20px;
   display: flex;
-  gap: 3px;
+  gap: 2px;
   align-items: flex-end;
 }
 .end-tuft {
-  width: 6px;
+  width: 5px;
   height: var(--h, 10px);
-  background: #1a4020;
-  border-radius: 3px 3px 0 0;
+  background: var(--tc, #1c4c26);
+  border-radius: 2px 2px 0 0;
   flex-shrink: 0;
 }
-/* Firefly dots */
+
+/* Road horizon mist */
+.end-road-mist {
+  position: absolute;
+  bottom: 54%; left: 34%; right: 34%;
+  height: 14px;
+  background: linear-gradient(180deg, transparent 0%, rgba(80,100,160,0.1) 50%, transparent 100%);
+  border-radius: 50%;
+  animation: endMistFlow 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes endMistFlow {
+  0%,100% { opacity: 0.45; transform: scaleX(1) scaleY(1); }
+  50%     { opacity: 0.15; transform: scaleX(1.35) scaleY(0.7); }
+}
+
+/* Fireflies */
 .end-firefly {
   position: absolute;
   width: 3px; height: 3px;
   border-radius: 50%;
-  background: #aaffa0;
-  box-shadow: 0 0 4px 2px rgba(150,255,130,0.6);
+  background: #a8ffa0;
+  box-shadow: 0 0 5px 2px rgba(130,255,100,0.5);
   opacity: 0;
-  animation: endFirefly var(--fd,4s) ease-in-out infinite;
+  animation: endFirefly var(--fd,4.5s) ease-in-out infinite;
   animation-delay: var(--fdd,0s);
 }
 @keyframes endFirefly {
   0%,100%  { opacity: 0; transform: translate(0,0); }
-  20%,80%  { opacity: 0.9; }
-  50%      { opacity: 0.6; transform: translate(var(--fx,8px), var(--fy,-12px)); }
+  25%,75%  { opacity: 0.85; }
+  50%      { opacity: 0.45; transform: translate(var(--fx,8px), var(--fy,-14px)); }
 }
 
-/* Convenience store (behind/left) */
+/* Store */
 .end-store {
   position: absolute;
-  bottom: 40%;
-  left: 6vw;
+  bottom: 42%;
+  left: 5vw;
   opacity: 0;
-  transition: opacity 2s ease;
+  transition: opacity 2.2s ease;
   transform-origin: bottom left;
 }
-.end-store.visible { opacity: 0.75; }
+.end-store.visible { opacity: 0.82; }
 .end-store svg { width: 130px; height: auto; image-rendering: pixelated; }
 
-/* Cat */
+/* Cat with tail wag */
 .end-cat {
   position: absolute;
-  bottom: calc(42% + 2px);
-  left: 20%;
+  bottom: calc(44% + 1px);
+  left: 18%;
   opacity: 0;
-  transition: opacity 1.5s ease;
-  animation: endCatIdle 3s ease-in-out infinite;
+  transition: opacity 1.6s ease;
 }
-.end-cat.visible { opacity: 1; }
-@keyframes endCatIdle {
+.end-cat.visible {
+  opacity: 1;
+  animation: endCatFloat 4.2s ease-in-out infinite;
+}
+@keyframes endCatFloat {
   0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-3px); }
+  50%     { transform: translateY(-2px); }
 }
 .end-cat svg { width: 56px; height: auto; image-rendering: pixelated; }
+/* Cat tail wag applied via SVG animation on .cat-tail path */
 
-/* Character holding receipt */
+/* Character: slightly right of center so vanishing point is visible */
 .end-character {
   position: absolute;
-  bottom: calc(42% - 2px);
-  left: 50%;
+  bottom: calc(44% - 2px);
+  left: 54%;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 1.5s ease;
-  animation: endCharBreath 4s ease-in-out infinite;
 }
-.end-character.visible { opacity: 1; }
+.end-character.visible {
+  opacity: 1;
+  animation: endCharBreath 4.5s ease-in-out infinite;
+}
 @keyframes endCharBreath {
   0%,100% { transform: translateX(-50%) translateY(0); }
-  50%     { transform: translateX(-50%) translateY(-4px); }
+  50%     { transform: translateX(-50%) translateY(-3px); }
 }
 .end-character svg { width: 72px; height: auto; image-rendering: pixelated; }
+/* Foot shadow */
+.end-char-shadow {
+  position: absolute;
+  bottom: calc(44% - 7px);
+  left: 54%;
+  transform: translateX(-50%);
+  width: 42px; height: 7px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.32);
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.end-char-shadow.visible { opacity: 1; }
 
 /* Receipt in hand */
 .end-receipt {
   position: absolute;
-  bottom: calc(42% + 28px);
-  left: calc(50% + 18px);
+  bottom: calc(44% + 26px);
+  left: calc(54% + 20px);
   width: 36px;
   opacity: 0;
   transform-origin: top center;
   transition: opacity 1.5s ease;
-  animation: endReceiptSway 5s ease-in-out infinite;
 }
-.end-receipt.visible { opacity: 1; }
+.end-receipt.visible {
+  opacity: 1;
+  animation: endReceiptSway 5.5s ease-in-out infinite;
+}
 @keyframes endReceiptSway {
-  0%,100% { transform: rotate(-4deg); }
+  0%,100% { transform: rotate(-3deg); }
   50%     { transform: rotate(4deg); }
 }
 .end-receipt svg { width: 100%; image-rendering: pixelated; }
 
-/* Copy / text area */
+/* Copy — 3-level type hierarchy */
 .end-copy {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 0 24px 100px;
+  padding: 0 28px 108px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
   pointer-events: none;
 }
+/* Level 1: narrative */
 .end-line {
   font-family: var(--body);
-  font-size: 15px;
-  line-height: 1.9;
-  color: #e8f0ff;
+  font-size: 14px;
+  line-height: 2.0;
+  color: #b0c4e8;
   text-align: center;
-  text-shadow: 0 2px 12px rgba(0,0,30,0.9);
-  max-width: 380px;
+  text-shadow: 0 1px 8px rgba(0,0,20,0.96), 0 0 28px rgba(0,0,20,0.8);
+  max-width: 360px;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
-  margin-bottom: 2px;
+  transform: translateY(8px);
+  transition: opacity 1s ease, transform 1s ease;
+  margin-bottom: 1px;
 }
 .end-line.show { opacity: 1; transform: translateY(0); }
-.end-line.big {
-  font-family: var(--pixel);
-  font-size: 13px;
-  color: #fff;
-  letter-spacing: 1px;
-  margin-top: 6px;
-}
+/* Dim: supporting lines */
 .end-line.dim {
   font-size: 13px;
-  color: #a0b8d0;
+  color: #728aaa;
+  line-height: 1.85;
 }
+/* Level 2: emotional key sentence */
+.end-line.big {
+  font-family: var(--pixel);
+  font-size: 11px;
+  color: #d8eeff;
+  letter-spacing: 1.5px;
+  line-height: 1.8;
+  margin-top: 4px;
+  text-shadow: 0 0 16px rgba(170,205,255,0.28), 0 1px 8px rgba(0,0,20,0.96);
+}
+/* Level 3: game closing prompt */
 .end-line.finale {
   font-family: var(--pixel);
-  font-size: 16px;
+  font-size: 13px;
   color: var(--yellow);
-  text-shadow: 0 0 20px rgba(255,220,70,0.6), 0 2px 12px rgba(0,0,30,0.9);
-  margin-top: 8px;
-  letter-spacing: 2px;
+  text-shadow:
+    0 0 16px rgba(255,210,55,0.5),
+    0 0 32px rgba(255,195,35,0.18),
+    0 1px 8px rgba(0,0,20,0.96);
+  margin-top: 12px;
+  letter-spacing: 3px;
+  animation: endFinaleGlow 3.2s ease-in-out infinite;
+}
+@keyframes endFinaleGlow {
+  0%,100% { text-shadow: 0 0 16px rgba(255,210,55,0.5), 0 0 32px rgba(255,195,35,0.18), 0 1px 8px rgba(0,0,20,0.96); }
+  50%     { text-shadow: 0 0 22px rgba(255,210,55,0.72), 0 0 44px rgba(255,195,35,0.32), 0 1px 8px rgba(0,0,20,0.96); }
 }
 
-/* Bottom controls */
+/* Controls: integrated game-end feel */
 .end-controls {
   position: absolute;
-  bottom: 24px;
+  bottom: 26px;
   left: 0; right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
-  padding: 0 16px;
+  padding: 0 20px;
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.9s ease;
 }
 .end-controls.show { opacity: 1; }
 .end-btn-main {
   font-family: var(--pixel);
-  font-size: 10px;
-  padding: 12px 22px;
-  background: var(--yellow);
-  color: #1a1a2a;
-  border: 3px solid #fff;
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  font-size: 9px;
+  padding: 10px 18px;
+  background: rgba(255,205,71,0.14);
+  color: var(--yellow);
+  border: 2px solid rgba(255,205,71,0.55);
+  box-shadow: 0 0 12px rgba(255,205,71,0.12), inset 0 0 8px rgba(255,205,71,0.04);
   cursor: pointer;
   letter-spacing: 1px;
-  transition: transform 0.1s;
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.end-btn-main:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(0,0,0,0.5); }
+.end-btn-main:hover {
+  background: rgba(255,205,71,0.24);
+  box-shadow: 0 0 20px rgba(255,205,71,0.22), inset 0 0 12px rgba(255,205,71,0.08);
+}
 .end-btn-sec {
   font-family: var(--pixel);
-  font-size: 9px;
-  padding: 8px 14px;
+  font-size: 8px;
+  padding: 7px 11px;
   background: transparent;
-  color: #90b0cc;
-  border: 2px solid #4a6a8a;
+  color: #4a6880;
+  border: 1px solid #263a52;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
 }
-.end-btn-sec:hover { color: #c0d8f0; border-color: #7aa0c0; }
+.end-btn-sec:hover { color: #80a8c0; border-color: #426080; }
 
-/* Skip button (top right) */
+/* Skip button */
 .end-skip {
   position: absolute;
-  top: 16px; right: 16px;
+  top: 14px; right: 14px;
   font-family: var(--pixel);
-  font-size: 8px;
-  color: #5a7a9a;
+  font-size: 7px;
+  color: #344860;
   background: transparent;
-  border: 1px solid #3a5a7a;
-  padding: 6px 10px;
+  border: 1px solid #1c3048;
+  padding: 5px 9px;
   cursor: pointer;
   z-index: 10;
   transition: color 0.2s;
 }
-.end-skip:hover { color: #9abcce; }
+.end-skip:hover { color: #6a9ab8; }
 .end-skip.hidden { display: none; }
 
 @media (max-width: 480px) {
-  .end-line      { font-size: 14px; }
-  .end-line.big  { font-size: 11px; }
-  .end-line.finale { font-size: 13px; }
+  .end-line        { font-size: 13px; }
+  .end-line.big    { font-size: 10px; }
+  .end-line.finale { font-size: 11px; }
   .end-character svg { width: 58px; }
-  .end-receipt { left: calc(50% + 14px); }
+  .end-receipt { left: calc(54% + 15px); }
   .end-cat svg { width: 46px; }
-  .end-store { left: 2vw; }
+  .end-store { left: 1vw; }
   .end-store svg { width: 100px; }
-  .end-moon { width: 44px; height: 44px; }
-  .end-btn-main { font-size: 9px; padding: 10px 16px; }
+  .end-moon { width: 42px; height: 42px; }
+  .end-btn-main { font-size: 8px; padding: 9px 14px; }
 }
 
 </style>
@@ -6818,6 +6906,8 @@ function endBuildScene() {
   document.getElementById('endCat').classList.remove('visible');
   document.getElementById('endCharacter').classList.remove('visible');
   document.getElementById('endReceipt').classList.remove('visible');
+  const cs = document.getElementById('endCharShadow');
+  if (cs) cs.classList.remove('visible');
   document.querySelectorAll('.end-line').forEach(l => l.classList.remove('show'));
   document.getElementById('endControls').classList.remove('show');
   document.getElementById('endSkip').classList.remove('hidden');
@@ -6827,28 +6917,29 @@ function endBuildScene() {
   if (!document.getElementById('endStars').children.length) endInitStars();
   if (!document.getElementById('endFireflies').children.length) endInitFireflies();
   if (!document.getElementById('endTuftsL').children.length) endInitGrass();
-  if (!document.querySelector('.end-road-dash')) endInitRoadDashes();
+  if (!document.getElementById('endRoadDashes').children.length) endInitRoadDashes();
 
-  // Step 1 (500ms): stars appear
+  // Step 1 (500ms): stars appear (staggered)
   endingTimer(() => {
     document.querySelectorAll('.end-star').forEach((s, i) => {
-      endingTimer(() => s.classList.add('visible'), i * 20);
+      endingTimer(() => s.classList.add('visible'), i * 18);
     });
   }, 500);
 
-  // Step 2 (1200ms): moon
+  // Step 2 (1200ms): moon rises
   endingTimer(() => document.getElementById('endMoon').classList.add('visible'), 1200);
 
   // Step 3 (1800ms): store glow
   endingTimer(() => document.getElementById('endStore').classList.add('visible'), 1800);
 
-  // Step 4 (2600ms): character + receipt
+  // Step 4 (2600ms): character + receipt + shadow
   endingTimer(() => {
     document.getElementById('endCharacter').classList.add('visible');
     document.getElementById('endReceipt').classList.add('visible');
+    if (cs) cs.classList.add('visible');
   }, 2600);
 
-  // Step 5 (3400ms): cat walks in
+  // Step 5 (3400ms): cat appears
   endingTimer(() => document.getElementById('endCat').classList.add('visible'), 3400);
 
   // Step 6 (4200ms): start copy lines
@@ -6881,6 +6972,8 @@ function endSkip() {
   document.getElementById('endCharacter').classList.add('visible');
   document.getElementById('endReceipt').classList.add('visible');
   document.getElementById('endCat').classList.add('visible');
+  const cs = document.getElementById('endCharShadow');
+  if (cs) cs.classList.add('visible');
   document.getElementById('endCopy').style.opacity = '1';
   document.querySelectorAll('.end-line').forEach(l => l.classList.add('show'));
   document.getElementById('endControls').classList.add('show');
@@ -6906,16 +6999,31 @@ function endViewReceipt() {
 
 function endInitStars() {
   const container = document.getElementById('endStars');
-  for (let i = 0; i < 90; i++) {
+  // Far stars: small, dim, slow twinkle — upper sky
+  for (let i = 0; i < 65; i++) {
     const s = document.createElement('div');
-    s.className = 'end-star';
-    const size = Math.random() < 0.25 ? 3 : Math.random() < 0.55 ? 2 : 1;
-    const op = 0.4 + Math.random() * 0.55;
+    s.className = 'end-star far';
+    const size = Math.random() < 0.15 ? 2 : 1;
+    const op = 0.2 + Math.random() * 0.35;
     s.style.cssText = [
       `width:${size}px`, `height:${size}px`,
-      `left:${Math.random()*100}%`, `top:${Math.random()*58}%`,
-      `--op:${op.toFixed(2)}`, `--dur:${(1.5+Math.random()*2.5).toFixed(1)}s`,
-      `--d:${(Math.random()*4).toFixed(1)}s`
+      `left:${Math.random()*100}%`, `top:${(Math.random()*48).toFixed(1)}%`,
+      `--op:${op.toFixed(2)}`, `--dur:${(2.5+Math.random()*3.5).toFixed(1)}s`,
+      `--d:${(Math.random()*5).toFixed(1)}s`
+    ].join(';');
+    container.appendChild(s);
+  }
+  // Near stars: larger, brighter, faster twinkle — mid sky
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('div');
+    s.className = 'end-star near';
+    const size = Math.random() < 0.3 ? 3 : 2;
+    const op = 0.55 + Math.random() * 0.35;
+    s.style.cssText = [
+      `width:${size}px`, `height:${size}px`,
+      `left:${Math.random()*100}%`, `top:${(5+Math.random()*42).toFixed(1)}%`,
+      `--op:${op.toFixed(2)}`, `--dur:${(1.4+Math.random()*1.8).toFixed(1)}s`,
+      `--d:${(Math.random()*3).toFixed(1)}s`
     ].join(';');
     container.appendChild(s);
   }
@@ -6936,25 +7044,46 @@ function endInitFireflies() {
 }
 
 function endInitGrass() {
+  const colors = ['#1a4a22', '#1c5228', '#14381a', '#224c2a', '#163c1e'];
   ['endTuftsL','endTuftsR'].forEach(id => {
     const el = document.getElementById(id);
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 22; i++) {
       const t = document.createElement('div');
       t.className = 'end-tuft';
-      t.style.setProperty('--h', `${6+Math.floor(Math.random()*10)}px`);
+      t.style.setProperty('--h', `${5+Math.floor(Math.random()*12)}px`);
+      t.style.setProperty('--tc', colors[Math.floor(Math.random()*colors.length)]);
       el.appendChild(t);
     }
   });
 }
 
 function endInitRoadDashes() {
-  const road = document.querySelector('.end-road');
-  for (let i = 0; i < 6; i++) {
-    const d = document.createElement('div');
-    d.className = 'end-road-dash';
-    d.style.cssText = `bottom:${5+i*14}%;height:${8+Math.random()*6}px;animation-delay:${i*0.3}s`;
-    road.appendChild(d);
-  }
+  const g = document.getElementById('endRoadDashes');
+  if (!g) return;
+  const svgNS = 'http://www.w3.org/2000/svg';
+  // SVG viewBox is 400x200; road trapezoid: bottom(32,200)-(368,200), top(172,15)-(212,15)
+  // VP center at x~192, y~5 (extrapolated above viewBox)
+  // Dash positions: 6 dashes from near to far (y=180 down to y=35)
+  const dashData = [
+    { y: 178, h: 14, cx: 200, w: 9 },
+    { y: 148, h: 11, cx: 198, w: 7 },
+    { y: 118, h: 9,  cx: 196, w: 5.5 },
+    { y: 90,  h: 7,  cx: 195, w: 4 },
+    { y: 66,  h: 5,  cx: 194, w: 2.8 },
+    { y: 46,  h: 4,  cx: 193, w: 2 }
+  ];
+  dashData.forEach((d, i) => {
+    const rect = document.createElementNS(svgNS, 'rect');
+    rect.setAttribute('x', d.cx - d.w / 2);
+    rect.setAttribute('y', d.y);
+    rect.setAttribute('width', d.w);
+    rect.setAttribute('height', d.h);
+    rect.setAttribute('rx', '1');
+    rect.setAttribute('fill', 'rgba(255,205,71,0.42)');
+    rect.classList.add('end-road-dash-svg');
+    rect.style.setProperty('--dd', `${i * 0.28}s`);
+    g.appendChild(rect);
+  });
 }
 
 
@@ -7155,9 +7284,34 @@ if (tgEl) tgObserver.observe(tgEl);
   <!-- Ground -->
   <div class="end-ground">
     <div class="end-ground-base"></div>
-    <div class="end-road">
-      <!-- Dashes generated by JS -->
-    </div>
+    <!-- Perspective road SVG (drawn by JS) -->
+    <svg class="end-road-svg" id="endRoadSvg" viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rdGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0e1028"/>
+          <stop offset="48%" stop-color="#1a1836"/>
+          <stop offset="100%" stop-color="#262240"/>
+        </linearGradient>
+        <linearGradient id="rdFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080a1e" stop-opacity="0.88"/>
+          <stop offset="100%" stop-color="#080a1e" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Road trapezoid: bottom 8%-92%, top near vanishing pt ~48% -->
+      <polygon points="32,200 368,200 212,15 172,15" fill="url(#rdGrad)"/>
+      <!-- Left edge shadow -->
+      <line x1="32" y1="200" x2="172" y2="15" stroke="#0a0c20" stroke-width="3" opacity="0.7"/>
+      <!-- Right edge shadow -->
+      <line x1="368" y1="200" x2="212" y2="15" stroke="#0a0c20" stroke-width="3" opacity="0.7"/>
+      <!-- Horizon fade at top of road -->
+      <rect x="166" y="13" width="52" height="28" fill="url(#rdFade)"/>
+      <!-- Road dashes (inserted by JS into this group) -->
+      <g id="endRoadDashes"></g>
+    </svg>
+    <!-- Road horizon mist -->
+    <div class="end-road-mist"></div>
+    <!-- Store warm light spill -->
+    <div class="end-store-glow"></div>
     <!-- Fireflies -->
     <div id="endFireflies"></div>
     <!-- Grass left -->
@@ -7233,6 +7387,9 @@ if (tgEl) tgObserver.observe(tgEl);
       <path d="M36,28 Q50,20 52,30 Q50,38 44,36" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     </svg>
   </div>
+
+  <!-- Character foot shadow -->
+  <div class="end-char-shadow" id="endCharShadow"></div>
 
   <!-- Character holding receipt -->
   <div class="end-character" id="endCharacter">
