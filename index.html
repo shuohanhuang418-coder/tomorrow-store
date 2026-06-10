@@ -2963,87 +2963,99 @@ footer .tiny {
   inset: 0;
   z-index: 2000;
   overflow: hidden;
-  background: #060a1c;
+  background: #030508;
   font-family: var(--body);
 }
 #ending.active { display: block; }
 
-/* Sky: layered atmospheric night with depth */
+/* ── Sky ── */
 .end-sky {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 78% 12%, rgba(210,225,255,0.07) 0%, transparent 42%),
-    radial-gradient(ellipse at 10% 82%, rgba(255,175,60,0.06) 0%, transparent 30%),
-    radial-gradient(ellipse at 50% -8%, #1c2060 0%, #0d1038 32%, #080a22 65%, #050810 100%);
+    radial-gradient(ellipse at 76% 9%, rgba(185,215,255,0.055) 0%, transparent 38%),
+    radial-gradient(ellipse at 11% 90%, rgba(255,162,45,0.04) 0%, transparent 35%),
+    linear-gradient(180deg,
+      #020307 0%,
+      #04091a 18%,
+      #070e28 42%,
+      #0a1130 62%,
+      #080c22 82%,
+      #050818 100%
+    );
 }
-/* Horizon haze: dark band where sky meets ground */
+/* Horizon haze */
 .end-sky::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 30%;
-  background: linear-gradient(to top, rgba(5,8,24,0.92) 0%, rgba(8,12,32,0.5) 40%, transparent 100%);
+  height: 32%;
+  background: linear-gradient(to top,
+    rgba(4,7,18,0.94) 0%,
+    rgba(6,10,26,0.52) 38%,
+    transparent 100%);
   pointer-events: none;
 }
 
-/* Stars: two depth layers */
+/* ── Stars ── */
 .end-star {
   position: absolute;
   border-radius: 50%;
-  animation: endStarTwinkle var(--dur,2.5s) ease-in-out infinite;
+  animation: endStarTwinkle var(--dur,2.8s) ease-in-out infinite;
   animation-delay: var(--d,0s);
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-.end-star.near {
-  background: #deeeff;
-  box-shadow: 0 0 2px 1px rgba(180,210,255,0.35);
-}
-.end-star.far { background: #a8b8d8; }
-.end-star.visible { opacity: var(--op, 0.7); }
-@keyframes endStarTwinkle {
-  0%,100% { opacity: var(--op,0.7); transform: scale(1); }
-  50%      { opacity: calc(var(--op,0.7) * 0.2); transform: scale(0.55); }
-}
-
-/* Moon: cool silver, atmospheric glow */
-.end-moon {
-  position: absolute;
-  top: 8vh; right: 11vw;
-  width: 50px; height: 50px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 32%, #f0f6ff, #d4e4ff 52%, #a8c0f0);
-  box-shadow:
-    0 0 14px 4px rgba(150,190,255,0.16),
-    0 0 36px 14px rgba(130,170,255,0.07),
-    0 0 80px 30px rgba(110,155,255,0.03);
   opacity: 0;
   transition: opacity 2s ease;
 }
+.end-star.near {
+  background: #e2eeff;
+  box-shadow: 0 0 2px 1px rgba(175,208,255,0.3);
+}
+.end-star.far { background: #9aabcc; }
+.end-star.bright {
+  background: #f0f6ff;
+  box-shadow: 0 0 3px 1px rgba(210,230,255,0.45);
+}
+.end-star.visible { opacity: var(--op, 0.65); }
+@keyframes endStarTwinkle {
+  0%,100% { opacity: var(--op,0.65); transform: scale(1); }
+  50%      { opacity: calc(var(--op,0.65) * 0.18); transform: scale(0.5); }
+}
+
+/* ── Moon ── */
+.end-moon {
+  position: absolute;
+  top: 7vh; right: 10vw;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 32%, #f2f7ff, #d8e8ff 52%, #b0c8f0);
+  box-shadow:
+    0 0 10px 3px rgba(155,192,255,0.14),
+    0 0 26px 10px rgba(135,175,255,0.055),
+    0 0 60px 24px rgba(115,160,255,0.022);
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
 .end-moon.visible { opacity: 1; }
-/* Moon craters (subtle) */
 .end-moon::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 40% 35%, rgba(140,165,210,0.22) 0%, transparent 18%),
-    radial-gradient(circle at 65% 58%, rgba(140,165,210,0.16) 0%, transparent 13%),
-    radial-gradient(circle at 28% 64%, rgba(140,165,210,0.14) 0%, transparent 10%);
+    radial-gradient(circle at 40% 36%, rgba(138,165,215,0.20) 0%, transparent 16%),
+    radial-gradient(circle at 64% 57%, rgba(138,165,215,0.14) 0%, transparent 12%),
+    radial-gradient(circle at 30% 66%, rgba(138,165,215,0.12) 0%, transparent 10%);
 }
-/* Soft moon halo ring */
 .end-moon::after {
   content: '';
   position: absolute;
-  top: -28px; left: -28px; right: -28px; bottom: -28px;
+  top: -72px; left: -72px; right: -72px; bottom: -72px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(150,195,255,0.05) 30%, transparent 70%);
+  background: radial-gradient(circle, rgba(158,198,255,0.035) 25%, rgba(140,182,255,0.016) 48%, transparent 65%);
   pointer-events: none;
 }
 
-/* Ground plane */
+/* ── Ground ── */
 .end-ground {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -3052,40 +3064,59 @@ footer .tiny {
 .end-ground-base {
   position: absolute;
   bottom: 0; left: 0; right: 0; height: 100%;
-  background: linear-gradient(180deg, #0c1c14 0%, #091208 55%, #060c06 100%);
+  background: linear-gradient(180deg, #0a1a10 0%, #080e08 55%, #050805 100%);
 }
 
-/* Perspective road SVG */
+/* ── Road SVG ── */
 .end-road-svg {
   position: absolute;
   bottom: 0; left: 0;
   width: 100%; height: 100%;
   overflow: visible;
 }
-/* Road center dashes animated */
 .end-road-dash-svg {
-  animation: endDashScroll 1.7s linear infinite;
+  animation: endDashScroll 1.8s linear infinite;
   animation-delay: var(--dd, 0s);
 }
 @keyframes endDashScroll {
-  0%   { opacity: 0.9; transform: translateY(0); }
-  100% { opacity: 0.1; transform: translateY(6px); }
+  0%   { opacity: 0.88; transform: translateY(0); }
+  100% { opacity: 0.08; transform: translateY(5px); }
 }
 
-/* Store warm light spill on left ground */
+/* ── Store warm light spill ── */
 .end-store-glow {
   position: absolute;
   bottom: 0; left: 0;
-  width: 55%; height: 70%;
-  background: radial-gradient(ellipse at 14% 88%, rgba(210,140,20,0.13) 0%, rgba(175,105,10,0.06) 38%, transparent 62%);
+  width: 52%; height: 72%;
+  background: radial-gradient(ellipse at 12% 86%, rgba(205,138,22,0.11) 0%, rgba(170,105,12,0.05) 40%, transparent 62%);
   pointer-events: none;
 }
 
-/* Grass L/R */
+/* ── Lamp light pools on ground ── */
+.end-lamp-pool {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2.2s ease;
+}
+.end-lamp-pool.visible { opacity: 1; }
+.lamp-pool-l {
+  bottom: 3%; left: 16%;
+  width: 130px; height: 44px;
+  background: radial-gradient(ellipse, rgba(255,192,45,0.13) 0%, rgba(255,175,30,0.05) 52%, transparent 74%);
+}
+.lamp-pool-r {
+  bottom: 3%; right: 15%;
+  width: 110px; height: 38px;
+  background: radial-gradient(ellipse, rgba(255,192,45,0.10) 0%, rgba(255,175,30,0.04) 52%, transparent 74%);
+}
+
+/* ── Grass ── */
 .end-grass-l, .end-grass-r {
   position: absolute;
   bottom: 0;
-  width: 43%;
+  width: 44%;
   height: 58%;
   overflow: hidden;
 }
@@ -3096,10 +3127,18 @@ footer .tiny {
   position: absolute;
   inset: 0;
 }
-.end-grass-l::before { background: linear-gradient(174deg, #0c2010 0%, #0f2814 45%, #08140a 100%); }
-.end-grass-r::before { background: linear-gradient(186deg, #0c2010 0%, #0f2814 45%, #08140a 100%); }
+.end-grass-l::before { background: linear-gradient(173deg, #0b1c10 0%, #0e2613 45%, #07120a 100%); }
+.end-grass-r::before { background: linear-gradient(187deg, #0b1c10 0%, #0e2613 45%, #07120a 100%); }
+/* Lamp warm tint on left grass */
+.end-grass-l::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 30%, rgba(200,138,28,0.075) 0%, transparent 55%);
+  pointer-events: none;
+}
 
-/* Grass tufts (pixel silhouettes) */
+/* Grass tufts */
 .end-grass-tufts {
   position: absolute;
   bottom: 56%;
@@ -3112,119 +3151,153 @@ footer .tiny {
 .end-tuft {
   width: 5px;
   height: var(--h, 10px);
-  background: var(--tc, #1c4c26);
+  background: var(--tc, #1c4a26);
   border-radius: 2px 2px 0 0;
   flex-shrink: 0;
 }
 
-/* Road horizon mist */
+/* ── Horizon mist ── */
 .end-road-mist {
   position: absolute;
-  bottom: 54%; left: 34%; right: 34%;
-  height: 14px;
-  background: linear-gradient(180deg, transparent 0%, rgba(80,100,160,0.1) 50%, transparent 100%);
+  bottom: 55%; left: 36%; right: 36%;
+  height: 12px;
+  background: linear-gradient(180deg, transparent 0%, rgba(70,90,150,0.09) 50%, transparent 100%);
   border-radius: 50%;
-  animation: endMistFlow 7s ease-in-out infinite;
+  animation: endMistFlow 8s ease-in-out infinite;
   pointer-events: none;
 }
 @keyframes endMistFlow {
-  0%,100% { opacity: 0.45; transform: scaleX(1) scaleY(1); }
-  50%     { opacity: 0.15; transform: scaleX(1.35) scaleY(0.7); }
+  0%,100% { opacity: 0.4; transform: scaleX(1); }
+  50%     { opacity: 0.14; transform: scaleX(1.4); }
 }
 
-/* Fireflies */
+/* ── Fireflies ── */
 .end-firefly {
   position: absolute;
   width: 3px; height: 3px;
   border-radius: 50%;
-  background: #a8ffa0;
-  box-shadow: 0 0 5px 2px rgba(130,255,100,0.5);
+  background: #a0ffa0;
+  box-shadow: 0 0 5px 2px rgba(120,248,100,0.48);
   opacity: 0;
-  animation: endFirefly var(--fd,4.5s) ease-in-out infinite;
+  animation: endFirefly var(--fd,5s) ease-in-out infinite;
   animation-delay: var(--fdd,0s);
 }
 @keyframes endFirefly {
   0%,100%  { opacity: 0; transform: translate(0,0); }
-  25%,75%  { opacity: 0.85; }
-  50%      { opacity: 0.45; transform: translate(var(--fx,8px), var(--fy,-14px)); }
+  25%,75%  { opacity: 0.78; }
+  50%      { opacity: 0.4; transform: translate(var(--fx,8px), var(--fy,-14px)); }
 }
 
-/* Store */
-.end-store {
+/* ── Street lamps (pixel art) ── */
+.end-lamp {
   position: absolute;
-  bottom: 42%;
-  left: 5vw;
   opacity: 0;
   transition: opacity 2.2s ease;
-  transform-origin: bottom left;
+  pointer-events: none;
 }
-.end-store.visible { opacity: 0.82; }
-.end-store svg { width: 130px; height: auto; image-rendering: pixelated; }
+.end-lamp.visible { opacity: 1; }
+.lamp-l {
+  bottom: 42%;
+  left: 26%;
+}
+.lamp-r {
+  bottom: 42%;
+  right: 22%;
+}
+.lamp-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: lampGlowPulse 4.5s ease-in-out infinite;
+}
+.lamp-l .lamp-glow {
+  top: -18px; left: -22px;
+  width: 66px; height: 66px;
+  background: radial-gradient(circle, rgba(255,196,50,0.26) 0%, rgba(255,176,28,0.10) 38%, rgba(255,160,18,0.03) 62%, transparent 78%);
+}
+.lamp-r .lamp-glow {
+  top: -15px; left: -10px;
+  width: 56px; height: 56px;
+  background: radial-gradient(circle, rgba(255,196,50,0.22) 0%, rgba(255,176,28,0.08) 38%, rgba(255,160,18,0.025) 62%, transparent 78%);
+}
+@keyframes lampGlowPulse {
+  0%,100% { opacity: 0.82; transform: scale(1); }
+  50%     { opacity: 1; transform: scale(1.07); }
+}
 
-/* Cat with tail wag */
+/* ── Store ── */
+.end-store {
+  position: absolute;
+  bottom: 43%;
+  left: 4vw;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+.end-store.visible { opacity: 1; }
+.end-store svg { width: 126px; height: auto; image-rendering: pixelated; }
+
+/* ── Cat ── */
 .end-cat {
   position: absolute;
   bottom: calc(44% + 1px);
-  left: 18%;
+  left: 14%;
   opacity: 0;
-  transition: opacity 1.6s ease;
+  transition: opacity 1.8s ease;
 }
 .end-cat.visible {
   opacity: 1;
-  animation: endCatFloat 4.2s ease-in-out infinite;
+  animation: endCatFloat 4.5s ease-in-out infinite;
 }
 @keyframes endCatFloat {
   0%,100% { transform: translateY(0); }
   50%     { transform: translateY(-2px); }
 }
-.end-cat svg { width: 56px; height: auto; image-rendering: pixelated; }
-/* Cat tail wag applied via SVG animation on .cat-tail path */
+.end-cat svg { width: 52px; height: auto; image-rendering: pixelated; }
 
-/* Character: slightly right of center so vanishing point is visible */
+/* ── Character ── */
 .end-character {
   position: absolute;
   bottom: calc(44% - 2px);
-  left: 54%;
+  left: 53%;
   transform: translateX(-50%);
   opacity: 0;
-  transition: opacity 1.5s ease;
+  transition: opacity 1.6s ease;
 }
 .end-character.visible {
   opacity: 1;
-  animation: endCharBreath 4.5s ease-in-out infinite;
+  animation: endCharBreath 4.8s ease-in-out infinite;
 }
 @keyframes endCharBreath {
   0%,100% { transform: translateX(-50%) translateY(0); }
   50%     { transform: translateX(-50%) translateY(-3px); }
 }
-.end-character svg { width: 72px; height: auto; image-rendering: pixelated; }
-/* Foot shadow */
+.end-character svg { width: 70px; height: auto; image-rendering: pixelated; }
 .end-char-shadow {
   position: absolute;
   bottom: calc(44% - 7px);
-  left: 54%;
+  left: 53%;
   transform: translateX(-50%);
-  width: 42px; height: 7px;
+  width: 40px; height: 6px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.32);
+  background: rgba(0,0,0,0.30);
   opacity: 0;
-  transition: opacity 1.5s ease;
+  transition: opacity 1.6s ease;
 }
 .end-char-shadow.visible { opacity: 1; }
 
-/* Receipt in hand */
+/* ── Receipt ── */
 .end-receipt {
   position: absolute;
-  bottom: calc(44% + 26px);
-  left: calc(54% + 20px);
-  width: 36px;
+  bottom: calc(44% + 24px);
+  left: calc(53% + 18px);
+  width: 34px;
   opacity: 0;
   transform-origin: top center;
-  transition: opacity 1.5s ease;
+  transition: opacity 1.6s ease;
 }
 .end-receipt.visible {
   opacity: 1;
-  animation: endReceiptSway 5.5s ease-in-out infinite;
+  animation: endReceiptSway 6s ease-in-out infinite;
 }
 @keyframes endReceiptSway {
   0%,100% { transform: rotate(-3deg); }
@@ -3232,124 +3305,123 @@ footer .tiny {
 }
 .end-receipt svg { width: 100%; image-rendering: pixelated; }
 
-/* Copy — 3-level type hierarchy */
+/* ── Copy — 3-level type hierarchy with breathing room ── */
 .end-copy {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 0 28px 108px;
+  padding: 0 32px 118px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
   pointer-events: none;
 }
 /* Level 1: narrative */
 .end-line {
   font-family: var(--body);
   font-size: 14px;
-  line-height: 2.0;
-  color: #b0c4e8;
+  line-height: 2.1;
+  color: #a8bede;
   text-align: center;
-  text-shadow: 0 1px 8px rgba(0,0,20,0.96), 0 0 28px rgba(0,0,20,0.8);
-  max-width: 360px;
+  text-shadow: 0 1px 12px rgba(0,0,14,0.98), 0 0 28px rgba(0,0,14,0.85);
+  max-width: 340px;
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 1s ease, transform 1s ease;
-  margin-bottom: 1px;
+  transition: opacity 1.1s ease, transform 1.1s ease;
+  margin-bottom: 0;
 }
 .end-line.show { opacity: 1; transform: translateY(0); }
 /* Dim: supporting lines */
 .end-line.dim {
   font-size: 13px;
-  color: #728aaa;
-  line-height: 1.85;
+  color: #6a8098;
+  line-height: 1.9;
 }
 /* Level 2: emotional key sentence */
 .end-line.big {
   font-family: var(--pixel);
   font-size: 11px;
-  color: #d8eeff;
+  color: #cce2ff;
   letter-spacing: 1.5px;
   line-height: 1.8;
-  margin-top: 4px;
-  text-shadow: 0 0 16px rgba(170,205,255,0.28), 0 1px 8px rgba(0,0,20,0.96);
+  margin-top: 3px;
+  text-shadow: 0 0 14px rgba(165,202,255,0.24), 0 1px 12px rgba(0,0,14,0.98);
 }
 /* Level 3: game closing prompt */
 .end-line.finale {
   font-family: var(--pixel);
   font-size: 13px;
-  color: var(--yellow);
+  color: #ffc840;
   text-shadow:
-    0 0 16px rgba(255,210,55,0.5),
-    0 0 32px rgba(255,195,35,0.18),
-    0 1px 8px rgba(0,0,20,0.96);
-  margin-top: 12px;
+    0 0 14px rgba(255,200,50,0.45),
+    0 0 30px rgba(255,185,30,0.15),
+    0 1px 12px rgba(0,0,14,0.98);
+  margin-top: 14px;
   letter-spacing: 3px;
-  animation: endFinaleGlow 3.2s ease-in-out infinite;
+  animation: endFinaleGlow 3.5s ease-in-out infinite;
 }
 @keyframes endFinaleGlow {
-  0%,100% { text-shadow: 0 0 16px rgba(255,210,55,0.5), 0 0 32px rgba(255,195,35,0.18), 0 1px 8px rgba(0,0,20,0.96); }
-  50%     { text-shadow: 0 0 22px rgba(255,210,55,0.72), 0 0 44px rgba(255,195,35,0.32), 0 1px 8px rgba(0,0,20,0.96); }
+  0%,100% { text-shadow: 0 0 14px rgba(255,200,50,0.45), 0 0 30px rgba(255,185,30,0.15), 0 1px 12px rgba(0,0,14,0.98); }
+  50%     { text-shadow: 0 0 20px rgba(255,200,50,0.65), 0 0 42px rgba(255,185,30,0.28), 0 1px 12px rgba(0,0,14,0.98); }
 }
 
-/* Controls: integrated game-end feel */
+/* ── Controls ── */
 .end-controls {
   position: absolute;
-  bottom: 26px;
+  bottom: 28px;
   left: 0; right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
   padding: 0 20px;
   opacity: 0;
-  transition: opacity 0.9s ease;
+  transition: opacity 1s ease;
 }
 .end-controls.show { opacity: 1; }
 .end-btn-main {
   font-family: var(--pixel);
   font-size: 9px;
-  padding: 10px 18px;
-  background: rgba(255,205,71,0.14);
-  color: var(--yellow);
-  border: 2px solid rgba(255,205,71,0.55);
-  box-shadow: 0 0 12px rgba(255,205,71,0.12), inset 0 0 8px rgba(255,205,71,0.04);
+  padding: 11px 20px;
+  background: rgba(255,200,60,0.13);
+  color: #ffc840;
+  border: 2px solid rgba(255,200,60,0.52);
   cursor: pointer;
   letter-spacing: 1px;
   transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 10px rgba(255,200,60,0.1);
 }
 .end-btn-main:hover {
-  background: rgba(255,205,71,0.24);
-  box-shadow: 0 0 20px rgba(255,205,71,0.22), inset 0 0 12px rgba(255,205,71,0.08);
+  background: rgba(255,200,60,0.22);
+  box-shadow: 0 0 18px rgba(255,200,60,0.2);
 }
 .end-btn-sec {
   font-family: var(--pixel);
   font-size: 8px;
-  padding: 7px 11px;
+  padding: 7px 12px;
   background: transparent;
-  color: #4a6880;
-  border: 1px solid #263a52;
+  color: #3e5870;
+  border: 1px solid #1e3248;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
 }
-.end-btn-sec:hover { color: #80a8c0; border-color: #426080; }
+.end-btn-sec:hover { color: #7298b8; border-color: #384e68; }
 
-/* Skip button */
+/* ── Skip ── */
 .end-skip {
   position: absolute;
   top: 14px; right: 14px;
   font-family: var(--pixel);
   font-size: 7px;
-  color: #344860;
+  color: #2c4060;
   background: transparent;
-  border: 1px solid #1c3048;
+  border: 1px solid #182c44;
   padding: 5px 9px;
   cursor: pointer;
   z-index: 10;
   transition: color 0.2s;
 }
-.end-skip:hover { color: #6a9ab8; }
+.end-skip:hover { color: #5a88a8; }
 .end-skip.hidden { display: none; }
 
 @media (max-width: 480px) {
@@ -3357,12 +3429,14 @@ footer .tiny {
   .end-line.big    { font-size: 10px; }
   .end-line.finale { font-size: 11px; }
   .end-character svg { width: 58px; }
-  .end-receipt { left: calc(54% + 15px); }
-  .end-cat svg { width: 46px; }
+  .end-receipt { left: calc(53% + 14px); }
+  .end-cat svg { width: 42px; }
   .end-store { left: 1vw; }
-  .end-store svg { width: 100px; }
-  .end-moon { width: 42px; height: 42px; }
-  .end-btn-main { font-size: 8px; padding: 9px 14px; }
+  .end-store svg { width: 96px; }
+  .end-moon { width: 40px; height: 40px; }
+  .end-btn-main { font-size: 8px; padding: 10px 15px; }
+  .lamp-l { left: 20%; }
+  .lamp-r { right: 18%; }
 }
 
 </style>
@@ -6876,54 +6950,53 @@ function endClearTimers() {
 }
 
 function endBuildScene() {
-  // Reset everything
-  document.querySelectorAll('.end-star').forEach(s => s.classList.remove('visible'));
-  document.getElementById('endMoon').classList.remove('visible');
-  document.getElementById('endStore').classList.remove('visible');
-  document.getElementById('endCat').classList.remove('visible');
-  document.getElementById('endCharacter').classList.remove('visible');
-  document.getElementById('endReceipt').classList.remove('visible');
+  const ids = ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('visible'); });
   const cs = document.getElementById('endCharShadow');
   if (cs) cs.classList.remove('visible');
+  document.querySelectorAll('.end-star').forEach(s => s.classList.remove('visible'));
   document.querySelectorAll('.end-line').forEach(l => l.classList.remove('show'));
   document.getElementById('endControls').classList.remove('show');
   document.getElementById('endSkip').classList.remove('hidden');
   document.getElementById('endCopy').style.opacity = '0';
 
-  // Init scene elements once
   if (!document.getElementById('endStars').children.length) endInitStars();
   if (!document.getElementById('endFireflies').children.length) endInitFireflies();
   if (!document.getElementById('endTuftsL').children.length) endInitGrass();
   if (!document.getElementById('endRoadDashes').children.length) endInitRoadDashes();
 
-  // Step 1 (500ms): stars appear (staggered)
+  // Step 1 (500ms): stars staggered
   endingTimer(() => {
     document.querySelectorAll('.end-star').forEach((s, i) => {
-      endingTimer(() => s.classList.add('visible'), i * 18);
+      endingTimer(() => s.classList.add('visible'), i * 20);
     });
   }, 500);
 
-  // Step 2 (1200ms): moon rises
+  // Step 2 (1200ms): moon
   endingTimer(() => document.getElementById('endMoon').classList.add('visible'), 1200);
 
-  // Step 3 (1800ms): store glow
-  endingTimer(() => document.getElementById('endStore').classList.add('visible'), 1800);
+  // Step 3 (1900ms): store + street lamps warm up together
+  endingTimer(() => {
+    ['endStore','endLampL','endLampR','endLampPoolL','endLampPoolR'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.classList.add('visible');
+    });
+  }, 1900);
 
-  // Step 4 (2600ms): character + receipt + shadow
+  // Step 4 (2700ms): character + receipt + shadow
   endingTimer(() => {
     document.getElementById('endCharacter').classList.add('visible');
     document.getElementById('endReceipt').classList.add('visible');
     if (cs) cs.classList.add('visible');
-  }, 2600);
+  }, 2700);
 
-  // Step 5 (3400ms): cat appears
-  endingTimer(() => document.getElementById('endCat').classList.add('visible'), 3400);
+  // Step 5 (3500ms): cat
+  endingTimer(() => document.getElementById('endCat').classList.add('visible'), 3500);
 
-  // Step 6 (4200ms): start copy lines
+  // Step 6 (4400ms): copy lines
   endingTimer(() => {
     document.getElementById('endCopy').style.opacity = '1';
     endShowLines();
-  }, 4200);
+  }, 4400);
 }
 
 function endShowLines() {
@@ -6944,11 +7017,9 @@ function endShowLines() {
 function endSkip() {
   endClearTimers();
   document.querySelectorAll('.end-star').forEach(s => s.classList.add('visible'));
-  document.getElementById('endMoon').classList.add('visible');
-  document.getElementById('endStore').classList.add('visible');
-  document.getElementById('endCharacter').classList.add('visible');
-  document.getElementById('endReceipt').classList.add('visible');
-  document.getElementById('endCat').classList.add('visible');
+  ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.add('visible');
+  });
   const cs = document.getElementById('endCharShadow');
   if (cs) cs.classList.add('visible');
   document.getElementById('endCopy').style.opacity = '1';
@@ -6976,34 +7047,54 @@ function endViewReceipt() {
 
 function endInitStars() {
   const container = document.getElementById('endStars');
-  // Far stars: small, dim, slow twinkle — upper sky
-  for (let i = 0; i < 65; i++) {
+  // Very small far stars — concentrated in upper 38% of sky, sparse
+  for (let i = 0; i < 42; i++) {
     const s = document.createElement('div');
     s.className = 'end-star far';
-    const size = Math.random() < 0.15 ? 2 : 1;
-    const op = 0.2 + Math.random() * 0.35;
+    const op = 0.14 + Math.random() * 0.28;
     s.style.cssText = [
-      `width:${size}px`, `height:${size}px`,
-      `left:${Math.random()*100}%`, `top:${(Math.random()*48).toFixed(1)}%`,
-      `--op:${op.toFixed(2)}`, `--dur:${(2.5+Math.random()*3.5).toFixed(1)}s`,
-      `--d:${(Math.random()*5).toFixed(1)}s`
+      'width:1px','height:1px',
+      `left:${(Math.random()*96+2).toFixed(1)}%`,
+      `top:${(Math.random()*36 + 1).toFixed(1)}%`,
+      `--op:${op.toFixed(2)}`,
+      `--dur:${(3+Math.random()*4).toFixed(1)}s`,
+      `--d:${(Math.random()*6).toFixed(1)}s`
     ].join(';');
     container.appendChild(s);
   }
-  // Near stars: larger, brighter, faster twinkle — mid sky
-  for (let i = 0; i < 30; i++) {
+  // Mid stars — slightly larger, scattered in top half
+  for (let i = 0; i < 22; i++) {
     const s = document.createElement('div');
     s.className = 'end-star near';
-    const size = Math.random() < 0.3 ? 3 : 2;
-    const op = 0.55 + Math.random() * 0.35;
+    const size = Math.random() < 0.25 ? 3 : 2;
+    const op = 0.42 + Math.random() * 0.30;
     s.style.cssText = [
-      `width:${size}px`, `height:${size}px`,
-      `left:${Math.random()*100}%`, `top:${(5+Math.random()*42).toFixed(1)}%`,
-      `--op:${op.toFixed(2)}`, `--dur:${(1.4+Math.random()*1.8).toFixed(1)}s`,
+      `width:${size}px`,`height:${size}px`,
+      `left:${(Math.random()*92+4).toFixed(1)}%`,
+      `top:${(3+Math.random()*38).toFixed(1)}%`,
+      `--op:${op.toFixed(2)}`,
+      `--dur:${(1.8+Math.random()*2.2).toFixed(1)}s`,
+      `--d:${(Math.random()*4).toFixed(1)}s`
+    ].join(';');
+    container.appendChild(s);
+  }
+  // 4-5 bright standout stars (constellation anchors)
+  const brightSpots = [
+    [12,8],[28,5],[55,12],[72,7],[88,14],[42,18],[66,22]
+  ];
+  brightSpots.forEach(([lp, tp]) => {
+    if (Math.random() > 0.35) return;
+    const s = document.createElement('div');
+    s.className = 'end-star bright';
+    s.style.cssText = [
+      'width:3px','height:3px',
+      `left:${lp}%`,`top:${tp}%`,
+      `--op:0.85`,
+      `--dur:${(2+Math.random()*1.5).toFixed(1)}s`,
       `--d:${(Math.random()*3).toFixed(1)}s`
     ].join(';');
     container.appendChild(s);
-  }
+  });
 }
 
 function endInitFireflies() {
@@ -7056,7 +7147,8 @@ function endInitRoadDashes() {
     rect.setAttribute('width', d.w);
     rect.setAttribute('height', d.h);
     rect.setAttribute('rx', '1');
-    rect.setAttribute('fill', 'rgba(255,205,71,0.42)');
+    const dashOp = 0.22 + d.w * 0.022;
+    rect.setAttribute('fill', `rgba(220,185,75,${dashOp.toFixed(2)})`);
     rect.classList.add('end-road-dash-svg');
     rect.style.setProperty('--dd', `${i * 0.28}s`);
     g.appendChild(rect);
@@ -7252,43 +7344,68 @@ if (tgEl) tgObserver.observe(tgEl);
   <!-- Sky -->
   <div class="end-sky" id="endSky"></div>
 
-  <!-- Stars (generated by JS) -->
+  <!-- Stars (JS-generated) -->
   <div id="endStars"></div>
 
   <!-- Moon -->
   <div class="end-moon" id="endMoon"></div>
 
-  <!-- Ground -->
+  <!-- Ground (44% height, contains road, grass, lamps pools, fireflies) -->
   <div class="end-ground">
     <div class="end-ground-base"></div>
-    <!-- Perspective road SVG (drawn by JS) -->
+
+    <!-- Perspective road SVG — soft-edged trapezoid -->
     <svg class="end-road-svg" id="endRoadSvg" viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
+        <!-- Near-warm → far-cool gradient -->
         <linearGradient id="rdGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0e1028"/>
-          <stop offset="48%" stop-color="#1a1836"/>
-          <stop offset="100%" stop-color="#262240"/>
+          <stop offset="0%"  stop-color="#0f1128"/>
+          <stop offset="40%" stop-color="#1a1835"/>
+          <stop offset="100%" stop-color="#28243e"/>
         </linearGradient>
+        <!-- Subtle warm overlay near bottom (lamp reflection) -->
+        <linearGradient id="rdWarm" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="transparent"/>
+          <stop offset="75%"  stop-color="rgba(195,135,38,0.00)"/>
+          <stop offset="100%" stop-color="rgba(195,135,38,0.065)"/>
+        </linearGradient>
+        <!-- Horizon fade -->
         <linearGradient id="rdFade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#080a1e" stop-opacity="0.88"/>
-          <stop offset="100%" stop-color="#080a1e" stop-opacity="0"/>
+          <stop offset="0%"   stop-color="#090a1e" stop-opacity="0.88"/>
+          <stop offset="100%" stop-color="#090a1e" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Left soft edge (road-to-grass blend) -->
+        <linearGradient id="rdEdgeL" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#090a1e" stop-opacity="0.75"/>
+          <stop offset="100%" stop-color="#090a1e" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Right soft edge -->
+        <linearGradient id="rdEdgeR" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#090a1e" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#090a1e" stop-opacity="0.75"/>
         </linearGradient>
       </defs>
-      <!-- Road trapezoid: bottom 8%-92%, top near vanishing pt ~48% -->
-      <polygon points="32,200 368,200 212,15 172,15" fill="url(#rdGrad)"/>
-      <!-- Left edge shadow -->
-      <line x1="32" y1="200" x2="172" y2="15" stroke="#0a0c20" stroke-width="3" opacity="0.7"/>
-      <!-- Right edge shadow -->
-      <line x1="368" y1="200" x2="212" y2="15" stroke="#0a0c20" stroke-width="3" opacity="0.7"/>
-      <!-- Horizon fade at top of road -->
-      <rect x="166" y="13" width="52" height="28" fill="url(#rdFade)"/>
-      <!-- Road dashes (inserted by JS into this group) -->
+      <!-- Road surface: trapezoid (near 8%→92%, far ~44%→53%) -->
+      <polygon points="34,200 366,200 214,16 172,16" fill="url(#rdGrad)"/>
+      <!-- Warm near-road overlay -->
+      <polygon points="34,200 366,200 214,16 172,16" fill="url(#rdWarm)"/>
+      <!-- Soft left blend (road edge → grass) -->
+      <polygon points="22,200 110,200 196,52 172,16" fill="url(#rdEdgeL)" opacity="0.6"/>
+      <!-- Soft right blend -->
+      <polygon points="290,200 378,200 214,16 204,52" fill="url(#rdEdgeR)" opacity="0.6"/>
+      <!-- Horizon fade at vanishing point -->
+      <rect x="164" y="13" width="58" height="30" fill="url(#rdFade)"/>
+      <!-- Road center dashes (JS) -->
       <g id="endRoadDashes"></g>
     </svg>
-    <!-- Road horizon mist -->
+
+    <!-- Horizon mist -->
     <div class="end-road-mist"></div>
-    <!-- Store warm light spill -->
+    <!-- Store warm light spill on ground -->
     <div class="end-store-glow"></div>
+    <!-- Lamp light pools -->
+    <div class="end-lamp-pool lamp-pool-l" id="endLampPoolL"></div>
+    <div class="end-lamp-pool lamp-pool-r" id="endLampPoolR"></div>
     <!-- Fireflies -->
     <div id="endFireflies"></div>
     <!-- Grass left -->
@@ -7301,156 +7418,201 @@ if (tgEl) tgObserver.observe(tgEl);
     </div>
   </div>
 
-  <!-- Convenience store (behind, left) -->
-  <div class="end-store" id="endStore">
-    <svg width="130" height="120" viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
-      <!-- building -->
-      <rect x="5" y="30" width="120" height="85" fill="#1a1a3a" stroke="#2a2a5a" stroke-width="2"/>
-      <!-- roof -->
-      <rect x="0" y="20" width="130" height="14" fill="#2a2a5a" stroke="#1a1a3a" stroke-width="2"/>
-      <!-- sign -->
-      <rect x="20" y="24" width="90" height="10" fill="#FFCD47" stroke="#1a1a3a" stroke-width="1"/>
-      <text x="65" y="32" text-anchor="middle" font-size="6" fill="#1a1a2a" font-family="monospace" font-weight="bold">TOMORROW MART</text>
-      <!-- warm window glow -->
-      <rect x="15" y="42" width="36" height="28" fill="#3a2800" stroke="#2a1a00" stroke-width="1"/>
-      <rect x="17" y="44" width="32" height="24" fill="#d4820a" opacity="0.55"/>
-      <rect x="17" y="44" width="32" height="24" fill="url(#winGlow)" opacity="0.7"/>
-      <!-- window 2 -->
-      <rect x="78" y="42" width="36" height="28" fill="#3a2800" stroke="#2a1a00" stroke-width="1"/>
-      <rect x="80" y="44" width="32" height="24" fill="#d4820a" opacity="0.55"/>
-      <!-- door -->
-      <rect x="51" y="75" width="28" height="40" fill="#2a2a4a" stroke="#1a1a3a" stroke-width="2"/>
-      <rect x="53" y="77" width="11" height="36" fill="#c47a08" opacity="0.4"/>
-      <rect x="66" y="77" width="11" height="36" fill="#c47a08" opacity="0.4"/>
-      <!-- door light spill -->
-      <ellipse cx="65" cy="115" rx="22" ry="6" fill="#d4820a" opacity="0.25"/>
-      <defs>
-        <radialGradient id="winGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffe090" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#c47a08" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
+  <!-- Street lamp LEFT (near store, mid-ground) -->
+  <div class="end-lamp lamp-l" id="endLampL">
+    <div class="lamp-glow"></div>
+    <svg width="30" height="68" viewBox="0 0 30 68" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <!-- pole -->
+      <rect x="13" y="20" width="4" height="48" fill="#181628"/>
+      <!-- arm — horizontal then vertical up -->
+      <rect x="5" y="17" width="10" height="3" fill="#181628"/>
+      <rect x="5" y="9"  width="3" height="10" fill="#181628"/>
+      <!-- lantern casing -->
+      <rect x="2" y="5"  width="14" height="10" rx="1" fill="#12102a"/>
+      <!-- lantern glass — warm amber-yellow -->
+      <rect x="3" y="6"  width="12" height="8" fill="#ffc038" opacity="0.95"/>
+      <!-- glass inner glow -->
+      <rect x="4" y="7"  width="6"  height="3" fill="#ffe090" opacity="0.45"/>
+      <!-- lantern trim top/bottom -->
+      <rect x="1" y="4"  width="16" height="2" fill="#181628"/>
+      <rect x="1" y="14" width="16" height="2" fill="#181628"/>
     </svg>
   </div>
 
-  <!-- Cat -->
+  <!-- Street lamp RIGHT (other road side, slightly further) -->
+  <div class="end-lamp lamp-r" id="endLampR">
+    <div class="lamp-glow"></div>
+    <svg width="26" height="60" viewBox="0 0 26 60" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <!-- pole -->
+      <rect x="11" y="18" width="4" height="42" fill="#181628"/>
+      <!-- arm — extends left toward road -->
+      <rect x="10" y="15" width="10" height="3" fill="#181628"/>
+      <rect x="17" y="8"  width="3"  height="9" fill="#181628"/>
+      <!-- lantern casing -->
+      <rect x="8"  y="4"  width="12" height="9"  rx="1" fill="#12102a"/>
+      <!-- lantern glass -->
+      <rect x="9"  y="5"  width="10" height="7"  fill="#ffc038" opacity="0.95"/>
+      <!-- glass inner glow -->
+      <rect x="10" y="6"  width="5"  height="3"  fill="#ffe090" opacity="0.40"/>
+      <!-- lantern trim -->
+      <rect x="7"  y="3"  width="14" height="2"  fill="#181628"/>
+      <rect x="7"  y="12" width="14" height="2"  fill="#181628"/>
+    </svg>
+  </div>
+
+  <!-- Convenience store (behind, left — night atmosphere) -->
+  <div class="end-store" id="endStore">
+    <svg width="126" height="118" viewBox="0 0 126 118" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <defs>
+        <radialGradient id="wg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#ffe098" stop-opacity="0.88"/>
+          <stop offset="100%" stop-color="#c47808" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#ffda80" stop-opacity="0.75"/>
+          <stop offset="100%" stop-color="#c07008" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- Building body (dark night) -->
+      <rect x="4"  y="30" width="118" height="84" fill="#14142a" stroke="#1e1e40" stroke-width="1.5"/>
+      <!-- Roof -->
+      <rect x="0"  y="20" width="126" height="13" fill="#1e1e40" stroke="#141428" stroke-width="1.5"/>
+      <!-- Sign (warm yellow) -->
+      <rect x="18" y="23" width="90" height="9"  fill="#FFCD47" stroke="#141428" stroke-width="1"/>
+      <text x="63" y="30" text-anchor="middle" font-size="5.5" fill="#12122a" font-family="monospace" font-weight="bold">TOMORROW MART</text>
+      <!-- Left window frame -->
+      <rect x="12" y="40" width="38" height="30" fill="#2a1a00" stroke="#1a1000" stroke-width="1"/>
+      <!-- Left window warm glow -->
+      <rect x="13" y="41" width="36" height="28" fill="#c47408" opacity="0.48"/>
+      <rect x="13" y="41" width="36" height="28" fill="url(#wg1)"/>
+      <!-- Right window frame -->
+      <rect x="76" y="40" width="38" height="30" fill="#2a1a00" stroke="#1a1000" stroke-width="1"/>
+      <!-- Right window warm glow -->
+      <rect x="77" y="41" width="36" height="28" fill="#c47408" opacity="0.42"/>
+      <rect x="77" y="41" width="36" height="28" fill="url(#wg2)"/>
+      <!-- Door -->
+      <rect x="48" y="73" width="30" height="42" fill="#1e1e38" stroke="#141428" stroke-width="1.5"/>
+      <rect x="50" y="75" width="12" height="38" fill="#b87008" opacity="0.35"/>
+      <rect x="64" y="75" width="12" height="38" fill="#b87008" opacity="0.35"/>
+      <!-- Door light spill on ground -->
+      <ellipse cx="63" cy="114" rx="20" ry="5" fill="#c87808" opacity="0.22"/>
+    </svg>
+  </div>
+
+  <!-- Cat (near store, left side) -->
   <div class="end-cat" id="endCat">
-    <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">
+    <svg width="52" height="42" viewBox="0 0 52 42" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
       <!-- body -->
-      <rect x="10" y="18" width="26" height="18" rx="4" fill="#e8d0a8" stroke="#2a2010" stroke-width="2"/>
+      <rect x="8"  y="17" width="26" height="18" rx="4" fill="#e2ca9e" stroke="#28200e" stroke-width="1.5"/>
       <!-- head -->
-      <rect x="16" y="6" width="20" height="16" rx="4" fill="#e8d0a8" stroke="#2a2010" stroke-width="2"/>
+      <rect x="14" y="5"  width="20" height="16" rx="4" fill="#e2ca9e" stroke="#28200e" stroke-width="1.5"/>
       <!-- ears -->
-      <polygon points="17,8 14,0 20,4" fill="#e8d0a8" stroke="#2a2010" stroke-width="1.5"/>
-      <polygon points="35,8 38,0 32,4" fill="#e8d0a8" stroke="#2a2010" stroke-width="1.5"/>
+      <polygon points="15,7 12,0 19,4"  fill="#e2ca9e" stroke="#28200e" stroke-width="1.2"/>
+      <polygon points="33,7 36,0 30,4"  fill="#e2ca9e" stroke="#28200e" stroke-width="1.2"/>
       <!-- inner ear -->
-      <polygon points="17,7 15,2 19,5" fill="#f0a0a0" opacity="0.6"/>
-      <polygon points="35,7 37,2 33,5" fill="#f0a0a0" opacity="0.6"/>
-      <!-- eyes (calm closed) -->
-      <path d="M20,12 Q22,10 24,12" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <path d="M28,12 Q30,10 32,12" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <polygon points="15,7 13,2 18,5"  fill="#eba0a0" opacity="0.55"/>
+      <polygon points="33,7 35,2 31,5"  fill="#eba0a0" opacity="0.55"/>
+      <!-- eyes closed -->
+      <path d="M18,11 Q20,9 22,11" stroke="#28200e" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M26,11 Q28,9 30,11" stroke="#28200e" stroke-width="1.4" fill="none" stroke-linecap="round"/>
       <!-- nose -->
-      <rect x="25" y="16" width="4" height="3" rx="1" fill="#e08888"/>
+      <rect x="23" y="15" width="4" height="3" rx="1" fill="#e08080"/>
       <!-- whiskers -->
-      <line x1="12" y1="15" x2="22" y2="16" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
-      <line x1="12" y1="18" x2="22" y2="17" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
-      <line x1="44" y1="15" x2="34" y2="16" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
-      <line x1="44" y1="18" x2="34" y2="17" stroke="#2a2010" stroke-width="0.8" opacity="0.6"/>
+      <line x1="10" y1="14" x2="20" y2="15" stroke="#28200e" stroke-width="0.7" opacity="0.5"/>
+      <line x1="10" y1="17" x2="20" y2="16" stroke="#28200e" stroke-width="0.7" opacity="0.5"/>
+      <line x1="42" y1="14" x2="32" y2="15" stroke="#28200e" stroke-width="0.7" opacity="0.5"/>
+      <line x1="42" y1="17" x2="32" y2="16" stroke="#28200e" stroke-width="0.7" opacity="0.5"/>
       <!-- legs -->
-      <rect x="12" y="34" width="8" height="8" rx="2" fill="#d8c098" stroke="#2a2010" stroke-width="1.5"/>
-      <rect x="26" y="34" width="8" height="8" rx="2" fill="#d8c098" stroke="#2a2010" stroke-width="1.5"/>
-      <!-- tail -->
-      <path d="M36,28 Q50,20 52,30 Q50,38 44,36" stroke="#e8d0a8" stroke-width="4" fill="none" stroke-linecap="round"/>
-      <path d="M36,28 Q50,20 52,30 Q50,38 44,36" stroke="#2a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="33" width="8" height="8" rx="2" fill="#d2ba90" stroke="#28200e" stroke-width="1.2"/>
+      <rect x="24" y="33" width="8" height="8" rx="2" fill="#d2ba90" stroke="#28200e" stroke-width="1.2"/>
+      <!-- tail (curled right) -->
+      <path d="M34,26 Q48,18 50,28 Q48,36 42,35" stroke="#e2ca9e" stroke-width="4"   fill="none" stroke-linecap="round"/>
+      <path d="M34,26 Q48,18 50,28 Q48,36 42,35" stroke="#28200e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     </svg>
   </div>
 
   <!-- Character foot shadow -->
   <div class="end-char-shadow" id="endCharShadow"></div>
 
-  <!-- Character holding receipt -->
+  <!-- Character holding receipt (slightly right of center, facing forward) -->
   <div class="end-character" id="endCharacter">
-    <svg width="72" height="96" viewBox="0 0 72 96" xmlns="http://www.w3.org/2000/svg">
+    <svg width="70" height="94" viewBox="0 0 70 94" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
       <!-- legs -->
-      <rect x="18" y="72" width="14" height="22" rx="3" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1.5"/>
-      <rect x="40" y="72" width="14" height="22" rx="3" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1.5"/>
+      <rect x="17" y="70" width="14" height="22" rx="3" fill="#28283a" stroke="#18182a" stroke-width="1.5"/>
+      <rect x="39" y="70" width="14" height="22" rx="3" fill="#28283a" stroke="#18182a" stroke-width="1.5"/>
       <!-- shoes -->
-      <rect x="14" y="90" width="20" height="8" rx="3" fill="#1a1a28"/>
-      <rect x="38" y="90" width="20" height="8" rx="3" fill="#1a1a28"/>
+      <rect x="13" y="88" width="20" height="7" rx="3" fill="#181826"/>
+      <rect x="37" y="88" width="20" height="7" rx="3" fill="#181826"/>
       <!-- body -->
-      <rect x="12" y="38" width="48" height="38" rx="4" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5"/>
+      <rect x="11" y="37" width="48" height="36" rx="4" fill="#5870b8" stroke="#3858a8" stroke-width="1.5"/>
       <!-- collar -->
-      <rect x="28" y="38" width="16" height="10" rx="2" fill="#4a6aaf"/>
-      <!-- left arm (hangs down) -->
-      <rect x="2" y="40" width="12" height="32" rx="3" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5"/>
-      <rect x="2" y="68" width="12" height="8" rx="2" fill="#e8c8a0"/>
+      <rect x="27" y="37" width="16" height="10" rx="2" fill="#4868a8"/>
+      <!-- left arm -->
+      <rect x="1"  y="39" width="12" height="30" rx="3" fill="#5870b8" stroke="#3858a8" stroke-width="1.5"/>
+      <rect x="1"  y="66" width="12" height="8"  rx="2" fill="#e8c8a0"/>
       <!-- right arm (raised, holds receipt) -->
-      <rect x="58" y="30" width="12" height="28" rx="3" fill="#5a7abf" stroke="#3a5aaf" stroke-width="1.5" transform="rotate(-18,64,44)"/>
-      <rect x="60" y="54" width="12" height="8" rx="2" fill="#e8c8a0" transform="rotate(-18,66,58)"/>
+      <rect x="57" y="29" width="12" height="28" rx="3" fill="#5870b8" stroke="#3858a8" stroke-width="1.5" transform="rotate(-18,63,43)"/>
+      <rect x="59" y="53" width="12" height="8"  rx="2" fill="#e8c8a0" transform="rotate(-18,65,57)"/>
       <!-- head -->
-      <rect x="18" y="6" width="36" height="34" rx="5" fill="#e8c8a0" stroke="#c8a880" stroke-width="1.5"/>
+      <rect x="17" y="5"  width="36" height="34" rx="5" fill="#e8c8a0" stroke="#c8a880" stroke-width="1.5"/>
       <!-- hair -->
-      <rect x="16" y="2" width="40" height="14" rx="4" fill="#3a2a1a"/>
-      <!-- eyes (calm looking up) -->
-      <rect x="24" y="20" width="7" height="7" rx="1" fill="#2a1a0a"/>
-      <rect x="41" y="20" width="7" height="7" rx="1" fill="#2a1a0a"/>
+      <rect x="15" y="1"  width="40" height="14" rx="4" fill="#382818"/>
+      <!-- eyes -->
+      <rect x="23" y="19" width="7" height="7" rx="1" fill="#281808"/>
+      <rect x="40" y="19" width="7" height="7" rx="1" fill="#281808"/>
       <!-- eye shine -->
-      <rect x="26" y="21" width="2" height="2" fill="#fff"/>
-      <rect x="43" y="21" width="2" height="2" fill="#fff"/>
-      <!-- mouth (gentle smile) -->
-      <path d="M28,32 Q36,37 44,32" stroke="#c08060" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <rect x="25" y="20" width="2" height="2" fill="#fff"/>
+      <rect x="42" y="20" width="2" height="2" fill="#fff"/>
+      <!-- gentle smile -->
+      <path d="M27,31 Q35,36 43,31" stroke="#b87858" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     </svg>
   </div>
 
   <!-- Receipt in hand -->
   <div class="end-receipt" id="endReceipt">
-    <svg width="36" height="58" viewBox="0 0 36 58" xmlns="http://www.w3.org/2000/svg">
-      <!-- paper body -->
-      <rect x="2" y="2" width="32" height="52" fill="#f8f4e8" stroke="#c8b880" stroke-width="1.5"/>
-      <!-- torn top edge -->
-      <polyline points="2,4 5,2 8,5 11,2 14,4 17,2 20,5 23,2 26,4 29,2 32,4 34,2 34,4" fill="#f8f4e8" stroke="#c8b880" stroke-width="1"/>
-      <!-- content lines -->
-      <rect x="6" y="10" width="24" height="2" rx="1" fill="#c8b060" opacity="0.7"/>
-      <rect x="6" y="16" width="18" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
-      <rect x="6" y="20" width="22" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
-      <rect x="6" y="24" width="16" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
-      <rect x="6" y="30" width="24" height="1" rx="1" fill="#c8c0a8" opacity="0.4"/>
-      <rect x="6" y="35" width="14" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
-      <rect x="6" y="39" width="20" height="1.5" rx="1" fill="#a89848" opacity="0.5"/>
-      <!-- star stamp -->
-      <text x="18" y="52" text-anchor="middle" font-size="8" fill="#FFCD47" opacity="0.9">★</text>
+    <svg width="34" height="55" viewBox="0 0 34 55" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <rect x="2" y="2" width="30" height="50" fill="#f6f2e6" stroke="#c8b878" stroke-width="1.5"/>
+      <polyline points="2,4 5,2 8,5 11,2 14,4 17,2 20,5 23,2 26,4 29,2 32,4 32,2" fill="#f6f2e6" stroke="#c8b878" stroke-width="1"/>
+      <rect x="6" y="10" width="22" height="2"   rx="1" fill="#c8b058" opacity="0.68"/>
+      <rect x="6" y="16" width="16" height="1.5" rx="1" fill="#a89840" opacity="0.48"/>
+      <rect x="6" y="20" width="20" height="1.5" rx="1" fill="#a89840" opacity="0.48"/>
+      <rect x="6" y="24" width="14" height="1.5" rx="1" fill="#a89840" opacity="0.48"/>
+      <rect x="6" y="30" width="22" height="1"   rx="1" fill="#c8c0a8" opacity="0.38"/>
+      <rect x="6" y="35" width="12" height="1.5" rx="1" fill="#a89840" opacity="0.48"/>
+      <rect x="6" y="39" width="18" height="1.5" rx="1" fill="#a89840" opacity="0.48"/>
+      <text x="17" y="51" text-anchor="middle" font-size="8" fill="#FFCD47" opacity="0.88">★</text>
     </svg>
   </div>
 
-  <!-- Copy lines -->
+  <!-- Copy lines — breathing room between paragraphs -->
   <div class="end-copy" id="endCopy">
-    <div class="end-line" data-i="0">你走出便利店，手里还握着那张小票。</div>
-    <div class="end-line" data-i="1">这一刻你突然明白，</div>
-    <div class="end-line dim" data-i="2">知道这一切，并不意味着什么一定会发生。</div>
-    <div class="end-line" data-i="3" style="margin-top:10px;">明天的面试，</div>
-    <div class="end-line dim" data-i="4">也只是地球 Online 里的一场职场体验游戏。</div>
-    <div class="end-line" data-i="5" style="margin-top:10px;">你抬头看见群星璀璨，月亮高挂。</div>
-    <div class="end-line dim" data-i="6">小猫轻轻走过，四周只有安静的虫鸣。</div>
-    <div class="end-line" data-i="7" style="margin-top:10px;">面前是一条很长的路。</div>
-    <div class="end-line big" data-i="8">平静，却有力量。</div>
-    <div class="end-line" data-i="9" style="margin-top:10px;">此刻的你，就是最好的你。</div>
-    <div class="end-line dim" data-i="10">你带着一点自信，也带着一点勇气。</div>
-    <div class="end-line" data-i="11" style="margin-top:10px;">无论如何，</div>
-    <div class="end-line big" data-i="12">前进，都是最好的答案。</div>
-    <div class="end-line dim" data-i="13" style="margin-top:8px;">你沉沉睡去，等待明天醒来，等待太阳升起。</div>
-    <div class="end-line finale" data-i="14" style="margin-top:14px;">Tomorrow will load soon...</div>
+    <div class="end-line"     data-i="0"                         >你走出便利店，手里还握着那张小票。</div>
+    <div class="end-line"     data-i="1"                         >这一刻你突然明白，</div>
+    <div class="end-line dim" data-i="2"                         >知道这一切，并不意味着什么一定会发生。</div>
+    <div class="end-line"     data-i="3"  style="margin-top:14px">明天的面试，</div>
+    <div class="end-line dim" data-i="4"                         >也只是地球 Online 里的一场职场体验游戏。</div>
+    <div class="end-line"     data-i="5"  style="margin-top:14px">你抬头看见群星璀璨，月亮高挂。</div>
+    <div class="end-line dim" data-i="6"                         >小猫轻轻走过，四周只有安静的虫鸣。</div>
+    <div class="end-line"     data-i="7"  style="margin-top:14px">面前是一条很长的路。</div>
+    <div class="end-line big" data-i="8"                         >平静，却有力量。</div>
+    <div class="end-line"     data-i="9"  style="margin-top:14px">此刻的你，就是最好的你。</div>
+    <div class="end-line dim" data-i="10"                        >你带着一点自信，也带着一点勇气。</div>
+    <div class="end-line"     data-i="11" style="margin-top:14px">无论如何，</div>
+    <div class="end-line big" data-i="12"                        >前进，都是最好的答案。</div>
+    <div class="end-line dim" data-i="13" style="margin-top:10px">你沉沉睡去，等待明天醒来，等待太阳升起。</div>
+    <div class="end-line finale" data-i="14" style="margin-top:18px">Tomorrow will load soon...</div>
   </div>
 
   <!-- Controls -->
   <div class="end-controls" id="endControls">
     <button class="end-btn-main" onclick="endGoForward()">带着小票出发 →</button>
-    <button class="end-btn-sec" onclick="endReplay()">↺ 再看一次</button>
-    <button class="end-btn-sec" onclick="endViewReceipt()">再看小票</button>
+    <button class="end-btn-sec"  onclick="endReplay()">↺ 再看一次</button>
+    <button class="end-btn-sec"  onclick="endViewReceipt()">再看小票</button>
   </div>
 
-  <!-- Skip button -->
+  <!-- Skip -->
   <button class="end-skip" id="endSkip" onclick="endSkip()">跳过 »</button>
-</div>
+</div></div>
 
 </body>
 </html>
