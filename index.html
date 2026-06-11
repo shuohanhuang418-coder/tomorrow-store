@@ -868,7 +868,7 @@ section {
   100% { transform: translate(calc(var(--sf-dx, 12px) * 0.6), 105vh); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .skill-kw { animation: none; opacity: var(--sf-op, 0.09); }
+  .skill-kw { animation: none; opacity: var(--sf-op, 0.22); }
 }
 
 .backpack-center {
@@ -5463,15 +5463,15 @@ function goTo(id) {
 
   // Colors: soft cyan-greens + occasional yellow highlight
   const COLORS = [
-    'rgba(71,214,214,1)',   // --cyan
-    'rgba(109,217,134,1)',  // --green
-    'rgba(120,230,180,1)',  // mint
-    'rgba(160,255,200,1)',  // pale green
-    'rgba(255,205,71,1)',   // --yellow (highlight, rare)
+    'rgba(0,130,140,1)',    // dark teal
+    'rgba(25,110,65,1)',    // dark green
+    'rgba(0,100,110,1)',    // deep cyan
+    'rgba(60,130,90,1)',    // forest green
+    'rgba(140,80,0,1)',     // amber (highlight, rare)
   ];
 
   let initialized = false;
-  const TOTAL = 16; // target keyword count on screen
+  const TOTAL = 18; // target keyword count on screen
 
   function buildSkillKeyword(container, reducedMotion) {
     const word = KEYWORDS[Math.floor(Math.random() * KEYWORDS.length)];
@@ -5494,8 +5494,8 @@ function goTo(id) {
     const colorIdx = glow ? 4 : Math.floor(Math.random() * 4);
     const baseColor = COLORS[colorIdx];
     const op     = glow
-      ? (0.18 + Math.random() * 0.06)  // glow: 0.18–0.24
-      : (0.07 + Math.random() * 0.13); // normal: 0.07–0.20
+      ? (0.38 + Math.random() * 0.12)  // glow: 0.38–0.50
+      : (0.18 + Math.random() * 0.18); // normal: 0.18–0.36
 
     el.style.cssText = [
       `left:${leftPct.toFixed(1)}%`,
@@ -5505,7 +5505,7 @@ function goTo(id) {
       `--sf-delay:${delay.toFixed(2)}s`,
       `--sf-dx:${dx.toFixed(0)}px`,
       `--sf-op:${op.toFixed(3)}`,
-      glow ? `text-shadow:0 0 6px ${baseColor.replace(',1)',',0.5)')}` : ''
+      glow ? `text-shadow:0 0 8px ${baseColor.replace(',1)',',0.55)')}` : ''
     ].filter(Boolean).join(';');
 
     container.appendChild(el);
