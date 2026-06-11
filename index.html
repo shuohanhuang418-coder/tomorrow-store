@@ -7441,45 +7441,6 @@ function endInitBushes() {
 }
 
 
-  const container = document.getElementById('endBushes');
-  if (!container) return;
-  // Bush positions: both sides, varied heights
-  const bushes = [
-    // Left side
-    {l:2,  b:28, w:32, h:22, c:'#0e2a14', c2:'#163420'},
-    {l:6,  b:24, w:24, h:18, c:'#122a18', c2:'#1a3822'},
-    {l:16, b:20, w:20, h:14, c:'#0c2210', c2:'#143018'},
-    // Between store and path
-    {l:20, b:24, w:18, h:12, c:'#102616', c2:'#18321c'},
-    // Right side (past stream)
-    {l:74, b:26, w:28, h:20, c:'#0e2a14', c2:'#163420'},
-    {l:80, b:22, w:22, h:16, c:'#122a18', c2:'#1a3822'},
-    {l:86, b:28, w:30, h:24, c:'#0c2210', c2:'#143018'},
-    {l:90, b:18, w:18, h:12, c:'#102616', c2:'#18321c'},
-  ];
-  bushes.forEach((bs, i) => {
-    const el = document.createElement('div');
-    el.className = 'end-bush';
-    el.style.cssText = [
-      `left:${bs.l}%`, `bottom:${bs.b}%`,
-      `--bw:${(5+Math.random()*4).toFixed(1)}s`,
-      `--bd:${(Math.random()*3).toFixed(1)}s`
-    ].join(';');
-    el.innerHTML = `<svg width="${bs.w}" height="${bs.h}" viewBox="0 0 ${bs.w} ${bs.h}"
-      xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <ellipse cx="${bs.w/2}" cy="${bs.h*0.6}" rx="${bs.w/2}" ry="${bs.h*0.55}" fill="${bs.c}"/>
-      <ellipse cx="${bs.w*0.35}" cy="${bs.h*0.45}" rx="${bs.w*0.35}" ry="${bs.h*0.42}" fill="${bs.c2}"/>
-      <ellipse cx="${bs.w*0.65}" cy="${bs.h*0.42}" rx="${bs.w*0.3}"  ry="${bs.h*0.38}" fill="${bs.c2}"/>
-    </svg>`;
-    container.appendChild(el);
-  });
-  setTimeout(() => {
-    container.querySelectorAll('.end-bush').forEach((b, i) => {
-      setTimeout(() => b.classList.add('visible'), i * 120);
-    });
-  }, 1800);
-}
-
 
 // ===== PORTAL DOOR =====
 function portalDoorClick() {
