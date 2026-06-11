@@ -833,10 +833,47 @@ section {
 
 /* ===== SECTION 3: BACKPACK ===== */
 #backpack {
+  position: relative;
   background: linear-gradient(135deg, #e8f5e9 0%, #f3e5f5 100%);
 }
 
+/* ── Skills rain layer ── */
+.skills-rain-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+.skill-kw {
+  position: absolute;
+  top: -2em;
+  font-family: var(--pixel);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  animation: skillFall var(--sf-dur, 14s) linear var(--sf-delay, 0s) infinite;
+  will-change: transform, opacity;
+}
+.skill-kw.reduced {
+  animation: none;
+  opacity: var(--sf-op, 0.10);
+}
+@keyframes skillFall {
+  0%   { transform: translate(0, -2em); opacity: 0; }
+  8%   { opacity: var(--sf-op, 0.12); }
+  50%  { transform: translate(var(--sf-dx, 12px), 50vh); }
+  92%  { opacity: var(--sf-op, 0.12); }
+  100% { transform: translate(calc(var(--sf-dx, 12px) * 0.6), 105vh); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skill-kw { animation: none; opacity: var(--sf-op, 0.09); }
+}
+
 .backpack-center {
+  position: relative;
+  z-index: 1;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -4741,6 +4778,8 @@ footer .tiny {
 
 <!-- ===== SECTION 3: BACKPACK ===== -->
 <section id="backpack">
+  <!-- Skills keyword rain layer — atmosphere only -->
+  <div class="skills-rain-layer" id="skillsRainLayer" aria-hidden="true"></div>
   <div class="backpack-center">
     <div class="zone-tag">🎒 安检区 · SECURITY SCAN ZONE</div>
     <div class="section-header fade-in" style="text-align:center;">03｜随行背包安检</div>
@@ -5411,6 +5450,96 @@ createStars();
 function goTo(id) {
   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 }
+
+// ===== SKILL KEYWORD RAIN (03 Backpack section) =====
+(function() {
+  const KEYWORDS = [
+    "沟通","协调","组织","细致","责任感","倾听",
+    "访谈","执行力","信息整理","服务意识","跨文化协作",
+    "同理心","反馈","主动性","复盘","学习力",
+    "耐心","适应力","招聘","候选人体验","岗位理解",
+    "流程意识","关系维护"
+  ];
+
+  // Colors: soft cyan-greens + occasional yellow highlight
+  const COLORS = [
+    'rgba(71,214,214,1)',   // --cyan
+    'rgba(109,217,134,1)',  // --green
+    'rgba(120,230,180,1)',  // mint
+    'rgba(160,255,200,1)',  // pale green
+    'rgba(255,205,71,1)',   // --yellow (highlight, rare)
+  ];
+
+  let initialized = false;
+  const TOTAL = 16; // target keyword count on screen
+
+  function buildSkillKeyword(container, reducedMotion) {
+    const word = KEYWORDS[Math.floor(Math.random() * KEYWORDS.length)];
+    const el   = document.createElement('span');
+    el.className = 'skill-kw' + (reducedMotion ? ' reduced' : '');
+    el.textContent = word;
+
+    // ~20% originate near center (like scanning the backpack area)
+    const nearCenter = Math.random() < 0.20;
+    const leftPct = nearCenter
+      ? (35 + Math.random() * 30)    // 35–65% (center zone)
+      : (2  + Math.random() * 94);   // 2–96% (full width)
+
+    const dur    = 10 + Math.random() * 10;           // 10–20s
+    const delay  = reducedMotion ? 0 : -(Math.random() * dur); // stagger via negative delay
+    const dx     = (Math.random() - 0.5) * 60;        // ±30px horizontal drift
+    const sz     = 10 + Math.floor(Math.random() * 7); // 10–16px
+    // Rare glow: ~15% of keywords
+    const glow   = Math.random() < 0.15;
+    const colorIdx = glow ? 4 : Math.floor(Math.random() * 4);
+    const baseColor = COLORS[colorIdx];
+    const op     = glow
+      ? (0.18 + Math.random() * 0.06)  // glow: 0.18–0.24
+      : (0.07 + Math.random() * 0.13); // normal: 0.07–0.20
+
+    el.style.cssText = [
+      `left:${leftPct.toFixed(1)}%`,
+      `font-size:${sz}px`,
+      `color:${baseColor}`,
+      `--sf-dur:${dur.toFixed(1)}s`,
+      `--sf-delay:${delay.toFixed(2)}s`,
+      `--sf-dx:${dx.toFixed(0)}px`,
+      `--sf-op:${op.toFixed(3)}`,
+      glow ? `text-shadow:0 0 6px ${baseColor.replace(',1)',',0.5)')}` : ''
+    ].filter(Boolean).join(';');
+
+    container.appendChild(el);
+  }
+
+  function initSkillsRain() {
+    if (initialized) return;
+    initialized = true;
+
+    const container = document.getElementById('skillsRainLayer');
+    if (!container) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const count = reducedMotion ? 8 : TOTAL;
+
+    for (let i = 0; i < count; i++) {
+      buildSkillKeyword(container, reducedMotion);
+    }
+  }
+
+  // Trigger once when #backpack enters viewport
+  const section = document.getElementById('backpack');
+  if (section) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          initSkillsRain();
+          obs.unobserve(e.target); // only init once
+        }
+      });
+    }, { threshold: 0.05 });
+    obs.observe(section);
+  }
+})();
 
 window.addEventListener('scroll', () => {
   const sections = ['#hero','#charCreate','#scratch','#cans','#backpack','#door','#chocolate','#receipt','#hrcounter'];
