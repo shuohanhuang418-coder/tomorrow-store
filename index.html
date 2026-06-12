@@ -7407,20 +7407,6 @@ function endInitFireflies() {
   });
 }
 
-function endInitGrass() {
-  const colors = ['#1a4a22', '#1c5228', '#14381a', '#224c2a', '#163c1e'];
-  ['endTuftsL','endTuftsR'].forEach(id => {
-    const el = document.getElementById(id);
-    for (let i = 0; i < 22; i++) {
-      const t = document.createElement('div');
-      t.className = 'end-tuft';
-      t.style.setProperty('--h', `${5+Math.floor(Math.random()*12)}px`);
-      t.style.setProperty('--tc', colors[Math.floor(Math.random()*colors.length)]);
-      el.appendChild(t);
-    }
-  });
-}
-
 function endInitFlowers() {
   const container = document.getElementById('endFlowers');
   if (!container) return;
