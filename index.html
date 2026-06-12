@@ -3427,7 +3427,7 @@ footer .tiny {
   text-shadow:0 0 12px rgba(165,202,255,0.22),0 1px 14px rgba(0,0,14,0.98);
 }
 .end-line.finale {
-  font-family:var(--pixel); font-size:11px; color:#ffc840;
+  font-family:var(--pixel); font-size:13px; color:#ffc840;
   text-shadow:0 0 14px rgba(255,200,50,0.42),0 0 30px rgba(255,185,30,0.14),0 1px 14px rgba(0,0,14,0.98);
   margin-top:12px; letter-spacing:2px;
   animation:endFinaleGlow 3.5s ease-in-out infinite;
@@ -7285,7 +7285,7 @@ function endBuildScene() {
 
 function endShowLines() {
   const lines = document.querySelectorAll('.end-line');
-  const delays = [0, 1400, 2600, 3800, 4800, 5600, 6800, 8200, 9200, 10400, 12000, 13200];
+  const delays = [0, 1200, 2400, 3600, 4800, 5800, 7000, 8400];
   lines.forEach((line, i) => {
     const d = delays[i] || i * 1400;
     endingTimer(() => line.classList.add('show'), d);
@@ -7442,23 +7442,29 @@ function endInitFlowers() {
   }
 
   const cream = '#f5f2ec', white = '#f0f0f8', ivory = '#ede8de', yWarm = '#ffd880';
+  // Road left edge x% ≈ 29.5 + 0.172*bottom% — flowers placed just outside (x - 3~5%)
+  // Road right edge x% ≈ 70.5 - 0.172*bottom% — flowers placed just outside (x + 3~5%)
   const clusters = [
-    // Left road edge — near (foreground, larger)
-    { x:26, y:16, count:3, type:'rose',  petal:cream, center:yWarm, sz:14 },
-    { x:29, y:8,  count:2, type:'tulip', petal:white, center:yWarm, sz:12 },
-    { x:24, y:26, count:2, type:'tulip', petal:ivory, center:yWarm, sz:13 },
-    // Left road edge — mid distance (smaller)
-    { x:25, y:42, count:2, type:'rose',  petal:cream, center:yWarm, sz:9  },
-    { x:27, y:56, count:1, type:'tulip', petal:white, center:yWarm, sz:7  },
-    // Right road edge — near
-    { x:71, y:16, count:3, type:'tulip', petal:cream, center:yWarm, sz:14 },
-    { x:68, y:8,  count:2, type:'rose',  petal:white, center:yWarm, sz:12 },
-    { x:73, y:26, count:2, type:'tulip', petal:ivory, center:yWarm, sz:13 },
-    // Right road edge — mid distance
-    { x:72, y:42, count:2, type:'rose',  petal:cream, center:yWarm, sz:9  },
-    { x:70, y:56, count:1, type:'tulip', petal:white, center:yWarm, sz:7  },
-    // Near store, very subtle
-    { x:8,  y:18, count:2, type:'tulip', petal:ivory, center:yWarm, sz:10 },
+    // Left road edge — continuous from near to far
+    { x:24, y:3,  count:3, type:'rose',  petal:cream, center:yWarm, sz:16 },
+    { x:25, y:9,  count:2, type:'tulip', petal:white, center:yWarm, sz:14 },
+    { x:25, y:16, count:2, type:'rose',  petal:ivory, center:yWarm, sz:13 },
+    { x:26, y:24, count:2, type:'tulip', petal:cream, center:yWarm, sz:11 },
+    { x:27, y:33, count:2, type:'rose',  petal:white, center:yWarm, sz:10 },
+    { x:28, y:42, count:2, type:'tulip', petal:ivory, center:yWarm, sz:8  },
+    { x:29, y:52, count:1, type:'rose',  petal:cream, center:yWarm, sz:7  },
+    { x:30, y:62, count:1, type:'tulip', petal:white, center:yWarm, sz:6  },
+    { x:31, y:72, count:1, type:'rose',  petal:ivory, center:yWarm, sz:5  },
+    // Right road edge — continuous from near to far
+    { x:76, y:3,  count:3, type:'tulip', petal:cream, center:yWarm, sz:16 },
+    { x:75, y:9,  count:2, type:'rose',  petal:white, center:yWarm, sz:14 },
+    { x:75, y:16, count:2, type:'tulip', petal:ivory, center:yWarm, sz:13 },
+    { x:74, y:24, count:2, type:'rose',  petal:cream, center:yWarm, sz:11 },
+    { x:73, y:33, count:2, type:'tulip', petal:white, center:yWarm, sz:10 },
+    { x:72, y:42, count:2, type:'rose',  petal:ivory, center:yWarm, sz:8  },
+    { x:71, y:52, count:1, type:'tulip', petal:cream, center:yWarm, sz:7  },
+    { x:70, y:62, count:1, type:'rose',  petal:white, center:yWarm, sz:6  },
+    { x:69, y:72, count:1, type:'tulip', petal:ivory, center:yWarm, sz:5  },
   ];
 
   clusters.forEach(cl => {
@@ -8158,18 +8164,14 @@ if (tgEl) tgObserver.observe(tgEl);
   <!-- Copy — centered panel, upper-middle -->
   <div class="end-copy" id="endCopy">
     <div class="end-copy-panel">
-      <div class="end-line"      data-i="0"                          >你走出便利店，</div>
-      <div class="end-line dim"  data-i="1"                          >手里还握着那张小票。</div>
-      <div class="end-line"      data-i="2"  style="margin-top:10px" >月光照在小径上，</div>
-      <div class="end-line dim"  data-i="3"                          >这一夜，你明白了一些事。</div>
-      <div class="end-line dim"  data-i="4"  style="margin-top:10px" >不是考题，不是标准答案，</div>
-      <div class="end-line dim"  data-i="5"                          >只是更真实的自己。</div>
-      <div class="end-line big"  data-i="6"  style="margin-top:10px" >平静，却有力量。</div>
-      <div class="end-line"      data-i="7"  style="margin-top:10px" >面前是一条很长的路，</div>
-      <div class="end-line dim"  data-i="8"                          >但方向已经清晰。</div>
-      <div class="end-line big"  data-i="9"  style="margin-top:10px" >前进，都是最好的答案。</div>
-      <div class="end-line finale"     data-i="10" style="margin-top:14px">Tomorrow will load soon...</div>
-      <div class="end-line finale-sub" data-i="11"                   >明天很快就会加载完毕……</div>
+      <div class="end-line" data-i="0">你走出便利店。</div>
+      <div class="end-line" data-i="1">夜风很轻，小票还带着一点温度。</div>
+      <div class="end-line" data-i="2" style="margin-top:10px">今晚没有人给你标准答案——</div>
+      <div class="end-line" data-i="3">因为你本来就不需要。</div>
+      <div class="end-line" data-i="4" style="margin-top:10px">明天要见的，</div>
+      <div class="end-line" data-i="5">也只是另一个想认识你的人。</div>
+      <div class="end-line" data-i="6" style="margin-top:10px">慢慢走。</div>
+      <div class="end-line finale" data-i="7" style="margin-top:14px">Tomorrow will load soon...</div>
     </div>
   </div>
 
