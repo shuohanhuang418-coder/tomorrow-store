@@ -1856,7 +1856,7 @@ section {
 .receipt-section:last-child { border-bottom: none; }
 .receipt-section-title {
   font-family: var(--pixel);
-  font-size: 9px;
+  font-size: 11px;
   color: var(--dark);
   margin-bottom: 8px;
   background: #f5f5f5;
@@ -1867,6 +1867,8 @@ section {
   display: flex;
   gap: 6px;
   line-height: 1.7;
+  color: #1a1a1a;
+  font-size: 13px;
 }
 .receipt-item::before { content: '◆'; color: var(--yellow); flex-shrink: 0; }
 .receipt-footer {
@@ -4139,10 +4141,10 @@ footer .tiny {
         <div class="char-name-display" id="nameDisplay">你的昵称</div>
         <div class="char-avatar-name-display" id="avatarNameDisplay">未选择头像</div>
         <div class="char-hobby-display" id="hobbyDisplay">
-          <span style="font-size:10px;color:#a0b8cc;">暂无爱好</span>
+          <span style="font-size:10px;color:#333;">暂无爱好</span>
         </div>
         <div style="margin-top:14px;border-top:1px dashed rgba(255,255,255,0.1);padding-top:12px;">
-          <div style="font-family:var(--pixel);font-size:9px;color:#a0b8cc;line-height:2;">
+          <div style="font-family:var(--pixel);font-size:9px;color:#333;line-height:2;">
             TOMORROW MART<br>VISITOR PASS
           </div>
         </div>
@@ -4157,7 +4159,7 @@ footer .tiny {
             <div class="px-leg"></div>
           </div>
         </div>
-        <div style="font-family:var(--pixel);font-size:9px;color:#a0b8cc;margin-top:6px;">带着这个角色进店</div>
+        <div style="font-family:var(--pixel);font-size:9px;color:#333;margin-top:6px;">带着这个角色进店</div>
       </div>
     </div>
 
@@ -6188,7 +6190,7 @@ function generateReceipt() {
       </div>` : ''}
       <div class="receipt-section" style="background:#fff8f0; padding:10px;">
         <div style="font-family:var(--pixel);font-size:10px;color:var(--pink);margin-bottom:6px;">⭐ 明天面试前的小提醒</div>
-        <div style="font-size:11px;line-height:1.9;color:#a0b8cc;">${charData.nickname ? charData.nickname + '，' : ''}你不需要成为最会说的人。<br>你只需要把真实经历讲具体，把不确定的问题问清楚。</div>
+        <div style="font-size:11px;line-height:1.9;color:#333;">${charData.nickname ? charData.nickname + '，' : ''}你不需要成为最会说的人。<br>你只需要把真实经历讲具体，把不确定的问题问清楚。</div>
       </div>
     </div>
     <div class="receipt-footer">
@@ -6239,7 +6241,7 @@ function generateReceipt() {
       </div>` : ''}
       <div class="receipt-section" style="background:#f0faff; padding:10px;">
         <div style="font-family:var(--pixel);font-size:9px;color:var(--cyan);margin-bottom:6px;">HR 端定位说明</div>
-        <div style="font-size:10px;line-height:1.9;color:#a0b8cc;">HR 拿到的不是「这个人是什么类型」，<br>而是「明天可以和这个人具体聊什么」。</div>
+        <div style="font-size:10px;line-height:1.9;color:#333;">HR 拿到的不是「这个人是什么类型」，<br>而是「明天可以和这个人具体聊什么」。</div>
       </div>
     </div>
     <div class="receipt-footer">
@@ -6265,7 +6267,7 @@ function populateHRDashboard(allKeywords, topKws, signals, chocQuestions) {
   const overview = document.getElementById('hrOverview');
   const skills = topKws.length > 0 ? topKws : ['沟通协调', '信息整理', '候选人体验'];
   const nickLine = charData.nickname ? `<div class="hr-dash-item">候选人昵称：${charData.avatarEmoji || ''} ${charData.nickname}${charData.avatar ? '（今晚标记：' + charData.avatar + '）' : ''}</div>` : '';
-  const hobbyLine = charData.hobbies.length ? `<div class="hr-dash-item">候选人自述爱好：${charData.hobbies.join(' · ')} <span style="color:#a0b8cc;font-size:10px;">（仅供参考，不作判断）</span></div>` : '';
+  const hobbyLine = charData.hobbies.length ? `<div class="hr-dash-item">候选人自述爱好：${charData.hobbies.join(' · ')} <span style="color:#333;font-size:10px;">（仅供参考，不作判断）</span></div>` : '';
   overview.innerHTML = `
     ${nickLine}
     ${hobbyLine}
@@ -6307,7 +6309,7 @@ function populateHRDashboard(allKeywords, topKws, signals, chocQuestions) {
   if (chocQuestions.length > 0) {
     cq.innerHTML = chocQuestions.map(q => `<div class="hr-dash-item">${q}</div>`).join('');
   } else {
-    cq.innerHTML = `<div class="hr-dash-item" style="color:#a0b8cc;">候选人暂未选择问题巧克力</div>`;
+    cq.innerHTML = `<div class="hr-dash-item" style="color:#333;">候选人暂未选择问题巧克力</div>`;
   }
 }
 
@@ -6390,7 +6392,7 @@ function addCustomHobby() {
 function updateHobbyDisplay() {
   const hd = document.getElementById('hobbyDisplay');
   if (charData.hobbies.length === 0) {
-    hd.innerHTML = '<span style="font-size:10px;color:#a0b8cc;">暂无爱好</span>';
+    hd.innerHTML = '<span style="font-size:10px;color:#333;">暂无爱好</span>';
   } else {
     hd.innerHTML = charData.hobbies.map(h =>
       `<span class="char-hobby-tag">${h}</span>`
