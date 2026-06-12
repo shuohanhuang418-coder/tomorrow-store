@@ -3188,7 +3188,6 @@ footer .tiny {
     linear-gradient(180deg,
       #010206 0%, #030719 15%, #060b25 36%,
       #080e2c 56%, #070a1e 78%, #04061a 100%);
-  pointer-events:none;
 }
 .end-sky::after {
   content:''; position:absolute; bottom:0; left:0; right:0; height:28%;
@@ -3219,7 +3218,6 @@ footer .tiny {
   box-shadow:0 0 12px 4px rgba(155,192,255,0.13),0 0 30px 12px rgba(140,178,255,0.05),0 0 72px 30px rgba(120,165,255,0.018);
   opacity:0; transition:opacity 2.8s ease;
   animation:moonHaloPulse 6s ease-in-out infinite;
-  pointer-events:none;
 }
 .end-moon.visible { opacity:1; }
 .end-moon::before {
@@ -3245,23 +3243,21 @@ footer .tiny {
 
 /* ── Ground ── */
 .end-ground {
-  position:absolute; bottom:0; left:0; right:0; height:46%;
-  pointer-events:none;
+  position:absolute; bottom:0; left:0; right:0; height:48%;
 }
-/* ── Road SVG ── */
-.end-road-svg {
-  position:absolute; bottom:0; left:0; width:100%; height:100%; overflow:visible;
-}
-/* Pixel-art road edge accent */
-.end-road-edge {
-  position:absolute; bottom:0; left:0; width:100%; height:100%; pointer-events:none;
+.end-ground-base {
+  position:absolute; bottom:0;left:0;right:0;height:100%;
+  background:linear-gradient(180deg,#0a1a10 0%,#080e08 52%,#050805 100%);
 }
 
-/* ── Store warm light on ground ── */
-.end-store-glow {
-  position:absolute; bottom:0; left:0; width:54%; height:74%;
-  background:radial-gradient(ellipse at 12% 88%,rgba(205,138,22,0.18) 0%,rgba(165,100,10,0.07) 42%,transparent 62%);
-  pointer-events:none;
+/* ── Curved path ── */
+.end-path-svg {
+  position:absolute; bottom:0; left:0; width:100%; height:100%; overflow:visible;
+}
+/* ── Unified grass ground SVG ── */
+.end-ground-svg {
+  position:absolute; bottom:0; left:0; width:100%; height:100%;
+  pointer-events:none; overflow:visible;
 }
 
 /* ── Lamp pools ── */
@@ -3269,48 +3265,21 @@ footer .tiny {
   position:absolute; border-radius:50%; pointer-events:none; opacity:0; transition:opacity 2.2s ease;
 }
 .end-lamp-pool.visible { opacity:1; }
-.lamp-pool-l { bottom:4%; left:18%; width:140px; height:50px;
-  background:radial-gradient(ellipse,rgba(255,192,45,0.22) 0%,rgba(255,175,30,0.09) 52%,transparent 74%); }
-.lamp-pool-r { bottom:4%; right:23%; width:120px; height:44px;
-  background:radial-gradient(ellipse,rgba(255,192,45,0.16) 0%,rgba(255,175,30,0.06) 52%,transparent 74%); }
-
-/* ── Grass tufts ── */
-.end-grass-l,.end-grass-r {
-  position:absolute; bottom:0; width:27%; height:60%; pointer-events:none;
-}
-.end-grass-l { left:0; }
-.end-grass-r { right:0; }
-.end-grass-tufts {
-  position:absolute; bottom:56%; width:100%; height:20px; display:flex; gap:2px; align-items:flex-end;
-}
-.end-tuft {
-  width:5px; height:var(--h,10px); background:var(--tc,#162020);
-  border-radius:2px 2px 0 0; flex-shrink:0;
-}
-
-/* ── Horizon mist ── */
-.end-road-mist {
-  position:absolute; bottom:56%;left:34%;right:34%;height:10px;
-  background:linear-gradient(180deg,transparent 0%,rgba(70,90,150,0.07) 50%,transparent 100%);
-  border-radius:50%; animation:endMistFlow 9s ease-in-out infinite; pointer-events:none;
-}
-@keyframes endMistFlow {
-  0%,100%{ opacity:0.35;transform:scaleX(1); }
-  50%    { opacity:0.10;transform:scaleX(1.6); }
-}
+.lamp-pool-l { bottom:4%;left:18%; width:120px;height:42px;
+  background:radial-gradient(ellipse,rgba(255,192,45,0.14) 0%,rgba(255,175,30,0.05) 52%,transparent 74%); }
+.lamp-pool-r { bottom:4%;right:23%; width:100px;height:36px;
+  background:radial-gradient(ellipse,rgba(255,192,45,0.10) 0%,rgba(255,175,30,0.04) 52%,transparent 74%); }
 
 /* ── Fireflies ── */
 .end-firefly {
-  position:absolute; width:3px;height:3px; border-radius:50%;
+  position:absolute; width:2px;height:2px; border-radius:50%;
+  background:#b0ffb0; box-shadow:0 0 5px 2px rgba(120,248,100,0.42);
   opacity:0; animation:endFirefly var(--fd,6s) ease-in-out infinite; animation-delay:var(--fdd,0s);
-  pointer-events:none;
 }
 @keyframes endFirefly {
-  0%      { opacity:0;    transform:translate(0,0); }
-  15%     { opacity:0.75; }
-  40%     { opacity:0.45; transform:translate(calc(var(--fx,10px)*0.5),calc(var(--fy,-14px)*0.5)); }
-  60%,80% { opacity:0.80; }
-  100%    { opacity:0;    transform:translate(var(--fx,10px),var(--fy,-14px)); }
+  0%,100% { opacity:0; transform:translate(0,0); }
+  20%,80% { opacity:0.70; }
+  50%     { opacity:0.26; transform:translate(var(--fx,10px),var(--fy,-18px)); }
 }
 
 /* ── Flowers ── */
@@ -3341,44 +3310,44 @@ footer .tiny {
 /* ── Street lamps ── */
 .end-lamp { position:absolute; opacity:0; transition:opacity 2.2s ease; pointer-events:none; }
 .end-lamp.visible { opacity:1; }
-.lamp-l { bottom:42%; left:26%; }
-.lamp-r { bottom:40%; right:24%; }
+.lamp-l { bottom:40%; left:22%; }
+.lamp-r { bottom:38%; right:24%; }
 .lamp-glow {
   position:absolute; border-radius:50%; pointer-events:none;
   animation:lampGlowPulse 5s ease-in-out infinite;
 }
 .lamp-l .lamp-glow {
-  top:-24px;left:-26px;width:80px;height:80px;
-  background:radial-gradient(circle,rgba(255,200,60,0.32) 0%,rgba(255,178,30,0.14) 38%,rgba(255,160,18,0.04) 62%,transparent 78%);
+  top:-18px;left:-22px;width:68px;height:68px;
+  background:radial-gradient(circle,rgba(255,196,50,0.24) 0%,rgba(255,176,28,0.09) 38%,rgba(255,160,18,0.025) 62%,transparent 78%);
 }
 .lamp-r .lamp-glow {
-  top:-18px;left:-12px;width:68px;height:68px;
-  background:radial-gradient(circle,rgba(255,200,60,0.26) 0%,rgba(255,178,30,0.10) 38%,rgba(255,160,18,0.03) 62%,transparent 78%);
+  top:-14px;left:-10px;width:56px;height:56px;
+  background:radial-gradient(circle,rgba(255,196,50,0.18) 0%,rgba(255,176,28,0.07) 38%,rgba(255,160,18,0.02) 62%,transparent 78%);
 }
 @keyframes lampGlowPulse {
   0%,100%{ opacity:0.80;transform:scale(1); }
-  50%    { opacity:1;transform:scale(1.08); }
+  50%    { opacity:1;transform:scale(1.07); }
 }
 
 /* ── Store ── */
 .end-store {
-  position:absolute; bottom:38%; left:2vw; opacity:0; transition:opacity 2.8s ease;
+  position:absolute; bottom:39%; left:2vw; opacity:0; transition:opacity 2.8s ease;
 }
 .end-store.visible { opacity:1; }
-.end-store svg { width:198px; height:auto; image-rendering:pixelated; }
+.end-store svg { width:168px; height:auto; image-rendering:pixelated; }
 /* Window warm flicker */
 .store-win-l,.store-win-r {
   animation:storeWinFlicker 5s ease-in-out infinite;
 }
 .store-win-r { animation-delay:1.3s; }
 @keyframes storeWinFlicker {
-  0%,100%{ opacity:0.48; } 45%{ opacity:0.62; } 50%{ opacity:0.54; } 55%{ opacity:0.64; }
+  0%,100%{ opacity:0.48; } 45%{ opacity:0.60; } 50%{ opacity:0.52; } 55%{ opacity:0.62; }
 }
 
 /* ── Cat (paces, alive) ── */
 .end-cat {
-  position:absolute; bottom:38%; left:16%;
-  opacity:0; transition:opacity 1.8s ease; pointer-events:none;
+  position:absolute; bottom:calc(40% + 2px); left:14%;
+  opacity:0; transition:opacity 1.8s ease;
 }
 .end-cat.visible {
   opacity:1;
@@ -3393,41 +3362,11 @@ footer .tiny {
   70%    { transform:translateX(8px)  scaleX(1); }
   100%   { transform:translateX(0)    scaleX(1); }
 }
-.end-cat svg { width:56px; height:auto; image-rendering:pixelated; }
-
-/* ── AI Robot at store door ── */
-.end-robot {
-  position:absolute; bottom:38%; left:6vw;
-  opacity:0; transition:opacity 2.0s ease; pointer-events:none;
-}
-.end-robot.visible { opacity:1; }
-.end-robot svg { width:38px; height:auto; image-rendering:pixelated; }
-.end-robot-wave { transform-origin:14px 22px; animation:robotWave 2.2s ease-in-out infinite; }
-@keyframes robotWave {
-  0%,100%{ transform:rotate(0deg); }
-  25%    { transform:rotate(-28deg); }
-  55%    { transform:rotate(10deg); }
-}
-.end-robot-bubble {
-  position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
-  background:rgba(20,20,50,0.82);
-  border:1px solid rgba(255,200,60,0.30);
-  border-radius:6px 6px 6px 0;
-  padding:3px 7px; white-space:nowrap;
-  font-family:var(--body); font-size:9px; color:#ffd870;
-  text-shadow:none; margin-bottom:4px;
-  opacity:0; transition:opacity 1.4s ease;
-}
-.end-robot-bubble.visible { opacity:1; }
-.end-robot-bubble::after {
-  content:''; position:absolute; bottom:-5px; left:6px;
-  border-width:5px 5px 0 0; border-style:solid;
-  border-color:rgba(20,20,50,0.82) transparent transparent transparent;
-}
+.end-cat svg { width:50px; height:auto; image-rendering:pixelated; }
 
 /* ── Character ── */
 .end-character {
-  position:absolute; bottom:34%; left:50%;
+  position:absolute; bottom:calc(40% - 1px); left:52%;
   transform:translateX(-50%); opacity:0; transition:opacity 1.8s ease;
 }
 .end-character.visible {
@@ -3437,19 +3376,18 @@ footer .tiny {
   0%,100%{ transform:translateX(-50%) translateY(0); }
   50%    { transform:translateX(-50%) translateY(-2.5px); }
 }
-.end-character svg { width:60px; height:auto; image-rendering:pixelated; }
+.end-character svg { width:68px; height:auto; image-rendering:pixelated; }
 .end-char-shadow {
-  position:absolute; bottom:calc(34% - 5px); left:50%;
-  transform:translateX(-50%); width:36px;height:5px; border-radius:50%;
-  background:rgba(0,0,0,0.30); opacity:0; transition:opacity 1.8s ease;
+  position:absolute; bottom:calc(40% - 6px); left:52%;
+  transform:translateX(-50%); width:38px;height:5px; border-radius:50%;
+  background:rgba(0,0,0,0.28); opacity:0; transition:opacity 1.8s ease;
 }
 .end-char-shadow.visible { opacity:1; }
 
 /* ── Receipt ── */
 .end-receipt {
-  position:absolute; bottom:calc(34% + 20px); left:calc(50% + 14px);
-  width:28px; opacity:0; transform-origin:top center; transition:opacity 1.8s ease;
-  pointer-events:none;
+  position:absolute; bottom:calc(40% + 22px); left:calc(52% + 16px);
+  width:30px; opacity:0; transform-origin:top center; transition:opacity 1.8s ease;
 }
 .end-receipt.visible { opacity:1; animation:endReceiptSway 7s ease-in-out infinite; }
 @keyframes endReceiptSway {
@@ -3458,69 +3396,60 @@ footer .tiny {
 }
 .end-receipt svg { width:100%; image-rendering:pixelated; }
 
-/* ── Copy — floating text over sky, NO black panel ── */
+/* ── Copy — centered, upper-middle ── */
 .end-copy {
-  position:absolute; top:8%; left:50%; transform:translateX(-50%);
-  width:300px; text-align:center;
-  pointer-events:none; z-index:20;
+  position:absolute; top:10vh; left:0; right:0;
+  display:flex; flex-direction:column; align-items:center;
+  pointer-events:none;
+  padding:0 24px;
+}
+.end-copy-panel {
+  background:rgba(3,6,18,0.52);
+  border:1px solid rgba(120,160,220,0.08);
+  border-radius:2px;
+  padding:16px 22px 14px;
+  max-width:300px;
+  width:100%;
   display:flex; flex-direction:column; align-items:center;
 }
 .end-line {
   font-family:var(--body); font-size:13px; line-height:1.95;
   color:#9ab8d8; text-align:center;
-  text-shadow:
-    0 0 8px rgba(0,0,10,1),
-    0 1px 3px rgba(0,0,10,1),
-    0 2px 12px rgba(0,0,8,0.98),
-    0 0 28px rgba(0,0,8,0.95),
-    1px 0 6px rgba(0,0,8,0.90),
-    -1px 0 6px rgba(0,0,8,0.90);
-  max-width:280px; opacity:0; transform:translateY(6px);
+  text-shadow:0 1px 14px rgba(0,0,14,0.98),0 0 32px rgba(0,0,14,0.88);
+  max-width:260px; opacity:0; transform:translateY(6px);
   transition:opacity 1.2s ease,transform 1.2s ease; margin-bottom:0;
 }
 .end-line.show { opacity:1; transform:translateY(0); }
-.end-line.dim  { font-size:12px; color:#546e88; line-height:1.82;
-  text-shadow:
-    0 0 8px rgba(0,0,10,1),
-    0 1px 3px rgba(0,0,10,1),
-    0 2px 12px rgba(0,0,8,0.98),
-    0 0 22px rgba(0,0,8,0.95);
-}
+.end-line.dim  { font-size:12px; color:#546e88; line-height:1.82; }
 .end-line.big  {
-  font-family:var(--pixel); font-size:10px; color:#d4e8ff;
+  font-family:var(--pixel); font-size:10px; color:#c4d8f8;
   letter-spacing:1.5px; line-height:1.8; margin-top:2px;
-  text-shadow:
-    0 0 8px rgba(0,0,10,1),
-    0 1px 3px rgba(0,0,10,1),
-    0 2px 14px rgba(0,0,8,0.98),
-    0 0 32px rgba(0,0,8,0.95),
-    0 0 12px rgba(165,202,255,0.30);
+  text-shadow:0 0 12px rgba(165,202,255,0.22),0 1px 14px rgba(0,0,14,0.98);
 }
 .end-line.finale {
   font-family:var(--pixel); font-size:11px; color:#ffc840;
-  text-shadow:
-    0 0 8px rgba(0,0,8,1),
-    0 1px 3px rgba(0,0,8,1),
-    0 0 14px rgba(255,200,50,0.55),
-    0 0 30px rgba(255,185,30,0.22),
-    0 2px 14px rgba(0,0,8,0.98);
+  text-shadow:0 0 14px rgba(255,200,50,0.42),0 0 30px rgba(255,185,30,0.14),0 1px 14px rgba(0,0,14,0.98);
   margin-top:12px; letter-spacing:2px;
   animation:endFinaleGlow 3.5s ease-in-out infinite;
 }
+.end-line.finale-sub {
+  font-family:var(--body); font-size:11px; color:rgba(255,200,64,0.55);
+  letter-spacing:1px; margin-top:4px;
+  text-shadow:0 1px 14px rgba(0,0,14,0.98);
+}
 @keyframes endFinaleGlow {
-  0%,100%{ text-shadow:0 0 8px rgba(0,0,8,1),0 1px 3px rgba(0,0,8,1),0 0 14px rgba(255,200,50,0.55),0 0 30px rgba(255,185,30,0.22),0 2px 14px rgba(0,0,8,0.98); }
-  50%    { text-shadow:0 0 8px rgba(0,0,8,1),0 1px 3px rgba(0,0,8,1),0 0 24px rgba(255,200,50,0.76),0 0 48px rgba(255,185,30,0.34),0 2px 14px rgba(0,0,8,0.98); }
+  0%,100%{ text-shadow:0 0 14px rgba(255,200,50,0.42),0 0 30px rgba(255,185,30,0.14),0 1px 14px rgba(0,0,14,0.98); }
+  50%    { text-shadow:0 0 22px rgba(255,200,50,0.64),0 0 44px rgba(255,185,30,0.26),0 1px 14px rgba(0,0,14,0.98); }
 }
 
 /* ── Controls ── */
 .end-controls {
-  position:absolute; bottom:20px; left:0;right:0;
+  position:absolute; bottom:28px; left:0;right:0;
   display:flex; justify-content:center; align-items:center;
   gap:12px; flex-wrap:wrap; padding:0 20px;
   opacity:0; transition:opacity 1s ease;
-  pointer-events:none;
 }
-.end-controls.show { opacity:1; pointer-events:auto; }
+.end-controls.show { opacity:1; }
 .end-btn-main {
   font-family:var(--pixel); font-size:9px; padding:11px 20px;
   background:rgba(255,200,60,0.12); color:#ffc840;
@@ -3528,7 +3457,7 @@ footer .tiny {
   letter-spacing:1px; transition:background 0.2s,box-shadow 0.2s;
   box-shadow:0 0 10px rgba(255,200,60,0.08);
 }
-.end-btn-main:hover { background:rgba(255,200,60,0.22); box-shadow:0 0 20px rgba(255,200,60,0.22); }
+.end-btn-main:hover { background:rgba(255,200,60,0.20); box-shadow:0 0 18px rgba(255,200,60,0.18); }
 .end-btn-sec {
   font-family:var(--pixel); font-size:8px; padding:7px 12px;
   background:transparent; color:#3e5870; border:1px solid #1e3248;
@@ -3541,7 +3470,7 @@ footer .tiny {
   position:absolute; top:14px;right:14px;
   font-family:var(--pixel); font-size:7px; color:#2c4060;
   background:transparent; border:1px solid #182c44;
-  padding:5px 9px; cursor:pointer; z-index:30; transition:color 0.2s;
+  padding:5px 9px; cursor:pointer; z-index:10; transition:color 0.2s;
 }
 .end-skip:hover { color:#5a88a8; }
 .end-skip.hidden { display:none; }
@@ -3550,18 +3479,17 @@ footer .tiny {
   .end-line       { font-size:12px; }
   .end-line.big   { font-size:9px; }
   .end-line.finale{ font-size:10px; }
-  .end-character svg { width:50px; }
-  .end-receipt { left:calc(50% + 10px); bottom:calc(34% + 16px); }
+  .end-character svg { width:56px; }
+  .end-receipt { left:calc(52% + 12px); }
   .end-cat svg { width:40px; }
   .end-store { left:1vw; }
-  .end-store svg { width:150px; }
+  .end-store svg { width:130px; }
   .end-moon { width:38px;height:38px; }
   .end-btn-main { font-size:8px;padding:10px 14px; }
-  .lamp-l { left:18%; }
+  .lamp-l { left:16%; }
   .lamp-r { right:18%; }
-  .end-copy { width:92vw; }
+  .end-copy-panel { padding:12px 16px 10px; }
 }
-
 
 
 </style>
@@ -7308,10 +7236,8 @@ function endClearTimers() {
 }
 
 function endBuildScene() {
-  const ids = ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR','endRobot'];
+  const ids = ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR'];
   ids.forEach(id => { const el = document.getElementById(id); if (el) el.classList.remove('visible'); });
-  const robotBubble = document.getElementById('endRobotBubble');
-  if (robotBubble) robotBubble.classList.remove('visible');
   const cs = document.getElementById('endCharShadow');
   if (cs) cs.classList.remove('visible');
   document.querySelectorAll('.end-star').forEach(s => s.classList.remove('visible'));
@@ -7322,9 +7248,7 @@ function endBuildScene() {
 
   if (!document.getElementById('endStars').children.length) endInitStars();
   if (!document.getElementById('endFireflies').children.length) endInitFireflies();
-  if (!document.getElementById('endTuftsL').children.length) endInitGrass();
   if (!document.getElementById('endFlowers').children.length) endInitFlowers();
-  if (!document.getElementById('endBushes').children.length) endInitBushes();
   // Step 1 (500ms): stars staggered
   endingTimer(() => {
     document.querySelectorAll('.end-star').forEach((s, i) => {
@@ -7341,15 +7265,6 @@ function endBuildScene() {
       const el = document.getElementById(id); if (el) el.classList.add('visible');
     });
   }, 1900);
-
-  // Step 3b (2600ms): robot appears at door
-  endingTimer(() => {
-    const r = document.getElementById('endRobot'); if (r) r.classList.add('visible');
-  }, 2600);
-  // Step 3c (4200ms): robot bubble appears
-  endingTimer(() => {
-    const rb = document.getElementById('endRobotBubble'); if (rb) rb.classList.add('visible');
-  }, 4200);
 
   // Step 4 (2700ms): character + receipt + shadow
   endingTimer(() => {
@@ -7370,7 +7285,7 @@ function endBuildScene() {
 
 function endShowLines() {
   const lines = document.querySelectorAll('.end-line');
-  const delays = [0, 1600, 3000, 3800, 5400, 7000, 8000, 9800];
+  const delays = [0, 1400, 2600, 3800, 4800, 5600, 6800, 8200, 9200, 10400, 12000, 13200];
   lines.forEach((line, i) => {
     const d = delays[i] || i * 1400;
     endingTimer(() => line.classList.add('show'), d);
@@ -7387,11 +7302,9 @@ function endSkip() {
   endClearTimers();
   document.querySelectorAll('.end-star').forEach(s => s.classList.add('visible'));
   document.querySelectorAll('.end-flower').forEach(el => el.classList.add('visible'));
-  document.querySelectorAll('.end-bush').forEach(el => el.classList.add('visible'));
-  ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR','endRobot'].forEach(id => {
+  ['endMoon','endStore','endCat','endCharacter','endReceipt','endLampL','endLampR','endLampPoolL','endLampPoolR'].forEach(id => {
     const el = document.getElementById(id); if (el) el.classList.add('visible');
   });
-  const rb = document.getElementById('endRobotBubble'); if (rb) rb.classList.add('visible');
   const cs = document.getElementById('endCharShadow');
   if (cs) cs.classList.add('visible');
   document.getElementById('endCopy').style.opacity = '1';
@@ -7472,37 +7385,30 @@ function endInitStars() {
 function endInitFireflies() {
   const container = document.getElementById('endFireflies');
   if (!container) return;
-  // Fireflies concentrated along road edges (left ~20-34%, right ~66-80%) and lower grass
-  const zones = [
-    // Left road edge
-    {lMin:19, lMax:33, bMin:6, bMax:28},
-    // Right road edge
-    {lMin:67, lMax:81, bMin:6, bMax:28},
-    // A few near left store / far left
-    {lMin:5,  lMax:18, bMin:8, bMax:22},
+  const spots = [
+    {l:22,b:12},{l:28,b:22},{l:31,b:8},
+    {l:69,b:14},{l:73,b:24},{l:67,b:9}
   ];
-  const warmColors = ['#c8ff90','#d4f880','#ffe090','#e8ff70','#f0ffa0'];
-  for (let i = 0; i < 12; i++) {
-    const z = zones[i < 5 ? 0 : i < 10 ? 1 : 2];
+  const cols = ['#c8ff90','#ffe090','#d4f880'];
+  spots.forEach((sp,i) => {
     const f = document.createElement('div');
     f.className = 'end-firefly';
-    const col = warmColors[Math.floor(Math.random()*warmColors.length)];
+    const col = cols[i%cols.length];
     f.style.cssText = [
-      `left:${(z.lMin + Math.random()*(z.lMax-z.lMin)).toFixed(1)}%`,
-      `bottom:${(z.bMin + Math.random()*(z.bMax-z.bMin)).toFixed(1)}%`,
+      `left:${sp.l}%`, `bottom:${sp.b}%`,
       `background:${col}`,
-      `box-shadow:0 0 5px 2px ${col}88`,
-      `--fd:${(4+Math.random()*5).toFixed(1)}s`,
-      `--fdd:${(Math.random()*7).toFixed(1)}s`,
-      `--fx:${(Math.random()*18-9).toFixed(0)}px`,
-      `--fy:${(-6-Math.random()*18).toFixed(0)}px`
+      `box-shadow:0 0 4px 1px ${col}88`,
+      `--fd:${(4.5+i*1.1).toFixed(1)}s`,
+      `--fdd:${(i*1.4).toFixed(1)}s`,
+      `--fx:${(i%2===0?8:-8)}px`,
+      `--fy:-${12+i*2}px`
     ].join(';');
     container.appendChild(f);
-  }
+  });
 }
 
 function endInitGrass() {
-  const colors = ['#162c1a', '#1a3420', '#122218', '#1c3022', '#102018'];
+  const colors = ['#1a4a22', '#1c5228', '#14381a', '#224c2a', '#163c1e'];
   ['endTuftsL','endTuftsR'].forEach(id => {
     const el = document.getElementById(id);
     for (let i = 0; i < 22; i++) {
@@ -7549,36 +7455,24 @@ function endInitFlowers() {
     </svg>`;
   }
 
-  // Flower clusters hug the road edges — road L-edge ~29-32%, R-edge ~68-71% at bottom
-  // Smaller/sparser farther from road; larger/denser near road edge
-  // Palette: white, cream, warm ivory — night-blooming feel
-  const cream  = '#f5f2ec', white = '#f0f0f8', ivory = '#ede8de', warm = '#fde8b8';
-  const yWarm  = '#ffd880', yPale = '#ffe4a0';
+  const cream = '#f5f2ec', white = '#f0f0f8', ivory = '#ede8de', yWarm = '#ffd880';
   const clusters = [
-    // ── Left road edge, foreground (large, dense) ──
-    { x:27, y:20, count:4, type:'rose',  petal:cream,  center:yWarm, sz:15 },
-    { x:30, y:11, count:3, type:'tulip', petal:white,  center:yPale, sz:13 },
-    { x:25, y:30, count:3, type:'tulip', petal:ivory,  center:yWarm, sz:14 },
-    { x:28, y:38, count:2, type:'rose',  petal:cream,  center:warm,  sz:12 },
-    // ── Left edge, mid-distance (medium) ──
-    { x:24, y:47, count:2, type:'tulip', petal:white,  center:yPale, sz:10 },
-    { x:26, y:54, count:2, type:'rose',  petal:ivory,  center:yWarm, sz:9  },
-    // ── Left edge, far (small, sparse) ──
-    { x:25, y:62, count:1, type:'tulip', petal:cream,  center:yPale, sz:7  },
-    { x:23, y:68, count:1, type:'rose',  petal:white,  center:yWarm, sz:6  },
-    // ── Right road edge, foreground ──
-    { x:70, y:20, count:4, type:'tulip', petal:cream,  center:yWarm, sz:15 },
-    { x:67, y:11, count:3, type:'rose',  petal:white,  center:yPale, sz:13 },
-    { x:72, y:30, count:3, type:'tulip', petal:ivory,  center:yWarm, sz:14 },
-    { x:69, y:38, count:2, type:'rose',  petal:cream,  center:warm,  sz:12 },
-    // ── Right edge, mid-distance ──
-    { x:73, y:46, count:2, type:'tulip', petal:white,  center:yPale, sz:10 },
-    { x:71, y:54, count:1, type:'rose',  petal:ivory,  center:yWarm, sz:9  },
-    // ── Right edge, far ──
-    { x:72, y:62, count:1, type:'tulip', petal:cream,  center:yPale, sz:7  },
-    // ── A couple lone flowers near store (very subtle) ──
-    { x: 8, y:22, count:2, type:'tulip', petal:ivory,  center:yWarm, sz:11 },
-    { x:12, y:30, count:1, type:'rose',  petal:white,  center:yPale, sz:9  },
+    // Left road edge — near (foreground, larger)
+    { x:26, y:16, count:3, type:'rose',  petal:cream, center:yWarm, sz:14 },
+    { x:29, y:8,  count:2, type:'tulip', petal:white, center:yWarm, sz:12 },
+    { x:24, y:26, count:2, type:'tulip', petal:ivory, center:yWarm, sz:13 },
+    // Left road edge — mid distance (smaller)
+    { x:25, y:42, count:2, type:'rose',  petal:cream, center:yWarm, sz:9  },
+    { x:27, y:56, count:1, type:'tulip', petal:white, center:yWarm, sz:7  },
+    // Right road edge — near
+    { x:71, y:16, count:3, type:'tulip', petal:cream, center:yWarm, sz:14 },
+    { x:68, y:8,  count:2, type:'rose',  petal:white, center:yWarm, sz:12 },
+    { x:73, y:26, count:2, type:'tulip', petal:ivory, center:yWarm, sz:13 },
+    // Right road edge — mid distance
+    { x:72, y:42, count:2, type:'rose',  petal:cream, center:yWarm, sz:9  },
+    { x:70, y:56, count:1, type:'tulip', petal:white, center:yWarm, sz:7  },
+    // Near store, very subtle
+    { x:8,  y:18, count:2, type:'tulip', petal:ivory, center:yWarm, sz:10 },
   ];
 
   clusters.forEach(cl => {
@@ -7608,57 +7502,6 @@ function endInitFlowers() {
     });
   }, 2000);
 }
-
-function endInitBushes() {
-  const container = document.getElementById('endBushes');
-  if (!container) return;
-
-  function makeBush(w, h, c1, c2, c3) {
-    const hw = w/2, hh = h*0.62;
-    return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"
-      xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <ellipse cx="${hw}" cy="${hh}" rx="${hw}"    ry="${h*0.58}" fill="${c1}"/>
-      <ellipse cx="${w*0.30}" cy="${h*0.48}" rx="${w*0.36}" ry="${h*0.44}" fill="${c2}"/>
-      <ellipse cx="${w*0.70}" cy="${h*0.46}" rx="${w*0.32}" ry="${h*0.40}" fill="${c2}"/>
-      <ellipse cx="${w*0.50}" cy="${h*0.30}" rx="${w*0.22}" ry="${h*0.28}" fill="${c3}"/>
-    </svg>`;
-  }
-
-  const bushDefs = [
-    // Left side — muted night-dark bushes (navy-green blend)
-    { l:0,  b:24, w:44, h:32, c1:'#0a1a18', c2:'#0e2018', c3:'#122818' },
-    { l:6,  b:20, w:32, h:24, c1:'#0c1c1a', c2:'#10221c', c3:'#142a1e' },
-    { l:14, b:28, w:40, h:30, c1:'#0e1e18', c2:'#12241c', c3:'#162c1e' },
-    { l:20, b:18, w:26, h:20, c1:'#0a1816', c2:'#0e2018', c3:'#12261a' },
-    // Near road left edge
-    { l:24, b:22, w:22, h:16, c1:'#0c1c1a', c2:'#10221e', c3:'#142a20' },
-    // Right side
-    { l:68, b:22, w:36, h:26, c1:'#0e1e18', c2:'#12241c', c3:'#162c1e' },
-    { l:75, b:26, w:42, h:32, c1:'#0a1a18', c2:'#0e2018', c3:'#122818' },
-    { l:83, b:20, w:32, h:24, c1:'#0c1c1a', c2:'#10221c', c3:'#142a1e' },
-    { l:88, b:28, w:38, h:30, c1:'#0a1816', c2:'#0e2018', c3:'#12261a' },
-  ];
-
-  bushDefs.forEach((bs, i) => {
-    const el = document.createElement('div');
-    el.className = 'end-bush';
-    el.style.cssText = [
-      `left:${bs.l}%`, `bottom:${bs.b}%`,
-      `--bw:${(5.5+Math.random()*4).toFixed(1)}s`,
-      `--bd:${(Math.random()*3.5).toFixed(1)}s`
-    ].join(';');
-    el.innerHTML = makeBush(bs.w, bs.h, bs.c1, bs.c2, bs.c3);
-    container.appendChild(el);
-  });
-
-  setTimeout(() => {
-    container.querySelectorAll('.end-bush').forEach((b, i) => {
-      setTimeout(() => b.classList.add('visible'), i * 100);
-    });
-  }, 1600);
-}
-
-
 
 // ===== PORTAL DOOR =====
 function portalDoorClick() {
@@ -8002,17 +7845,14 @@ if (tgEl) tgObserver.observe(tgEl);
 
 <!-- ===== ENDING SCENE ===== -->
 <div id="ending">
-  <!-- Sky -->
   <div class="end-sky" id="endSky"></div>
-  <!-- Stars JS-generated -->
   <div id="endStars"></div>
-  <!-- Moon -->
   <div class="end-moon" id="endMoon"></div>
 
-  <!-- Horizon distant hill silhouette -->
+  <!-- Distant horizon silhouette -->
   <div class="end-horizon">
     <svg width="100%" height="40" viewBox="0 0 800 40" preserveAspectRatio="none"
-         xmlns="http://www.w3.org/2000/svg" style="display:block;pointer-events:none;">
+         xmlns="http://www.w3.org/2000/svg" style="display:block;">
       <path d="M0,40 L0,26 C30,26 55,20 85,16 C108,13 130,12 162,14
         C185,15 208,18 238,17 C262,16 284,12 316,10 C338,9 360,8 392,9
         C415,10 440,13 468,12 C496,11 520,8 550,7 C570,6 592,7 620,9
@@ -8026,412 +7866,328 @@ if (tgEl) tgObserver.observe(tgEl);
     </svg>
   </div>
 
-  <!-- Ground layer -->
+  <!-- Ground (48%) -->
   <div class="end-ground">
+    <div class="end-ground-base"></div>
 
-    <!-- Road SVG: natural curved trapezoid with pixel-art edges -->
-    <svg class="end-road-svg" id="endPathSvg" viewBox="0 0 400 220"
+    <!-- Curved stone path (single, centered) -->
+    <svg class="end-path-svg" id="endPathSvg" viewBox="0 0 400 220"
          preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Main road gradient: dark blue-purple at bottom, nearly black at horizon -->
-        <linearGradient id="rdGrad" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%"  stop-color="#22243c"/>
-          <stop offset="55%" stop-color="#181a2e"/>
-          <stop offset="100%" stop-color="#10111e"/>
+        <linearGradient id="pathGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#0f1228"/>
+          <stop offset="42%" stop-color="#171b34"/>
+          <stop offset="100%" stop-color="#1e2038"/>
         </linearGradient>
-        <!-- Warm overlay near lamp/store side -->
-        <linearGradient id="rdWarm" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%"   stop-color="rgba(185,138,42,0.11)"/>
-          <stop offset="60%"  stop-color="rgba(185,138,42,0.04)"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </linearGradient>
-        <!-- Horizon fade at top of road -->
-        <linearGradient id="rdHorizon" x1="0" y1="1" x2="0" y2="0">
+        <linearGradient id="pathWarm" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stop-color="transparent"/>
-          <stop offset="70%"  stop-color="transparent"/>
-          <stop offset="100%" stop-color="rgba(8,10,20,0.82)"/>
+          <stop offset="82%"  stop-color="rgba(185,138,42,0.00)"/>
+          <stop offset="100%" stop-color="rgba(185,138,42,0.08)"/>
         </linearGradient>
-        <!-- Left edge shadow -->
-        <linearGradient id="rdEdgeL" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stop-color="rgba(8,10,28,0.68)"/>
-          <stop offset="100%" stop-color="rgba(8,10,28,0)"/>
+        <linearGradient id="pathEL" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%"   stop-color="rgba(8,10,28,0)"/>
+          <stop offset="100%" stop-color="rgba(8,10,28,0.72)"/>
         </linearGradient>
-        <!-- Right edge shadow -->
-        <linearGradient id="rdEdgeR" x1="1" y1="0" x2="0" y2="0">
-          <stop offset="0%"   stop-color="rgba(8,10,28,0.58)"/>
-          <stop offset="100%" stop-color="rgba(8,10,28,0)"/>
+        <linearGradient id="pathER" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="rgba(8,10,28,0)"/>
+          <stop offset="100%" stop-color="rgba(8,10,28,0.62)"/>
         </linearGradient>
       </defs>
-
-      <!-- Road body: slightly curved natural path, wider at bottom -->
-      <path d="M118,220 C118,200 140,160 160,120 C172,95 180,60 183,12
-               L217,12 C220,60 228,95 240,120 C260,160 282,200 282,220 Z"
-            fill="url(#rdGrad)"/>
-      <!-- Warm overlay -->
-      <path d="M118,220 C118,200 140,160 160,120 C172,95 180,60 183,12
-               L217,12 C220,60 228,95 240,120 C260,160 282,200 282,220 Z"
-            fill="url(#rdWarm)"/>
-      <!-- Horizon fade at top -->
-      <path d="M118,220 C118,200 140,160 160,120 C172,95 180,60 183,12
-               L217,12 C220,60 228,95 240,120 C260,160 282,200 282,220 Z"
-            fill="url(#rdHorizon)"/>
-
-      <!-- Pixel-art edge texture: small offset rects on left side -->
-      <rect x="116" y="216" width="4" height="3" fill="rgba(30,34,56,0.55)"/>
-      <rect x="119" y="205" width="3" height="4" fill="rgba(30,34,56,0.48)"/>
-      <rect x="130" y="178" width="3" height="4" fill="rgba(30,34,56,0.40)"/>
-      <rect x="142" y="148" width="3" height="3" fill="rgba(30,34,56,0.34)"/>
-      <rect x="155" y="118" width="3" height="3" fill="rgba(30,34,56,0.28)"/>
-      <rect x="165" y="88"  width="2" height="3" fill="rgba(30,34,56,0.22)"/>
-      <rect x="174" y="56"  width="2" height="2" fill="rgba(30,34,56,0.18)"/>
-      <!-- Pixel-art edge texture: small offset rects on right side -->
-      <rect x="280" y="216" width="4" height="3" fill="rgba(30,34,56,0.50)"/>
-      <rect x="278" y="205" width="3" height="4" fill="rgba(30,34,56,0.44)"/>
-      <rect x="267" y="178" width="3" height="4" fill="rgba(30,34,56,0.37)"/>
-      <rect x="255" y="148" width="3" height="3" fill="rgba(30,34,56,0.30)"/>
-      <rect x="242" y="118" width="3" height="3" fill="rgba(30,34,56,0.24)"/>
-      <rect x="233" y="88"  width="2" height="3" fill="rgba(30,34,56,0.18)"/>
-      <rect x="226" y="56"  width="2" height="2" fill="rgba(30,34,56,0.14)"/>
-
-      <!-- Left edge soft shadow blend -->
-      <path d="M118,220 C118,200 140,160 160,120 C172,95 180,60 183,12
-               L190,12 C186,60 178,95 166,120 C146,160 126,200 124,220 Z"
-            fill="url(#rdEdgeL)" opacity="0.55"/>
-      <!-- Right edge soft shadow blend -->
-      <path d="M276,220 C278,200 260,160 240,120 C228,95 220,60 217,12
-               L210,12 C214,60 222,95 234,120 C254,160 274,200 276,220 Z"
-            fill="url(#rdEdgeR)" opacity="0.48"/>
-
-      <!-- 5 perspective center dashes shrinking toward horizon (near=large, far=tiny) -->
-      <rect x="194" y="198" width="12" height="7"  rx="1" fill="rgba(180,192,230,0.16)"/>
-      <rect x="196" y="172" width="9"  height="5"  rx="1" fill="rgba(180,192,230,0.13)"/>
-      <rect x="197" y="148" width="7"  height="4"  rx="1" fill="rgba(180,192,230,0.10)"/>
-      <rect x="198" y="126" width="5"  height="3"  rx="1" fill="rgba(180,192,230,0.08)"/>
-      <rect x="199" y="106" width="3"  height="2"  rx="1" fill="rgba(180,192,230,0.06)"/>
-
-      <!-- Highlight edges of road -->
-      <path d="M118,220 C118,200 140,160 160,120 C172,95 180,60 183,12"
-            stroke="rgba(175,190,238,0.13)" stroke-width="1.2" fill="none"/>
-      <path d="M282,220 C282,200 260,160 240,120 C228,95 220,60 217,12"
-            stroke="rgba(175,190,238,0.08)" stroke-width="0.8" fill="none"/>
+      <!-- Path body: gentle S-curve, person-width -->
+      <path d="M150,220 C152,184 158,146 164,110 C170,76 175,46 179,8
+               L201,8 C205,46 210,76 216,110 C222,146 228,184 230,220 Z"
+            fill="url(#pathGrad)"/>
+      <path d="M150,220 C152,184 158,146 164,110 C170,76 175,46 179,8
+               L201,8 C205,46 210,76 216,110 C222,146 228,184 230,220 Z"
+            fill="url(#pathWarm)"/>
+      <!-- Soft edge blends -->
+      <path d="M150,220 C152,184 158,146 164,110 C170,76 175,46 179,8
+               L186,8 C182,46 176,76 171,110 C166,146 160,184 158,220 Z"
+            fill="url(#pathEL)" opacity="0.60"/>
+      <path d="M222,220 C224,184 222,146 216,110 C210,76 205,46 201,8
+               L208,8 C212,46 218,76 224,110 C230,146 234,184 236,220 Z"
+            fill="url(#pathER)" opacity="0.50"/>
+      <!-- Stone texture lines -->
+      <rect x="160" y="206" width="58" height="1.8" rx="1" fill="rgba(152,162,202,0.07)"/>
+      <rect x="162" y="193" width="54" height="1.5" rx="1" fill="rgba(152,162,202,0.06)"/>
+      <rect x="163" y="178" width="51" height="1.5" rx="1" fill="rgba(152,162,202,0.055)"/>
+      <rect x="165" y="160" width="47" height="1.2" rx="1" fill="rgba(152,162,202,0.05)"/>
+      <rect x="167" y="138" width="42" height="1.2" rx="1" fill="rgba(152,162,202,0.045)"/>
+      <rect x="170" y="115" width="36" height="1"   rx="1" fill="rgba(152,162,202,0.04)"/>
+      <rect x="172" y="90"  width="30" height="1"   rx="1" fill="rgba(152,162,202,0.035)"/>
+      <rect x="174" y="64"  width="22" height="0.8" rx="1" fill="rgba(152,162,202,0.030)"/>
+      <rect x="176" y="38"  width="16" height="0.8" rx="1" fill="rgba(152,162,202,0.025)"/>
+      <!-- Highlight edges -->
+      <path d="M150,220 C152,184 158,146 164,110 C170,76 175,46 179,8"
+            stroke="rgba(175,190,238,0.11)" stroke-width="1.2" fill="none"/>
+      <path d="M230,220 C228,184 222,146 216,110 C210,76 205,46 201,8"
+            stroke="rgba(175,190,238,0.07)" stroke-width="0.8" fill="none"/>
     </svg>
 
-    <!-- Warm ground glow from store (left) -->
-    <div class="end-store-glow"></div>
+    <!-- Unified grass ground: organic silhouette, no rectangles -->
+    <svg class="end-ground-svg" viewBox="0 0 400 220" preserveAspectRatio="none"
+         xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grassFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="rgba(8,13,18,0)"/>
+          <stop offset="15%" stop-color="rgba(8,13,20,0.50)"/>
+          <stop offset="40%" stop-color="#0c1620"/>
+          <stop offset="100%" stop-color="#0e1822"/>
+        </linearGradient>
+      </defs>
+      <!-- Left grass: fills left of road, top edge has organic pixel grass silhouette -->
+      <path d="M0,220 L118,220
+               C118,200 140,160 160,120 C172,95 180,60 183,12
+               L178,13 L172,9  L164,13 L156,8  L148,12 L138,8
+               L128,12 L118,8  L108,12 L96,8   L84,12  L72,8
+               L60,12  L48,8   L36,12  L24,8   L12,12  L0,9
+               Z" fill="url(#grassFill)"/>
+      <!-- Left small pixel grass blades near road edge -->
+      <rect x="112" y="215" width="2" height="5" fill="#122018" opacity="0.70"/>
+      <rect x="108" y="214" width="2" height="6" fill="#0e1c16" opacity="0.65"/>
+      <rect x="104" y="216" width="2" height="4" fill="#122018" opacity="0.55"/>
+      <rect x="98"  y="213" width="2" height="7" fill="#0e1c16" opacity="0.60"/>
+      <rect x="92"  y="215" width="2" height="5" fill="#122018" opacity="0.55"/>
+      <!-- Right grass: fills right of road -->
+      <path d="M400,220 L282,220
+               C282,200 260,160 240,120 C228,95 220,60 217,12
+               L222,13 L228,9  L236,13 L244,8  L252,12 L262,8
+               L272,12 L282,8  L292,12 L304,8  L316,12 L328,8
+               L340,12 L352,8  L364,12 L376,8  L388,12 L400,9
+               Z" fill="url(#grassFill)"/>
+      <!-- Right small pixel grass blades near road edge -->
+      <rect x="284" y="215" width="2" height="5" fill="#122018" opacity="0.70"/>
+      <rect x="288" y="214" width="2" height="6" fill="#0e1c16" opacity="0.65"/>
+      <rect x="294" y="216" width="2" height="4" fill="#122018" opacity="0.55"/>
+      <rect x="300" y="213" width="2" height="7" fill="#0e1c16" opacity="0.60"/>
+      <rect x="306" y="215" width="2" height="5" fill="#122018" opacity="0.55"/>
+    </svg>
     <!-- Lamp pools -->
     <div class="end-lamp-pool lamp-pool-l" id="endLampPoolL"></div>
     <div class="end-lamp-pool lamp-pool-r" id="endLampPoolR"></div>
-    <!-- Flowers, bushes, grass, fireflies -->
     <div id="endFlowers"></div>
-    <div id="endBushes"></div>
     <div id="endFireflies"></div>
-    <div class="end-grass-l"><div class="end-grass-tufts" id="endTuftsL"></div></div>
-    <div class="end-grass-r"><div class="end-grass-tufts" id="endTuftsR"></div></div>
   </div>
 
-  <!-- Lamp LEFT (near store, left of road) -->
+  <!-- Lamp LEFT -->
   <div class="end-lamp lamp-l" id="endLampL">
     <div class="lamp-glow"></div>
-    <svg width="28" height="64" viewBox="0 0 28 64" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <!-- Post -->
-      <rect x="12" y="18" width="4" height="46" fill="#181628"/>
-      <!-- Arm extending left -->
-      <rect x="4"  y="15" width="9"  height="3"  fill="#181628"/>
-      <rect x="4"  y="7"  width="3"  height="10" fill="#181628"/>
-      <!-- Lamp housing outer -->
-      <rect x="0"  y="3"  width="16" height="10" rx="1" fill="#12102a"/>
-      <!-- Lamp glow fill -->
-      <rect x="1"  y="4"  width="14" height="8"  fill="#ffc038" opacity="0.94"/>
-      <!-- Highlight inside lamp -->
-      <rect x="2"  y="5"  width="7"  height="3"  fill="#ffe090" opacity="0.50"/>
-      <rect x="10" y="5"  width="3"  height="2"  fill="#fff5c0" opacity="0.30"/>
-      <!-- Top frame bar -->
-      <rect x="0"  y="2"  width="16" height="2"  fill="#181628"/>
-      <!-- Bottom frame bar -->
-      <rect x="0"  y="12" width="16" height="2"  fill="#181628"/>
-      <!-- Tiny screws decoration -->
-      <rect x="1"  y="3"  width="1"  height="1"  fill="#281e48"/>
-      <rect x="14" y="3"  width="1"  height="1"  fill="#281e48"/>
+    <svg width="30" height="66" viewBox="0 0 30 66" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <rect x="13" y="20" width="4" height="46" fill="#181628"/>
+      <rect x="5"  y="17" width="10" height="3"  fill="#181628"/>
+      <rect x="5"  y="8"  width="3"  height="11" fill="#181628"/>
+      <rect x="1"  y="4"  width="15" height="10" rx="1" fill="#12102a"/>
+      <rect x="2"  y="5"  width="13" height="8"  fill="#ffc038" opacity="0.94"/>
+      <rect x="3"  y="6"  width="6"  height="3"  fill="#ffe090" opacity="0.44"/>
+      <rect x="0"  y="3"  width="17" height="2"  fill="#181628"/>
+      <rect x="0"  y="13" width="17" height="2"  fill="#181628"/>
     </svg>
   </div>
 
-  <!-- Lamp RIGHT (right side of road) -->
+  <!-- Lamp RIGHT -->
   <div class="end-lamp lamp-r" id="endLampR">
     <div class="lamp-glow"></div>
-    <svg width="24" height="56" viewBox="0 0 24 56" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <!-- Post -->
-      <rect x="10" y="16" width="4"  height="40" fill="#181628"/>
-      <!-- Arm extending right -->
-      <rect x="10" y="13" width="9"  height="3"  fill="#181628"/>
-      <rect x="16" y="6"  width="3"  height="9"  fill="#181628"/>
-      <!-- Lamp housing outer -->
-      <rect x="6"  y="2"  width="14" height="10" rx="1" fill="#12102a"/>
-      <!-- Lamp glow fill -->
-      <rect x="7"  y="3"  width="12" height="8"  fill="#ffc038" opacity="0.92"/>
-      <!-- Highlight inside -->
-      <rect x="8"  y="4"  width="5"  height="3"  fill="#ffe090" opacity="0.44"/>
-      <rect x="14" y="4"  width="3"  height="2"  fill="#fff5c0" opacity="0.28"/>
-      <!-- Top frame bar -->
-      <rect x="5"  y="1"  width="15" height="2"  fill="#181628"/>
-      <!-- Bottom frame bar -->
-      <rect x="5"  y="11" width="15" height="2"  fill="#181628"/>
-      <!-- Tiny screws -->
-      <rect x="6"  y="2"  width="1"  height="1"  fill="#281e48"/>
-      <rect x="18" y="2"  width="1"  height="1"  fill="#281e48"/>
+    <svg width="26" height="58" viewBox="0 0 26 58" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <rect x="11" y="17" width="4"  height="41" fill="#181628"/>
+      <rect x="10" y="14" width="10" height="3"  fill="#181628"/>
+      <rect x="16" y="7"  width="3"  height="9"  fill="#181628"/>
+      <rect x="7"  y="3"  width="13" height="9"  rx="1" fill="#12102a"/>
+      <rect x="8"  y="4"  width="11" height="7"  fill="#ffc038" opacity="0.94"/>
+      <rect x="9"  y="5"  width="5"  height="3"  fill="#ffe090" opacity="0.38"/>
+      <rect x="6"  y="2"  width="15" height="2"  fill="#181628"/>
+      <rect x="6"  y="11" width="15" height="2"  fill="#181628"/>
     </svg>
   </div>
 
-  <!-- Convenience store: left side, warm amber windows, door glow -->
+  <!-- Convenience store — bigger, more iconic -->
   <div class="end-store" id="endStore">
-    <svg width="156" height="128" viewBox="0 0 156 128" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <svg width="168" height="138" viewBox="0 0 168 138" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
       <defs>
         <radialGradient id="wgL" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="#ffe098" stop-opacity="0.92"/>
-          <stop offset="60%"  stop-color="#d48010" stop-opacity="0.58"/>
+          <stop offset="0%"   stop-color="#ffe098" stop-opacity="0.90"/>
+          <stop offset="60%"  stop-color="#d48010" stop-opacity="0.55"/>
           <stop offset="100%" stop-color="#c47808" stop-opacity="0"/>
         </radialGradient>
         <radialGradient id="wgR" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="#ffd880" stop-opacity="0.84"/>
-          <stop offset="60%"  stop-color="#c87808" stop-opacity="0.52"/>
+          <stop offset="0%"   stop-color="#ffd880" stop-opacity="0.82"/>
+          <stop offset="60%"  stop-color="#c87808" stop-opacity="0.50"/>
           <stop offset="100%" stop-color="#c07008" stop-opacity="0"/>
         </radialGradient>
         <radialGradient id="doorGlow" cx="50%" cy="0%" r="80%">
-          <stop offset="0%"   stop-color="#ffc840" stop-opacity="0.28"/>
+          <stop offset="0%"   stop-color="#ffc840" stop-opacity="0.22"/>
           <stop offset="100%" stop-color="#ffc840" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <!-- Foundation / sidewalk -->
-      <rect x="0"   y="118" width="156" height="10" fill="#0e0e22"/>
+      <rect x="0"  y="128" width="168" height="10" fill="#0e0e22"/>
       <!-- Building body -->
-      <rect x="4"   y="36"  width="148" height="84" fill="#13132c" stroke="#1e1e44" stroke-width="1.5"/>
+      <rect x="4"  y="38"  width="160" height="92" fill="#13132c" stroke="#1e1e44" stroke-width="1.5"/>
       <!-- Roof canopy -->
-      <rect x="0"   y="24"  width="156" height="14" fill="#1c1c42" stroke="#14142e" stroke-width="1.5"/>
+      <rect x="0"  y="26"  width="168" height="15" fill="#1c1c42" stroke="#14142e" stroke-width="1.5"/>
       <!-- Roof edge trim -->
-      <rect x="0"   y="22"  width="156" height="4"  fill="#28285a"/>
+      <rect x="0"  y="24"  width="168" height="4"  fill="#28285a"/>
       <!-- Sign board background -->
-      <rect x="10"  y="26"  width="136" height="12" fill="#FFCD47" stroke="#1a1a30" stroke-width="1"/>
+      <rect x="12" y="28"  width="144" height="12" fill="#FFCD47" stroke="#1a1a30" stroke-width="1"/>
       <!-- Sign text -->
-      <text x="78" y="35" text-anchor="middle" font-size="6" fill="#12122a"
+      <text x="84" y="37" text-anchor="middle" font-size="6.5" fill="#12122a"
             font-family="monospace" font-weight="bold" letter-spacing="1">TOMORROW MART</text>
       <!-- Small stars on sign -->
-      <text x="16"  y="35" text-anchor="middle" font-size="5" fill="#12122a">&#9733;</text>
-      <text x="140" y="35" text-anchor="middle" font-size="5" fill="#12122a">&#9733;</text>
+      <text x="18" y="37" text-anchor="middle" font-size="5" fill="#12122a">★</text>
+      <text x="150" y="37" text-anchor="middle" font-size="5" fill="#12122a">★</text>
       <!-- Left window frame outer -->
-      <rect x="8"   y="44"  width="48" height="36" fill="#1a1200" stroke="#0e0c00" stroke-width="1.5"/>
+      <rect x="10" y="48"  width="52" height="38" fill="#1a1200" stroke="#0e0c00" stroke-width="1.5"/>
       <!-- Left window glow fill -->
-      <rect x="9"   y="45"  width="46" height="34" fill="#c47408" opacity="0.52" class="store-win-l"/>
-      <rect x="9"   y="45"  width="46" height="34" fill="url(#wgL)"/>
+      <rect x="11" y="49"  width="50" height="36" fill="#c47408" opacity="0.50" class="store-win-l"/>
+      <rect x="11" y="49"  width="50" height="36" fill="url(#wgL)"/>
       <!-- Left window pane dividers -->
-      <rect x="32"  y="45"  width="1.5" height="34" fill="#0e0c00" opacity="0.40"/>
-      <rect x="9"   y="62"  width="46" height="1.5" fill="#0e0c00" opacity="0.35"/>
+      <rect x="36" y="49" width="1.5" height="36" fill="#0e0c00" opacity="0.40"/>
+      <rect x="11" y="67" width="50" height="1.5" fill="#0e0c00" opacity="0.35"/>
       <!-- Right window frame outer -->
-      <rect x="100" y="44"  width="48" height="36" fill="#1a1200" stroke="#0e0c00" stroke-width="1.5"/>
+      <rect x="106" y="48" width="52" height="38" fill="#1a1200" stroke="#0e0c00" stroke-width="1.5"/>
       <!-- Right window glow fill -->
-      <rect x="101" y="45"  width="46" height="34" fill="#c47408" opacity="0.46" class="store-win-r"/>
-      <rect x="101" y="45"  width="46" height="34" fill="url(#wgR)"/>
+      <rect x="107" y="49" width="50" height="36" fill="#c47408" opacity="0.44" class="store-win-r"/>
+      <rect x="107" y="49" width="50" height="36" fill="url(#wgR)"/>
       <!-- Right window pane dividers -->
-      <rect x="124" y="45"  width="1.5" height="34" fill="#0e0c00" opacity="0.40"/>
-      <rect x="101" y="62"  width="46" height="1.5" fill="#0e0c00" opacity="0.35"/>
+      <rect x="132" y="49" width="1.5" height="36" fill="#0e0c00" opacity="0.40"/>
+      <rect x="107" y="67" width="50" height="1.5" fill="#0e0c00" opacity="0.35"/>
       <!-- Posters / small detail in windows -->
-      <rect x="11"  y="47"  width="9"  height="13" fill="#ffd070" opacity="0.22"/>
-      <rect x="102" y="47"  width="9"  height="13" fill="#ffd070" opacity="0.20"/>
+      <rect x="13" y="51" width="10" height="14" fill="#ffd070" opacity="0.22"/>
+      <rect x="108" y="51" width="10" height="14" fill="#ffd070" opacity="0.20"/>
       <!-- Door frame -->
-      <rect x="58"  y="76"  width="40" height="44" fill="#1a1a3a" stroke="#141430" stroke-width="2"/>
+      <rect x="64" y="82"  width="40" height="48" fill="#1a1a3a" stroke="#141430" stroke-width="2"/>
       <!-- Door panels -->
-      <rect x="60"  y="78"  width="17" height="40" fill="#b87008" opacity="0.30"/>
-      <rect x="79"  y="78"  width="17" height="40" fill="#b87008" opacity="0.28"/>
+      <rect x="66" y="84"  width="17" height="44" fill="#b87008" opacity="0.30"/>
+      <rect x="85" y="84"  width="17" height="44" fill="#b87008" opacity="0.28"/>
       <!-- Door handle -->
-      <rect x="76"  y="98"  width="4"  height="2"  fill="#ffc840" opacity="0.55"/>
+      <rect x="82" y="106" width="4"  height="2"  fill="#ffc840" opacity="0.50"/>
       <!-- Door top light strip -->
-      <rect x="58"  y="74"  width="40" height="4"  fill="#ffc038" opacity="0.35"/>
-      <!-- Warm door light spill ellipse on sidewalk -->
-      <ellipse cx="78" cy="122" rx="26" ry="5"  fill="url(#doorGlow)"/>
+      <rect x="64" y="80"  width="40" height="4"  fill="#ffc038" opacity="0.30"/>
+      <!-- Warm door light pool on sidewalk -->
+      <ellipse cx="84" cy="132" rx="28" ry="6"  fill="url(#doorGlow)"/>
       <!-- Step -->
-      <rect x="54"  y="116" width="48" height="4"  fill="#1e1e40" stroke="#14142e" stroke-width="1"/>
+      <rect x="60" y="126" width="48" height="4" fill="#1e1e40" stroke="#14142e" stroke-width="1"/>
       <!-- Stripes on roof edge (decorative) -->
-      <rect x="0"   y="21"  width="5"  height="3"  fill="#d4a800" opacity="0.30"/>
-      <rect x="10"  y="21"  width="5"  height="3"  fill="#d4a800" opacity="0.30"/>
-      <rect x="20"  y="21"  width="5"  height="3"  fill="#d4a800" opacity="0.30"/>
-      <rect x="30"  y="21"  width="5"  height="3"  fill="#d4a800" opacity="0.30"/>
+      <rect x="0"  y="23" width="5" height="3" fill="#d4a800" opacity="0.30"/>
+      <rect x="10" y="23" width="5" height="3" fill="#d4a800" opacity="0.30"/>
+      <rect x="20" y="23" width="5" height="3" fill="#d4a800" opacity="0.30"/>
     </svg>
   </div>
 
-  <!-- AI Robot: at store door, waving farewell -->
-  <div class="end-robot" id="endRobot">
-    <div class="end-robot-bubble" id="endRobotBubble">明天见～</div>
-    <svg width="38" height="52" viewBox="0 0 38 52" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <!-- antenna -->
-      <rect x="18" y="0"  width="2" height="5" fill="#7890c8"/>
-      <rect x="16" y="4"  width="6" height="3" rx="1" fill="#a0b4e8"/>
-      <circle cx="19" cy="2" r="2" fill="#ffc840" opacity="0.90">
-        <animate attributeName="opacity" values="0.90;0.40;0.90" dur="1.8s" repeatCount="indefinite"/>
-      </circle>
-      <!-- head -->
-      <rect x="7"  y="7"  width="24" height="18" rx="3" fill="#4858a8" stroke="#3040a0" stroke-width="1.5"/>
-      <!-- visor / face screen -->
-      <rect x="10" y="10" width="18" height="11" rx="2" fill="#1a2880"/>
-      <!-- eyes (glowing) -->
-      <rect x="12" y="13" width="5" height="4" rx="1" fill="#4af0ff" opacity="0.90">
-        <animate attributeName="opacity" values="0.90;0.50;0.90" dur="2.4s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="21" y="13" width="5" height="4" rx="1" fill="#4af0ff" opacity="0.85">
-        <animate attributeName="opacity" values="0.85;0.45;0.85" dur="2.4s" repeatCount="indefinite" begin="0.4s"/>
-      </rect>
-      <!-- smile line -->
-      <path d="M13,20 Q19,23 25,20" stroke="#4af0ff" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.60"/>
-      <!-- neck -->
-      <rect x="16" y="25" width="6" height="4" fill="#3848a0"/>
-      <!-- body -->
-      <rect x="5"  y="29" width="28" height="18" rx="3" fill="#3848a0" stroke="#2838a0" stroke-width="1.5"/>
-      <!-- chest detail -->
-      <rect x="10" y="33" width="8"  height="6"  rx="1" fill="#1a2880"/>
-      <rect x="20" y="33" width="8"  height="6"  rx="1" fill="#1a2880"/>
-      <rect x="12" y="35" width="4"  height="2" rx="1" fill="#ffc840" opacity="0.75"/>
-      <rect x="22" y="35" width="4"  height="2" rx="1" fill="#4af0ff" opacity="0.65"/>
-      <!-- left arm (relaxed) -->
-      <rect x="0"  y="30" width="6"  height="14" rx="2" fill="#3848a0" stroke="#2838a0" stroke-width="1.2"/>
-      <rect x="0"  y="43" width="6"  height="4"  rx="1" fill="#4060c8"/>
-      <!-- right arm (raised, waving) -->
-      <g class="end-robot-wave">
-        <rect x="32" y="22" width="6"  height="14" rx="2" fill="#3848a0" stroke="#2838a0" stroke-width="1.2"/>
-        <rect x="32" y="35" width="6"  height="4"  rx="1" fill="#4060c8"/>
-      </g>
-      <!-- legs -->
-      <rect x="9"  y="47" width="8"  height="5"  rx="2" fill="#2838a0"/>
-      <rect x="21" y="47" width="8"  height="5"  rx="2" fill="#2838a0"/>
-    </svg>
-  </div>
-
-  <!-- Cat: near store, healing pixel cat with SMIL tail wave -->
+  <!-- Cat — lively, paces near store entrance -->
   <div class="end-cat" id="endCat">
-    <svg width="62" height="56" viewBox="0 0 62 56" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <!-- tail behind body, animated wave -->
-      <path d="M36,40 Q54,28 57,40 Q55,52 47,50" stroke="#f4ddb8" stroke-width="6" fill="none" stroke-linecap="round">
+    <svg width="50" height="44" viewBox="0 0 50 44" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <!-- body -->
+      <rect x="8"  y="18" width="26" height="18" rx="4" fill="#e2ca9e" stroke="#28200e" stroke-width="1.5"/>
+      <!-- head -->
+      <rect x="13" y="5"  width="20" height="16" rx="4" fill="#e2ca9e" stroke="#28200e" stroke-width="1.5"/>
+      <!-- ears -->
+      <polygon points="14,7 11,0 18,4"  fill="#e2ca9e" stroke="#28200e" stroke-width="1.2"/>
+      <polygon points="30,7 33,0 27,4"  fill="#e2ca9e" stroke="#28200e" stroke-width="1.2"/>
+      <polygon points="14,7 12,2 17,5"  fill="#eba0a0" opacity="0.55"/>
+      <polygon points="30,7 32,2 28,5"  fill="#eba0a0" opacity="0.55"/>
+      <!-- eyes (open, alert) -->
+      <ellipse cx="18" cy="12" rx="2.5" ry="2.5" fill="#281808"/>
+      <ellipse cx="28" cy="12" rx="2.5" ry="2.5" fill="#281808"/>
+      <rect x="19" y="11" width="1.5" height="1.5" fill="#fff"/>
+      <rect x="29" y="11" width="1.5" height="1.5" fill="#fff"/>
+      <!-- nose -->
+      <rect x="22" y="16" width="3" height="2" rx="1" fill="#e08080"/>
+      <!-- mouth -->
+      <path d="M22,18 Q23.5,20 25,18" stroke="#b07060" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+      <!-- whiskers -->
+      <line x1="8"  y1="13" x2="18" y2="14" stroke="#28200e" stroke-width="0.7" opacity="0.45"/>
+      <line x1="8"  y1="16" x2="18" y2="15" stroke="#28200e" stroke-width="0.7" opacity="0.45"/>
+      <line x1="40" y1="13" x2="30" y2="14" stroke="#28200e" stroke-width="0.7" opacity="0.45"/>
+      <line x1="40" y1="16" x2="30" y2="15" stroke="#28200e" stroke-width="0.7" opacity="0.45"/>
+      <!-- legs -->
+      <rect x="10" y="33" width="7"  height="9" rx="2" fill="#d2ba90" stroke="#28200e" stroke-width="1.2"/>
+      <rect x="24" y="33" width="7"  height="9" rx="2" fill="#d2ba90" stroke="#28200e" stroke-width="1.2"/>
+      <!-- tail: animated wave -->
+      <path d="M34,24 Q46,16 48,26 Q46,34 40,33" stroke="#e2ca9e" stroke-width="4" fill="none" stroke-linecap="round">
         <animateTransform attributeName="transform" type="rotate"
-          values="0 36 40; 14 36 40; -8 36 40; 6 36 40; 0 36 40"
-          dur="3s" repeatCount="indefinite"/>
+          values="0 34 24; 10 34 24; -6 34 24; 4 34 24; 0 34 24"
+          dur="2.5s" repeatCount="indefinite"/>
       </path>
-      <path d="M36,40 Q54,28 57,40 Q55,52 47,50" stroke="#c8a070" stroke-width="1.6" fill="none" stroke-linecap="round">
+      <path d="M34,24 Q46,16 48,26 Q46,34 40,33" stroke="#28200e" stroke-width="1.5" fill="none" stroke-linecap="round">
         <animateTransform attributeName="transform" type="rotate"
-          values="0 36 40; 14 36 40; -8 36 40; 6 36 40; 0 36 40"
-          dur="3s" repeatCount="indefinite"/>
+          values="0 34 24; 10 34 24; -6 34 24; 4 34 24; 0 34 24"
+          dur="2.5s" repeatCount="indefinite"/>
       </path>
-      <!-- body — very chubby round -->
-      <ellipse cx="22" cy="38" rx="16" ry="13" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.4"/>
-      <!-- head — large, round, sits on body -->
-      <ellipse cx="24" cy="18" rx="16" ry="15" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.4"/>
-      <!-- ear left (big and soft) -->
-      <path d="M11,10 Q7,1 18,6" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.3"/>
-      <path d="M12,10 Q9,4 17,7"  fill="#f9c0b8" opacity="0.65"/>
-      <!-- ear right -->
-      <path d="M37,10 Q41,1 30,6" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.3"/>
-      <path d="M36,10 Q39,4 31,7"  fill="#f9c0b8" opacity="0.65"/>
-      <!-- forehead spot -->
-      <ellipse cx="24" cy="10" rx="4" ry="3" fill="#e8c898" opacity="0.55"/>
-      <!-- rosy cheeks -->
-      <ellipse cx="12" cy="21" rx="4.5" ry="3" fill="#f0a0a0" opacity="0.28"/>
-      <ellipse cx="36" cy="21" rx="4.5" ry="3" fill="#f0a0a0" opacity="0.28"/>
-      <!-- eyes — large, shiny, half-moon happy -->
-      <ellipse cx="18" cy="17" rx="4" ry="4.5" fill="#281808"/>
-      <ellipse cx="30" cy="17" rx="4" ry="4.5" fill="#281808"/>
-      <!-- big sparkle highlights -->
-      <circle  cx="19" cy="15" r="1.8" fill="#fff"/>
-      <circle  cx="31" cy="15" r="1.8" fill="#fff"/>
-      <circle  cx="20" cy="18" r="0.8" fill="#fff" opacity="0.60"/>
-      <!-- eye lower glint — gentle warmth -->
-      <ellipse cx="18" cy="19" rx="1.5" ry="0.8" fill="#b07840" opacity="0.30"/>
-      <ellipse cx="30" cy="19" rx="1.5" ry="0.8" fill="#b07840" opacity="0.30"/>
-      <!-- nose — tiny upside-down heart -->
-      <path d="M22,25 Q24,23 26,25 Q24,27 22,25 Z" fill="#e89090"/>
-      <!-- mouth — gentle W smile -->
-      <path d="M19,27 Q21,30 24,28 Q27,30 29,27" stroke="#b07060" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-      <!-- whiskers left -->
-      <line x1="2"  y1="22" x2="17" y2="23" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
-      <line x1="2"  y1="26" x2="17" y2="25" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
-      <!-- whiskers right -->
-      <line x1="46" y1="22" x2="31" y2="23" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
-      <line x1="46" y1="26" x2="31" y2="25" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
-      <!-- fluffy front paws peeking out -->
-      <ellipse cx="14" cy="50" rx="6.5" ry="4" fill="#eacea0" stroke="#c8a070" stroke-width="1.2"/>
-      <ellipse cx="30" cy="51" rx="6.5" ry="4" fill="#eacea0" stroke="#c8a070" stroke-width="1.2"/>
-      <!-- paw toe lines -->
-      <line x1="12" y1="49" x2="12" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
-      <line x1="14" y1="48" x2="14" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
-      <line x1="16" y1="49" x2="16" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
-      <line x1="28" y1="50" x2="28" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
-      <line x1="30" y1="49" x2="30" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
-      <line x1="32" y1="50" x2="32" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
     </svg>
   </div>
 
-  <!-- Character shadow -->
   <div class="end-char-shadow" id="endCharShadow"></div>
 
-  <!-- Character: lower on road, facing away slightly, holding receipt -->
+  <!-- Character: relaxed, holding receipt, facing path -->
   <div class="end-character" id="endCharacter">
-    <svg width="60" height="82" viewBox="0 0 60 82" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+    <svg width="68" height="90" viewBox="0 0 68 90" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
       <!-- legs -->
-      <rect x="12" y="62" width="13" height="18" rx="3" fill="#28283a" stroke="#18182a" stroke-width="1.5"/>
-      <rect x="32" y="64" width="13" height="16" rx="3" fill="#222236" stroke="#18182a" stroke-width="1.5"/>
+      <rect x="14" y="67" width="14" height="21" rx="3" fill="#28283a" stroke="#18182a" stroke-width="1.5"/>
+      <rect x="36" y="69" width="14" height="19" rx="3" fill="#222236" stroke="#18182a" stroke-width="1.5"/>
       <!-- shoes -->
-      <rect x="9"  y="75" width="17" height="6"  rx="3" fill="#181826"/>
-      <rect x="31" y="77" width="16" height="5"  rx="3" fill="#181826"/>
+      <rect x="11" y="83" width="19" height="7" rx="3" fill="#181826"/>
+      <rect x="35" y="85" width="17" height="6" rx="3" fill="#181826"/>
       <!-- body -->
-      <rect x="9"  y="33" width="42" height="31" rx="4" fill="#4e6aaa" stroke="#3656a0" stroke-width="1.5"/>
-      <rect x="22" y="33" width="14" height="8"  rx="2" fill="#3e5a9a"/>
-      <!-- left arm (relaxed, slightly angled) -->
-      <rect x="0"  y="35" width="11" height="26" rx="3" fill="#4e6aaa" stroke="#3656a0" stroke-width="1.5"/>
-      <rect x="0"  y="58" width="11" height="6"  rx="2" fill="#e8c8a0"/>
+      <rect x="11" y="36" width="46" height="34" rx="4" fill="#5070b4" stroke="#3858a4" stroke-width="1.5"/>
+      <rect x="26" y="36" width="16" height="9"  rx="2" fill="#4060a4"/>
+      <!-- left arm (relaxed) -->
+      <rect x="1"  y="38" width="12" height="29" rx="3" fill="#5070b4" stroke="#3858a4" stroke-width="1.5"/>
+      <rect x="1"  y="64" width="12" height="7"  rx="2" fill="#e8c8a0"/>
       <!-- right arm (raised, holds receipt) -->
-      <rect x="49" y="24" width="11" height="24" rx="3" fill="#4e6aaa" stroke="#3656a0" stroke-width="1.5"
-            transform="rotate(-14,54,36)"/>
-      <rect x="51" y="45" width="11" height="6"  rx="2" fill="#e8c8a0"
-            transform="rotate(-14,56,48)"/>
+      <rect x="55" y="27" width="12" height="27" rx="3" fill="#5070b4" stroke="#3858a4" stroke-width="1.5"
+            transform="rotate(-16,61,40)"/>
+      <rect x="57" y="50" width="12" height="7"  rx="2" fill="#e8c8a0"
+            transform="rotate(-16,63,53)"/>
       <!-- head -->
-      <rect x="14" y="4"  width="32" height="30" rx="5" fill="#e8c8a0" stroke="#c8a880" stroke-width="1.5"/>
+      <rect x="17" y="4"  width="34" height="33" rx="5" fill="#e8c8a0" stroke="#c8a880" stroke-width="1.5"/>
       <!-- hair -->
-      <rect x="12" y="1"  width="36" height="12" rx="4" fill="#382818"/>
-      <!-- eyes (facing slightly right — asymmetric) -->
-      <rect x="18" y="15" width="5"  height="5"  rx="1" fill="#281808"/>
-      <rect x="36" y="15" width="6"  height="6"  rx="1" fill="#281808"/>
-      <rect x="19" y="16" width="2"  height="2"  fill="#fff"/>
-      <rect x="38" y="16" width="2"  height="2"  fill="#fff"/>
-      <!-- calm smile -->
-      <path d="M21,25 Q30,30 39,25" stroke="#b87858" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <rect x="15" y="1"  width="38" height="13" rx="4" fill="#382818"/>
+      <!-- eyes -->
+      <rect x="21" y="17" width="6" height="6" rx="1" fill="#281808"/>
+      <rect x="41" y="17" width="6" height="6" rx="1" fill="#281808"/>
+      <rect x="23" y="18" width="2" height="2" fill="#fff"/>
+      <rect x="43" y="18" width="2" height="2" fill="#fff"/>
+      <!-- smile -->
+      <path d="M25,29 Q34,34 43,29" stroke="#b87858" stroke-width="1.4" fill="none" stroke-linecap="round"/>
     </svg>
   </div>
 
-  <!-- Receipt floating in character's hand -->
+  <!-- Receipt -->
   <div class="end-receipt" id="endReceipt">
-    <svg width="28" height="46" viewBox="0 0 28 46" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <rect x="2" y="2" width="24" height="42" fill="#f5f0e4" stroke="#c8b875" stroke-width="1.5"/>
-      <polyline points="2,4 5,2 8,5 11,2 14,4 17,2 20,5 23,2 26,4 26,2"
+    <svg width="30" height="50" viewBox="0 0 30 50" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <rect x="2" y="2" width="26" height="46" fill="#f5f0e4" stroke="#c8b875" stroke-width="1.5"/>
+      <polyline points="2,4 5,2 8,5 11,2 14,4 17,2 20,5 23,2 26,4 28,2 28,4"
                 fill="#f5f0e4" stroke="#c8b875" stroke-width="1"/>
-      <rect x="4" y="9"  width="20" height="2"   rx="1" fill="#c8b058" opacity="0.65"/>
-      <rect x="4" y="14" width="13" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
-      <rect x="4" y="18" width="17" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
-      <rect x="4" y="22" width="11" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
-      <rect x="4" y="27" width="19" height="1"   rx="1" fill="#c8c0a8" opacity="0.35"/>
-      <rect x="4" y="31" width="9"  height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
-      <rect x="4" y="35" width="15" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
-      <text x="14" y="43" text-anchor="middle" font-size="7" fill="#FFCD47" opacity="0.92">&#9733;</text>
+      <rect x="5" y="10" width="20" height="2"   rx="1" fill="#c8b058" opacity="0.65"/>
+      <rect x="5" y="16" width="14" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
+      <rect x="5" y="20" width="18" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
+      <rect x="5" y="24" width="12" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
+      <rect x="5" y="30" width="20" height="1"   rx="1" fill="#c8c0a8" opacity="0.35"/>
+      <rect x="5" y="35" width="10" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
+      <rect x="5" y="39" width="16" height="1.5" rx="1" fill="#a89840" opacity="0.45"/>
+      <text x="15" y="47" text-anchor="middle" font-size="8" fill="#FFCD47" opacity="0.90">★</text>
     </svg>
   </div>
 
-  <!-- NARRATION TEXT: floating over sky, NO black box background -->
-  <!-- Positioned upper-center, text-shadow for readability against night sky -->
+  <!-- Copy — centered panel, upper-middle -->
   <div class="end-copy" id="endCopy">
-    <div class="end-line"       data-i="0"                          >你走出便利店。</div>
-    <div class="end-line dim"   data-i="1"                          >夜风很轻，小票还带着一点温度。</div>
-    <div class="end-line"       data-i="2"  style="margin-top:14px" >今晚没有人给你标准答案——</div>
-    <div class="end-line dim"   data-i="3"                          >因为你本来就不需要。</div>
-    <div class="end-line"       data-i="4"  style="margin-top:14px" >明天要见的，</div>
-    <div class="end-line big"   data-i="5"                          >也只是另一个想认识你的人。</div>
-    <div class="end-line"       data-i="6"  style="margin-top:14px" >慢慢走。</div>
-    <div class="end-line finale" data-i="7" style="margin-top:18px" >Tomorrow will load soon...</div>
+    <div class="end-copy-panel">
+      <div class="end-line"      data-i="0"                          >你走出便利店，</div>
+      <div class="end-line dim"  data-i="1"                          >手里还握着那张小票。</div>
+      <div class="end-line"      data-i="2"  style="margin-top:10px" >月光照在小径上，</div>
+      <div class="end-line dim"  data-i="3"                          >这一夜，你明白了一些事。</div>
+      <div class="end-line dim"  data-i="4"  style="margin-top:10px" >不是考题，不是标准答案，</div>
+      <div class="end-line dim"  data-i="5"                          >只是更真实的自己。</div>
+      <div class="end-line big"  data-i="6"  style="margin-top:10px" >平静，却有力量。</div>
+      <div class="end-line"      data-i="7"  style="margin-top:10px" >面前是一条很长的路，</div>
+      <div class="end-line dim"  data-i="8"                          >但方向已经清晰。</div>
+      <div class="end-line big"  data-i="9"  style="margin-top:10px" >前进，都是最好的答案。</div>
+      <div class="end-line finale"     data-i="10" style="margin-top:14px">Tomorrow will load soon...</div>
+      <div class="end-line finale-sub" data-i="11"                   >明天很快就会加载完毕……</div>
+    </div>
   </div>
 
-  <!-- Controls: bottom of screen, minimal, don't block road -->
+  <!-- Controls -->
   <div class="end-controls" id="endControls">
     <button class="end-btn-main" onclick="endGoForward()">带着小票出发 &#x2192;</button>
     <button class="end-btn-sec"  onclick="endReplay()">&#x21BA; 再看一次</button>
