@@ -3281,16 +3281,13 @@ footer .tiny {
 
 /* ── Grass tufts ── */
 .end-grass-l,.end-grass-r {
-  position:absolute; bottom:0; width:27%; height:60%; overflow:hidden; pointer-events:none;
+  position:absolute; bottom:0; width:27%; height:60%; pointer-events:none;
 }
 .end-grass-l { left:0; }
 .end-grass-r { right:0; }
-.end-grass-l::before,.end-grass-r::before { content:''; position:absolute; inset:0; }
-.end-grass-l::before { background:linear-gradient(173deg,#0b1c10 0%,#0e2613 45%,#07120a 100%); }
-.end-grass-r::before { background:linear-gradient(187deg,#0b1c10 0%,#0e2613 45%,#07120a 100%); }
 .end-grass-l::after  {
   content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 80% 30%,rgba(200,138,28,0.09) 0%,transparent 55%);
+  background:radial-gradient(ellipse at 80% 30%,rgba(200,138,28,0.06) 0%,transparent 55%);
   pointer-events:none;
 }
 .end-grass-tufts {
@@ -3404,7 +3401,7 @@ footer .tiny {
   70%    { transform:translateX(8px)  scaleX(1); }
   100%   { transform:translateX(0)    scaleX(1); }
 }
-.end-cat svg { width:48px; height:auto; image-rendering:pixelated; }
+.end-cat svg { width:56px; height:auto; image-rendering:pixelated; }
 
 /* ── AI Robot at store door ── */
 .end-robot {
@@ -8282,52 +8279,65 @@ if (tgEl) tgObserver.observe(tgEl);
     </svg>
   </div>
 
-  <!-- Cat: near store, cute pixel style with SMIL tail wave -->
+  <!-- Cat: near store, healing pixel cat with SMIL tail wave -->
   <div class="end-cat" id="endCat">
-    <svg width="54" height="46" viewBox="0 0 54 46" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-      <!-- body — rounder, chubby -->
-      <ellipse cx="20" cy="32" rx="14" ry="11" fill="#f0d9ae" stroke="#28200e" stroke-width="1.3"/>
-      <!-- head — big and round -->
-      <ellipse cx="21" cy="14" rx="13" ry="12" fill="#f0d9ae" stroke="#28200e" stroke-width="1.3"/>
-      <!-- ear left -->
-      <polygon points="10,8 7,1 16,5"  fill="#f0d9ae" stroke="#28200e" stroke-width="1.1"/>
-      <polygon points="10,8 8,3 15,6"  fill="#f5b8b8" opacity="0.70"/>
+    <svg width="62" height="56" viewBox="0 0 62 56" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+      <!-- tail behind body, animated wave -->
+      <path d="M36,40 Q54,28 57,40 Q55,52 47,50" stroke="#f4ddb8" stroke-width="6" fill="none" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 36 40; 14 36 40; -8 36 40; 6 36 40; 0 36 40"
+          dur="3s" repeatCount="indefinite"/>
+      </path>
+      <path d="M36,40 Q54,28 57,40 Q55,52 47,50" stroke="#c8a070" stroke-width="1.6" fill="none" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 36 40; 14 36 40; -8 36 40; 6 36 40; 0 36 40"
+          dur="3s" repeatCount="indefinite"/>
+      </path>
+      <!-- body — very chubby round -->
+      <ellipse cx="22" cy="38" rx="16" ry="13" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.4"/>
+      <!-- head — large, round, sits on body -->
+      <ellipse cx="24" cy="18" rx="16" ry="15" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.4"/>
+      <!-- ear left (big and soft) -->
+      <path d="M11,10 Q7,1 18,6" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.3"/>
+      <path d="M12,10 Q9,4 17,7"  fill="#f9c0b8" opacity="0.65"/>
       <!-- ear right -->
-      <polygon points="32,8 35,1 26,5" fill="#f0d9ae" stroke="#28200e" stroke-width="1.1"/>
-      <polygon points="32,8 34,3 27,6" fill="#f5b8b8" opacity="0.70"/>
+      <path d="M37,10 Q41,1 30,6" fill="#f4ddb8" stroke="#c8a070" stroke-width="1.3"/>
+      <path d="M36,10 Q39,4 31,7"  fill="#f9c0b8" opacity="0.65"/>
+      <!-- forehead spot -->
+      <ellipse cx="24" cy="10" rx="4" ry="3" fill="#e8c898" opacity="0.55"/>
       <!-- rosy cheeks -->
-      <ellipse cx="11" cy="17" rx="3.5" ry="2.5" fill="#f0a0a0" opacity="0.30"/>
-      <ellipse cx="31" cy="17" rx="3.5" ry="2.5" fill="#f0a0a0" opacity="0.30"/>
-      <!-- eyes — big, round, happy squint -->
-      <path d="M14,13 Q17,10 20,13" stroke="#281808" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M22,13 Q25,10 28,13" stroke="#281808" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <!-- tiny eye shine -->
-      <circle cx="15" cy="12" r="1" fill="#fff" opacity="0.70"/>
-      <circle cx="23" cy="12" r="1" fill="#fff" opacity="0.70"/>
-      <!-- nose — tiny heart-ish -->
-      <ellipse cx="21" cy="18" rx="2" ry="1.5" fill="#e89090"/>
-      <!-- mouth — happy w shape -->
-      <path d="M18,20 Q19.5,22 21,20 Q22.5,22 24,20" stroke="#b07060" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+      <ellipse cx="12" cy="21" rx="4.5" ry="3" fill="#f0a0a0" opacity="0.28"/>
+      <ellipse cx="36" cy="21" rx="4.5" ry="3" fill="#f0a0a0" opacity="0.28"/>
+      <!-- eyes — large, shiny, half-moon happy -->
+      <ellipse cx="18" cy="17" rx="4" ry="4.5" fill="#281808"/>
+      <ellipse cx="30" cy="17" rx="4" ry="4.5" fill="#281808"/>
+      <!-- big sparkle highlights -->
+      <circle  cx="19" cy="15" r="1.8" fill="#fff"/>
+      <circle  cx="31" cy="15" r="1.8" fill="#fff"/>
+      <circle  cx="20" cy="18" r="0.8" fill="#fff" opacity="0.60"/>
+      <!-- eye lower glint — gentle warmth -->
+      <ellipse cx="18" cy="19" rx="1.5" ry="0.8" fill="#b07840" opacity="0.30"/>
+      <ellipse cx="30" cy="19" rx="1.5" ry="0.8" fill="#b07840" opacity="0.30"/>
+      <!-- nose — tiny upside-down heart -->
+      <path d="M22,25 Q24,23 26,25 Q24,27 22,25 Z" fill="#e89090"/>
+      <!-- mouth — gentle W smile -->
+      <path d="M19,27 Q21,30 24,28 Q27,30 29,27" stroke="#b07060" stroke-width="1.1" fill="none" stroke-linecap="round"/>
       <!-- whiskers left -->
-      <line x1="4"  y1="16" x2="15" y2="17" stroke="#4a3828" stroke-width="0.8" opacity="0.50"/>
-      <line x1="4"  y1="19" x2="15" y2="18" stroke="#4a3828" stroke-width="0.8" opacity="0.50"/>
+      <line x1="2"  y1="22" x2="17" y2="23" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
+      <line x1="2"  y1="26" x2="17" y2="25" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
       <!-- whiskers right -->
-      <line x1="38" y1="16" x2="27" y2="17" stroke="#4a3828" stroke-width="0.8" opacity="0.50"/>
-      <line x1="38" y1="19" x2="27" y2="18" stroke="#4a3828" stroke-width="0.8" opacity="0.50"/>
-      <!-- front paws -->
-      <ellipse cx="13" cy="42" rx="5" ry="3.5" fill="#e0c898" stroke="#28200e" stroke-width="1.1"/>
-      <ellipse cx="27" cy="43" rx="5" ry="3.5" fill="#e0c898" stroke="#28200e" stroke-width="1.1"/>
-      <!-- tail: fluffy, animated wave -->
-      <path d="M32,34 Q46,24 50,34 Q48,43 42,42" stroke="#f0d9ae" stroke-width="5" fill="none" stroke-linecap="round">
-        <animateTransform attributeName="transform" type="rotate"
-          values="0 32 34; 12 32 34; -7 32 34; 5 32 34; 0 32 34"
-          dur="2.8s" repeatCount="indefinite"/>
-      </path>
-      <path d="M32,34 Q46,24 50,34 Q48,43 42,42" stroke="#28200e" stroke-width="1.4" fill="none" stroke-linecap="round">
-        <animateTransform attributeName="transform" type="rotate"
-          values="0 32 34; 12 32 34; -7 32 34; 5 32 34; 0 32 34"
-          dur="2.8s" repeatCount="indefinite"/>
-      </path>
+      <line x1="46" y1="22" x2="31" y2="23" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
+      <line x1="46" y1="26" x2="31" y2="25" stroke="#9a7050" stroke-width="0.9" opacity="0.45"/>
+      <!-- fluffy front paws peeking out -->
+      <ellipse cx="14" cy="50" rx="6.5" ry="4" fill="#eacea0" stroke="#c8a070" stroke-width="1.2"/>
+      <ellipse cx="30" cy="51" rx="6.5" ry="4" fill="#eacea0" stroke="#c8a070" stroke-width="1.2"/>
+      <!-- paw toe lines -->
+      <line x1="12" y1="49" x2="12" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
+      <line x1="14" y1="48" x2="14" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
+      <line x1="16" y1="49" x2="16" y2="52" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
+      <line x1="28" y1="50" x2="28" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
+      <line x1="30" y1="49" x2="30" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
+      <line x1="32" y1="50" x2="32" y2="53" stroke="#c8a070" stroke-width="0.7" opacity="0.50"/>
     </svg>
   </div>
 
