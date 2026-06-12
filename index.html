@@ -3248,16 +3248,6 @@ footer .tiny {
   position:absolute; bottom:0; left:0; right:0; height:46%;
   pointer-events:none;
 }
-.end-ground-base {
-  position:absolute; bottom:0;left:0;right:0;height:100%;
-  background:linear-gradient(180deg,
-    rgba(6,9,22,0) 0%,
-    rgba(8,11,26,0.55) 10%,
-    #0e1228 28%,
-    #111528 60%,
-    #141830 100%);
-}
-
 /* ── Road SVG ── */
 .end-road-svg {
   position:absolute; bottom:0; left:0; width:100%; height:100%; overflow:visible;
@@ -3290,16 +3280,11 @@ footer .tiny {
 }
 .end-grass-l { left:0; }
 .end-grass-r { right:0; }
-.end-grass-l::after  {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 80% 30%,rgba(200,138,28,0.06) 0%,transparent 55%);
-  pointer-events:none;
-}
 .end-grass-tufts {
   position:absolute; bottom:56%; width:100%; height:20px; display:flex; gap:2px; align-items:flex-end;
 }
 .end-tuft {
-  width:5px; height:var(--h,10px); background:var(--tc,#162838);
+  width:5px; height:var(--h,10px); background:var(--tc,#162020);
   border-radius:2px 2px 0 0; flex-shrink:0;
 }
 
@@ -7517,7 +7502,7 @@ function endInitFireflies() {
 }
 
 function endInitGrass() {
-  const colors = ['#1a4a22', '#1c5228', '#14381a', '#224c2a', '#163c1e'];
+  const colors = ['#162c1a', '#1a3420', '#122218', '#1c3022', '#102018'];
   ['endTuftsL','endTuftsR'].forEach(id => {
     const el = document.getElementById(id);
     for (let i = 0; i < 22; i++) {
@@ -7640,18 +7625,18 @@ function endInitBushes() {
   }
 
   const bushDefs = [
-    // Left side — big backdrop bushes
-    { l:0,  b:24, w:48, h:36, c1:'#0a2210', c2:'#122a16', c3:'#163820' },
-    { l:5,  b:20, w:36, h:28, c1:'#0c2414', c2:'#143018', c3:'#1a3c22' },
-    { l:13, b:28, w:44, h:34, c1:'#0e2812', c2:'#163418', c3:'#1c4020' },
-    { l:18, b:18, w:30, h:22, c1:'#0a2010', c2:'#122816', c3:'#163620' },
-    // Between left-side and path
-    { l:22, b:22, w:28, h:20, c1:'#0c2414', c2:'#143018', c3:'#183820' },
-    // Right side (where stream was)
-    { l:68, b:22, w:40, h:30, c1:'#0e2812', c2:'#163418', c3:'#1c4020' },
-    { l:75, b:26, w:46, h:36, c1:'#0a2210', c2:'#122a16', c3:'#163820' },
-    { l:83, b:20, w:36, h:28, c1:'#0c2414', c2:'#143018', c3:'#1a3c22' },
-    { l:88, b:28, w:42, h:34, c1:'#0a2010', c2:'#122816', c3:'#163620' },
+    // Left side — muted night-dark bushes (navy-green blend)
+    { l:0,  b:24, w:44, h:32, c1:'#0a1a18', c2:'#0e2018', c3:'#122818' },
+    { l:6,  b:20, w:32, h:24, c1:'#0c1c1a', c2:'#10221c', c3:'#142a1e' },
+    { l:14, b:28, w:40, h:30, c1:'#0e1e18', c2:'#12241c', c3:'#162c1e' },
+    { l:20, b:18, w:26, h:20, c1:'#0a1816', c2:'#0e2018', c3:'#12261a' },
+    // Near road left edge
+    { l:24, b:22, w:22, h:16, c1:'#0c1c1a', c2:'#10221e', c3:'#142a20' },
+    // Right side
+    { l:68, b:22, w:36, h:26, c1:'#0e1e18', c2:'#12241c', c3:'#162c1e' },
+    { l:75, b:26, w:42, h:32, c1:'#0a1a18', c2:'#0e2018', c3:'#122818' },
+    { l:83, b:20, w:32, h:24, c1:'#0c1c1a', c2:'#10221c', c3:'#142a1e' },
+    { l:88, b:28, w:38, h:30, c1:'#0a1816', c2:'#0e2018', c3:'#12261a' },
   ];
 
   bushDefs.forEach((bs, i) => {
@@ -8043,7 +8028,6 @@ if (tgEl) tgObserver.observe(tgEl);
 
   <!-- Ground layer -->
   <div class="end-ground">
-    <div class="end-ground-base"></div>
 
     <!-- Road SVG: natural curved trapezoid with pixel-art edges -->
     <svg class="end-road-svg" id="endPathSvg" viewBox="0 0 400 220"
