@@ -3499,9 +3499,6 @@ footer .tiny {
 </head>
 <body>
 
-<!-- Music auto-start prompt -->
-<div id="musicPrompt">🎵 点击任意处<br>开启便利店音乐</div>
-
 <!-- NAVBAR -->
 <nav id="navbar">
   <div class="logo">🏪 Tomorrow<br>Mart</div>
@@ -6467,7 +6464,7 @@ const TM_Audio = (() => {
   // SFX 专用通道（独立，BGM 静音不影响它）
   let sfxGain = null;
   let bgPlaying = false;
-  let bgMuted = false;   // 只控制 BGM
+  let bgMuted = true;    // 背景音乐默认关闭，只通过音乐按钮开启
   let bgLoopTimer = null;
 
   // ── 初始化音频上下文，建立两条独立通道 ───────────────────
@@ -6477,7 +6474,7 @@ const TM_Audio = (() => {
 
       // BGM 通道：gain 0.18，只有 BGM 音符接这里
       bgGain = ctx.createGain();
-      bgGain.gain.value = 0.18;
+      bgGain.gain.value = bgMuted ? 0 : 0.18;
       bgGain.connect(ctx.destination);
 
       // SFX 通道：gain 0.9，所有音效接这里，完全独立
@@ -6736,30 +6733,9 @@ const TM_Audio = (() => {
 
 // ── Wire sounds to interactions ────────────────────────────
 
-// ── Start BGM on ANY first user interaction (browser policy) ──
-let bgmStarted = false;
-function ensureBGM() {
-  if (bgmStarted) return;
-  bgmStarted = true;
-  TM_Audio.startBGM();
-  // Hide the music prompt
-  const prompt = document.getElementById('musicPrompt');
-  if (prompt) {
-    prompt.style.opacity = '0';
-    prompt.style.transform = 'translateY(10px)';
-    setTimeout(() => prompt.remove(), 600);
-  }
-}
-
-// Listen on the whole document — fires once on any click or touch
-['click', 'touchstart', 'keydown'].forEach(evt => {
-  document.addEventListener(evt, ensureBGM, { once: true });
-});
-
-// Override goTo to add portal sound + ensure BGM
+// Override goTo to add portal sound
 const _origGoTo = goTo;
 window.goTo = function(id) {
-  ensureBGM();
   TM_Audio.playPortal();
   _origGoTo(id);
 };
@@ -6767,7 +6743,6 @@ window.goTo = function(id) {
 // Override openCan
 const _origOpenCan = openCan;
 window.openCan = function(id) {
-  ensureBGM();
   TM_Audio.playCan();
   _origOpenCan(id);
 };
@@ -6803,7 +6778,6 @@ window.generateReceipt = function() {
 // Override startScan
 const _origStartScan = startScan;
 window.startScan = function() {
-  ensureBGM();
   TM_Audio.playScan();
   _origStartScan();
   // scan done sound after 1.5s
@@ -6842,29 +6816,33 @@ window.enterStore = function() {
 (function injectMuteBtn() {
   const btn = document.createElement('button');
   btn.id = 'muteBtn';
-  btn.innerHTML = '🔊';
-  btn.title = '点击切换音效';
+  btn.innerHTML = '🔇';
+  btn.title = '开启背景音乐';
+  btn.setAttribute('aria-label', btn.title);
+  btn.setAttribute('aria-pressed', 'false');
   btn.style.cssText = `
     position: fixed;
     bottom: 24px; left: 20px;
     z-index: 1001;
     width: 40px; height: 40px;
     background: var(--dark);
-    border: 2px solid var(--yellow);
+    border: 2px solid #555;
     color: var(--yellow);
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 3px 3px 0 var(--yellow);
+    box-shadow: 3px 3px 0 #555;
     transition: transform 0.1s, box-shadow 0.1s;
     font-family: monospace;
     image-rendering: pixelated;
   `;
-  btn.onmouseenter = () => { btn.style.transform = 'translate(1px,1px)'; btn.style.boxShadow = '2px 2px 0 var(--yellow)'; };
-  btn.onmouseleave = () => { btn.style.transform = ''; btn.style.boxShadow = '3px 3px 0 var(--yellow)'; };
+  btn.onmouseenter = () => { btn.style.transform = 'translate(1px,1px)'; btn.style.boxShadow = `2px 2px 0 ${btn.style.borderColor}`; };
+  btn.onmouseleave = () => { btn.style.transform = ''; btn.style.boxShadow = `3px 3px 0 ${btn.style.borderColor}`; };
   btn.onclick = () => {
-    ensureBGM();
     const muted = TM_Audio.toggleMute();
     btn.innerHTML = muted ? '🔇' : '🔊';
+    btn.title = muted ? '开启背景音乐' : '关闭背景音乐';
+    btn.setAttribute('aria-label', btn.title);
+    btn.setAttribute('aria-pressed', String(!muted));
     btn.style.borderColor = muted ? '#555' : 'var(--yellow)';
     btn.style.boxShadow = muted ? '3px 3px 0 #555' : '3px 3px 0 var(--yellow)';
   };
